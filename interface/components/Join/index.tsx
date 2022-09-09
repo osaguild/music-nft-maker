@@ -35,7 +35,6 @@ const Join: FunctionComponent = () => {
           <ModalBody>
             <Select value={role} onChange={(e) => setRole(e.target.value as Role)}>
               <option value="CREATOR">CREATOR</option>
-              <option value="FANFIC">FANFIC</option>
               <option value="FAN">FAN</option>
             </Select>
             <InputGroup size="sm">

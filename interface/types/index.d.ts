@@ -17,7 +17,7 @@ type AlertStatus = 'success' | 'error' | 'info' | 'warning'
 
 type LayoutPattern = 'TOP' | 'MEMBER'
 
-type Role = 'CREATOR' | 'FANFIC' | 'FUN'
+type Role = 'CREATOR' | 'FUN'
 
 interface Nft {
   id: number
