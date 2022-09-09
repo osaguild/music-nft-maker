@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react'
 import { Container, Box, Text } from '@chakra-ui/react'
+import { Alert } from '../Alert'
 import { Header } from './Header'
 import { Market } from '../Market'
 import { Footer } from './Footer'
@@ -13,6 +14,7 @@ interface LayoutProps {
 const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
   return (
     <>
+      <Alert />
       <Header />
       <Container maxW="container.lg">
         {pattern === 'TOP' && (

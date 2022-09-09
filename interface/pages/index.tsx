@@ -2,7 +2,6 @@ import { FunctionComponent } from 'react'
 import { providers } from 'ethers'
 import { Web3ReactProvider } from '@web3-react/core'
 import { ChakraProvider } from '@chakra-ui/react'
-import { Alert } from '../components/Alert'
 import { AlertContext, useAlertProvider } from '../hooks/AlertContext'
 import { Layout } from '../components/Layout'
 
@@ -17,7 +16,6 @@ const Top: FunctionComponent = () => {
     <ChakraProvider>
       <Web3ReactProvider getLibrary={getLibrary}>
         <AlertContext.Provider value={useAlertProvider()}>
-          <Alert />
           <Layout pattern="TOP" />
         </AlertContext.Provider>
       </Web3ReactProvider>
