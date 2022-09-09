@@ -39,7 +39,7 @@ const Join: FunctionComponent = () => {
             </Select>
             <InputGroup size="sm">
               <Input placeholder="1" />
-              <InputRightAddon children="MTE" />
+              <InputRightAddon>MTE</InputRightAddon>
             </InputGroup>
           </ModalBody>
 
