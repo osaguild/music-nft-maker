@@ -1,10 +1,11 @@
 import { FunctionComponent } from 'react'
-import { Container, Box, Text } from '@chakra-ui/react'
+import { Container, Text } from '@chakra-ui/react'
 import { Alert } from '../Alert'
 import { Header } from './Header'
 import { Market } from '../Market'
 import { Footer } from './Footer'
 import { Join } from '../Join'
+import { Portfolio } from '../Portfolio'
 
 interface LayoutProps {
   pattern: LayoutPattern
@@ -18,13 +19,18 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
       <Header />
       <Container maxW="container.lg">
         {pattern === 'TOP' && (
-          <Box>
+          <>
             <Text fontSize="6xl" textAlign="center" my="30" className="web3-title" data-testid="text">
               Music Token Economy
             </Text>
             <Join />
             <Market />
-          </Box>
+          </>
+        )}
+        {pattern === 'MEMBER' && (
+          <>
+            <Portfolio />
+          </>
         )}
       </Container>
       <Footer />

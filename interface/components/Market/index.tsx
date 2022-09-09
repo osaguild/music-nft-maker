@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { Box, Wrap, WrapItem, Center, Text } from '@chakra-ui/react'
+import { Wrap, WrapItem, Text } from '@chakra-ui/react'
 import { useOnSaleMusics } from '../../hooks/Music'
 import { useOnSalePlayLists } from '../../hooks/PlayList'
 import { Nft } from '../Nft'
