@@ -1,18 +1,32 @@
 import { FunctionComponent } from 'react'
-import { Container, Box } from '@chakra-ui/react'
+import { Container, Box, Text } from '@chakra-ui/react'
 import { Header } from './Header'
-import { Content } from '../Content'
+import { Market } from '../Market'
 import { Footer } from './Footer'
+import { Join } from '../Join'
 
-const Layout: FunctionComponent = () => {
+interface LayoutProps {
+  pattern: LayoutPattern
+  children?: React.ReactNode
+}
+
+const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
   return (
-    <Box>
+    <>
       <Header />
       <Container maxW="container.lg">
-        <Content />
+        {pattern === 'TOP' && (
+          <Box>
+            <Text fontSize="6xl" textAlign="center" my="30" className="web3-title" data-testid="text">
+              Music Token Economy
+            </Text>
+            <Join />
+            <Market />
+          </Box>
+        )}
       </Container>
       <Footer />
-    </Box>
+    </>
   )
 }
 

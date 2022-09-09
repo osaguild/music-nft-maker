@@ -18,7 +18,7 @@ const Top: FunctionComponent = () => {
       <Web3ReactProvider getLibrary={getLibrary}>
         <AlertContext.Provider value={useAlertProvider()}>
           <Alert />
-          <Layout />
+          <Layout pattern="TOP" />
         </AlertContext.Provider>
       </Web3ReactProvider>
     </ChakraProvider>

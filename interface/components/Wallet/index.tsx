@@ -37,7 +37,7 @@ const Wallet: FunctionComponent = () => {
   }, [account, library, chainId, setAlert])
 
   return active ? (
-    <div>
+    <>
       <Network />
       <Button w={160} mx={1} my={2}>
         {balance}
@@ -45,14 +45,14 @@ const Wallet: FunctionComponent = () => {
       <Button w={160} mx={1} my={2}>
         {convertToShortAddress(account as string)}
       </Button>
-    </div>
+    </>
   ) : (
-    <div>
+    <>
       <Network />
       <Button w={160} onClick={connect} mx={1} my={2}>
         connect
       </Button>
-    </div>
+    </>
   )
 }
 
