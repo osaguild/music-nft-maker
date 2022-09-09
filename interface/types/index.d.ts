@@ -15,8 +15,6 @@ type Alert = {
 
 type AlertStatus = 'success' | 'error' | 'info' | 'warning'
 
-type LayoutPattern = 'TOP' | 'MEMBER'
-
 type Role = 'CREATOR' | 'FUN'
 
 interface Nft {
