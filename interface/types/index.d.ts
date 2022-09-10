@@ -15,29 +15,30 @@ type Alert = {
 
 type AlertStatus = 'success' | 'error' | 'info' | 'warning'
 
-type Role = 'CREATOR' | 'FUN'
-
 interface Nft {
   id: number
   url: string
   author: string
+  owner: string
   value: number
-  isSale: boolean
+  onSale: boolean
 }
 
-interface Music extends Nft {
+interface OriginNft extends Nft {
   id: number
   url: string
   author: string
+  owner: string
   value: number
-  isSale: boolean
+  onSale: boolean
 }
 
-interface PlayList extends Nft {
+interface FanficNft extends Nft {
   id: number
   url: string
   author: string
+  owner: string
   value: number
-  isSale: boolean
-  musicUrls: string[]
+  onSale: boolean
+  originIds: string[]
 }

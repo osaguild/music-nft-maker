@@ -9,7 +9,7 @@ import { Portfolio } from '../Portfolio'
 import { NftMaker } from '../NftMaker'
 
 interface LayoutProps {
-  pattern: 'TOP' | 'CREATOR' | 'FAN'
+  pattern: 'TOP' | 'MEMBER'
   children?: React.ReactNode
 }
 
@@ -28,27 +28,21 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
             <Text fontSize="2xl" textAlign="center" my="30">
               Market
             </Text>
-            <Collection pattern="MARKET" />
+            <Collection pattern="ON_SALE" />
           </>
         )}
-        {pattern === 'CREATOR' && (
+        {pattern === 'MEMBER' && (
           <>
             <Portfolio />
             <Text fontSize="2xl" my="30">
               Created Music
             </Text>
             <NftMaker />
-            <Collection pattern="CREATOR" />
-          </>
-        )}
-        {pattern === 'FAN' && (
-          <>
-            <Portfolio />
+            <Collection pattern="CREATED" />
             <Text fontSize="2xl" my="30">
-              Created Play List
+              Own Music
             </Text>
-            <NftMaker />
-            <Collection pattern="FAN" />
+            <Collection pattern="OWN" />
           </>
         )}
       </Container>

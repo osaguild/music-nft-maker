@@ -2,7 +2,6 @@ import { FunctionComponent, useState } from 'react'
 import {
   Box,
   Text,
-  Select,
   Button,
   Modal,
   ModalOverlay,
@@ -19,7 +18,7 @@ import {
 
 const Join: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [role, setRole] = useState<Role>('CREATOR')
+  const [value, setValue] = useState('1000')
 
   return (
     <Box textAlign="center" my={20}>
@@ -33,16 +32,11 @@ const Join: FunctionComponent = () => {
           <ModalHeader>Form</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Select value={role} onChange={(e) => setRole(e.target.value as Role)}>
-              <option value="CREATOR">CREATOR</option>
-              <option value="FAN">FAN</option>
-            </Select>
             <InputGroup size="sm">
-              <Input placeholder="1" />
+              <Input placeholder="1" value={value} onChange={(e) => setValue(e.target.value)} />
               <InputRightAddon>MTE</InputRightAddon>
             </InputGroup>
           </ModalBody>
-
           <ModalFooter>
             <Button onClick={onClose}>Stake</Button>
           </ModalFooter>
