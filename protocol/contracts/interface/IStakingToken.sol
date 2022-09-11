@@ -3,12 +3,12 @@ pragma solidity =0.8.9;
 
 interface IStakingToken {
     /**
-     * @dev make the staking nft and send to the address
+     * @dev mint the staking token and send to the address
      */
-    function mint(address to, string memory tokenURI) external;
+    function mint(address to, string memory tokenURI) external returns (uint256);
 
     /**
-     * @dev burn the staking nft
+     * @dev burn the staking token
      */
     function burn(uint256 tokenId) external;
 }
