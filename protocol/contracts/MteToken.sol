@@ -9,12 +9,12 @@ contract MteToken is ERC20, Ownable, IMteToken {
     /**
      * @dev set the name and symbol of the MTE token and set owner address
      */
-    constructor(address protocol) ERC20("Music Token Economy", "MTE") {
-        _transferOwnership(protocol);
+    constructor(address owner) ERC20("MusicTokenEconomy", "MTE") {
+        _transferOwnership(owner);
     }
 
     /**
-     * @dev make the MTE token and send to the address
+     * @dev mint the MTE token and send to the address
      */
     function mint(address to, uint256 amount) external onlyOwner {
         _mint(to, amount);
