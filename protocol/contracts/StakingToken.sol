@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./interface/IStakingToken.sol";
 
-contract MteToken is ERC721URIStorage, Ownable, IStakingToken {
+contract StakingToken is ERC721URIStorage, Ownable, IStakingToken {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
