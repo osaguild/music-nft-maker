@@ -37,7 +37,7 @@ contract Protocol is Ownable, IProtocol {
      */
     function stake(uint256 amount) external {
         MteToken(_mteTokenAddress).transferFrom(_msgSender(), address(this), amount);
-        uint256 stakingTokenId = StakingToken(_stakingTokenAddress).mint(_msgSender(), "");
+        uint256 stakingTokenId = StakingToken(_stakingTokenAddress).mint(_msgSender(), "https://osaguild.com/");
         _setStaking(_msgSender(), amount, stakingTokenId);
     }
 
