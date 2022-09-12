@@ -26,5 +26,5 @@ interface IProtocol {
     /**
      * @dev check whether account can mint oringin token and fanfic token.
      */
-    function canMint(address account) external view returns (bool);
+    function mintable(address account) external view returns (bool);
 }
