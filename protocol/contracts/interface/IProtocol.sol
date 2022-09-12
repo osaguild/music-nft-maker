@@ -3,7 +3,8 @@ pragma solidity =0.8.9;
 
 interface IProtocol {
     /**
-     * @dev stake MTE to protocol. approve amount of staking MTE to protocol first.
+     * @dev stake MTE to protocol and receive staking token as proof of stake.
+     * approve amount of staking MTE to protocol first.
      */
     function stake(uint256 amount) external;
 
