@@ -45,17 +45,18 @@ contract Protocol is Ownable, IProtocol {
      * @dev withdraw MTE from protocol with APY.
      */
     function withdraw(uint256 amount) external {
-        Staking memory staking = _findStaking(_msgSender());
+        Staking memory staking = _currentStaking(_msgSender());
         if (staking.value == 0) {
             revert("Protocol: staking not found");
         } else if (staking.value < amount) {
             revert("Protocol: staking is not enough");
         } else {
             uint256 apyAmount = _calcApy(amount, staking.blockNumber);
-            MteToken(_mteToken).transferFrom(address(this), _msgSender(), amount + apyAmount);
-            // todo: If you doesn't withdraw all MTE, staking token isn't burned
-            StakingToken(_stakingToken).burn(staking.stakingTokenId);
+            MteToken(_mteToken).transfer(_msgSender(), amount + apyAmount);
             _setStaking(_msgSender(), staking.value - amount, staking.stakingTokenId);
+            if (staking.value == amount) {
+                StakingToken(_stakingToken).burn(staking.stakingTokenId);
+            }
         }
     }
 
@@ -63,7 +64,7 @@ contract Protocol is Ownable, IProtocol {
      * @dev amount of MTE which account is staking.
      */
     function balanceOfStaking(address account) external view returns (uint256) {
-        Staking memory staking = _findStaking(account);
+        Staking memory staking = _currentStaking(account);
         return staking.value;
     }
 
@@ -71,7 +72,7 @@ contract Protocol is Ownable, IProtocol {
      * @dev amount of MTE which account earned by staking.
      */
     function balanceOfApy(address account) external view returns (uint256) {
-        Staking memory staking = _findStaking(account);
+        Staking memory staking = _currentStaking(account);
         return _calcApy(staking.value, staking.blockNumber);
     }
 
@@ -79,7 +80,7 @@ contract Protocol is Ownable, IProtocol {
      * @dev check whether account can mint oringin token and fanfic token.
      */
     function mintable(address account) external view returns (bool) {
-        Staking memory staking = _findStaking(account);
+        Staking memory staking = _currentStaking(account);
         return staking.value > 0;
     }
 
@@ -145,8 +146,8 @@ contract Protocol is Ownable, IProtocol {
     /**
      * @dev find Staking by address. if not found, return Staking(address(0), 0, 0).
      */
-    function _findStaking(address staker) internal view returns (Staking memory) {
-        for (uint256 i = 1; i <= _stakingId.current(); i++) {
+    function _currentStaking(address staker) internal view returns (Staking memory) {
+        for (uint256 i = _stakingId.current(); i > 0; i--) {
             if (_stakings[i].staker == staker) {
                 return _stakings[i];
             }
