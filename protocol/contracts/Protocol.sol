@@ -46,7 +46,7 @@ contract Protocol is Ownable, IProtocol {
      */
     function withdraw(uint256 amount) external {
         Staking memory staking = _findStaking(_msgSender());
-        if (staking.value < 0) {
+        if (staking.value == 0) {
             revert("Protocol: staking not found");
         } else if (staking.value < amount) {
             revert("Protocol: staking is not enough");
