@@ -94,7 +94,7 @@ contract Protocol is Ownable, IProtocol {
         uint256 mteAmount
     ) external payable {
         to.transfer(ethAmount);
-        MteToken(_mteTokenAddress).transferFrom(address(this), to, mteAmount);
+        MteToken(_mteTokenAddress).mint(to, mteAmount);
     }
 
     /**
