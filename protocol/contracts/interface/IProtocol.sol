@@ -36,4 +36,14 @@ interface IProtocol {
         uint256 ethAmount,
         uint256 mteAmount
     ) external payable;
+
+    /**
+     * @dev set MTE token address.
+     */
+    function setMteToken(address mteToken) external;
+
+    /**
+     * @dev set staking token address.
+     */
+    function setStakingToken(address stakingToken) external;
 }

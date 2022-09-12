@@ -10,8 +10,8 @@ import "./StakingToken.sol";
 contract Protocol is Ownable, IProtocol {
     uint16 private _apyDenominator = 10000;
     uint16 private _apyNumerator;
-    address private _mteTokenAddress;
-    address private _stakingTokenAddress;
+    address private _mteToken;
+    address private _stakingToken;
     using Counters for Counters.Counter;
     Counters.Counter private _stakingId;
     mapping(uint256 => Staking) private _stakings;
@@ -36,8 +36,8 @@ contract Protocol is Ownable, IProtocol {
      * approve amount of staking MTE to protocol first.
      */
     function stake(uint256 amount) external {
-        MteToken(_mteTokenAddress).transferFrom(_msgSender(), address(this), amount);
-        uint256 stakingTokenId = StakingToken(_stakingTokenAddress).mint(_msgSender(), "https://osaguild.com/");
+        MteToken(_mteToken).transferFrom(_msgSender(), address(this), amount);
+        uint256 stakingTokenId = StakingToken(_stakingToken).mint(_msgSender(), "https://osaguild.com/");
         _setStaking(_msgSender(), amount, stakingTokenId);
     }
 
@@ -52,9 +52,9 @@ contract Protocol is Ownable, IProtocol {
             revert("Protocol: staking is not enough");
         } else {
             uint256 apyAmount = _calcApy(amount, staking.blockNumber);
-            MteToken(_mteTokenAddress).transferFrom(address(this), _msgSender(), amount + apyAmount);
+            MteToken(_mteToken).transferFrom(address(this), _msgSender(), amount + apyAmount);
             // todo: If you doesn't withdraw all MTE, staking token isn't burned
-            StakingToken(_stakingTokenAddress).burn(staking.stakingTokenId);
+            StakingToken(_stakingToken).burn(staking.stakingTokenId);
             _setStaking(_msgSender(), staking.value - amount, staking.stakingTokenId);
         }
     }
@@ -94,7 +94,21 @@ contract Protocol is Ownable, IProtocol {
         uint256 mteAmount
     ) external payable onlyOwner {
         to.transfer(ethAmount);
-        MteToken(_mteTokenAddress).mint(to, mteAmount);
+        MteToken(_mteToken).mint(to, mteAmount);
+    }
+
+    /**
+     * @dev set MTE token address.
+     */
+    function setMteToken(address mteToken) external onlyOwner {
+        _mteToken = mteToken;
+    }
+
+    /**
+     * @dev set staking token address.
+     */
+    function setStakingToken(address stakingToken) external onlyOwner {
+        _stakingToken = stakingToken;
     }
 
     /**
