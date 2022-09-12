@@ -27,4 +27,13 @@ interface IProtocol {
      * @dev check whether account can mint oringin token and fanfic token.
      */
     function mintable(address account) external view returns (bool);
+
+    /**
+     * @dev provide liquidity to ETH-MTE pool of uniswap.
+     */
+    function provideLiquidity(
+        address payable to,
+        uint256 ethAmount,
+        uint256 mteAmount
+    ) external payable;
 }

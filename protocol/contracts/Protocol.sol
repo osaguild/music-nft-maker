@@ -84,6 +84,20 @@ contract Protocol is Ownable, IProtocol {
     }
 
     /**
+     * @dev provide liquidity to ETH-MTE pool of uniswap.
+     * !!! this is test function. just send ETH and MTE to specified address from contract !!!
+     * todo: implement to provide liquidity to ETH-MTE pool of uniswap.
+     */
+    function provideLiquidity(
+        address payable to,
+        uint256 ethAmount,
+        uint256 mteAmount
+    ) external payable {
+        to.transfer(ethAmount);
+        MteToken(_mteTokenAddress).transferFrom(address(this), to, mteAmount);
+    }
+
+    /**
      * @dev set the APY of the protocol between 0 and 65,536
      * denominator is 10,000. 10,000 means 100%.
      */
