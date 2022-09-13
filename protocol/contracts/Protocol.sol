@@ -8,8 +8,8 @@ import "./MteToken.sol";
 import "./StakingToken.sol";
 
 contract Protocol is Ownable, IProtocol {
-    uint16 private _apyDenominator = 10000;
     uint16 private _apyNumerator;
+    uint16 private _apyDenominator = 10000;
     address private _mteToken;
     address private _stakingToken;
     using Counters for Counters.Counter;
@@ -51,7 +51,7 @@ contract Protocol is Ownable, IProtocol {
         } else if (staking.value < amount) {
             revert("Protocol: staking is not enough");
         } else {
-            uint256 apyAmount = _calcApy(amount, staking.blockNumber);
+            uint256 apyAmount = _calcReward(amount, staking.blockNumber);
             MteToken(_mteToken).transfer(_msgSender(), amount + apyAmount);
             _setStaking(_msgSender(), staking.value - amount, staking.stakingTokenId);
             if (staking.value == amount) {
@@ -69,11 +69,11 @@ contract Protocol is Ownable, IProtocol {
     }
 
     /**
-     * @dev amount of MTE which account earned by staking.
+     * @dev amount of reward MTE which account earned by staking.
      */
-    function balanceOfApy(address account) external view returns (uint256) {
+    function balanceOfReward(address account) external view returns (uint256) {
         Staking memory staking = _currentStaking(account);
-        return _calcApy(staking.value, staking.blockNumber);
+        return _calcReward(staking.value, staking.blockNumber);
     }
 
     /**
@@ -133,14 +133,14 @@ contract Protocol is Ownable, IProtocol {
     }
 
     /**
-     * @dev calculate APY
+     * @dev calculate Reward of APY
      * !!! this is test APY !!!
-     * APY = block diff * apyNumenator / apyDenominator * staking amount
-     * todo: update APY calculation
+     * reward = block diff * apyNumenator / apyDenominator * staking amount
+     * todo: update reward calculation
      */
-    function _calcApy(uint256 amount, uint256 blockNumber) internal view returns (uint256) {
+    function _calcReward(uint256 amount, uint256 blockNumber) internal view returns (uint256) {
         uint256 blockDiff = block.number - blockNumber;
-        return ((blockDiff * _apyNumerator) / _apyDenominator) * amount;
+        return (blockDiff * _apyNumerator * amount) / _apyDenominator;
     }
 
     /**

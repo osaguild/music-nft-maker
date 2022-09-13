@@ -19,9 +19,9 @@ interface IProtocol {
     function balanceOfStaking(address account) external view returns (uint256);
 
     /**
-     * @dev amount of MTE which account earned by staking.
+     * @dev amount of reward MTE which account earned by staking.
      */
-    function balanceOfApy(address account) external view returns (uint256);
+    function balanceOfReward(address account) external view returns (uint256);
 
     /**
      * @dev check whether account can mint oringin token and fanfic token.
