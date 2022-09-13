@@ -37,7 +37,7 @@ describe('Protocol.sol', () => {
     await protocol.setStakingToken(staking.address)
     await protocol.setMteToken(mte.address)
   })
-  it('transfer 1000 MTE to alice and bob', async () => {
+  it('transfer 1000 MTE to alice and 800 MTE to bob', async () => {
     // set balanceOf
     balanceOf.alice = 1000
     balanceOf.bob = 800
@@ -87,11 +87,11 @@ describe('Protocol.sol', () => {
   it('bob withdraw 500 MTE is reverted', async () => {
     await expect(protocol.connect(bob).withdraw(500)).revertedWith('Protocol: staking not found')
   })
-  it('bob approves 500 MTE to contract before staking', async () => {
-    await expect(mte.connect(bob).approve(protocol.address, 500))
+  it('bob approves 400 MTE to contract before staking', async () => {
+    await expect(mte.connect(bob).approve(protocol.address, 400))
       .to.emit(mte, 'Approval')
-      .withArgs(bob.address, protocol.address, 500)
-    expect(await mte.connect(bob).allowance(bob.address, protocol.address)).to.be.equals(500)
+      .withArgs(bob.address, protocol.address, 400)
+    expect(await mte.connect(bob).allowance(bob.address, protocol.address)).to.be.equals(400)
   })
   it('bob stake 400 MTE to contract', async () => {
     // set balanceOf
@@ -122,6 +122,10 @@ describe('Protocol.sol', () => {
     expect(await protocol.connect(alice).balanceOfStaking(bob.address)).to.be.equals(balanceOf.stakingOfBob)
     expect(await protocol.connect(alice).balanceOfReward(alice.address)).to.be.equals(_rewardOfAlice)
     expect(await protocol.connect(alice).balanceOfReward(bob.address)).to.be.equals(_rewardOfBob)
+  })
+  it('check mintable', async () => {
+    expect(await protocol.connect(alice).mintable(alice.address)).to.be.equals(true)
+    expect(await protocol.connect(alice).mintable(bob.address)).to.be.equals(true)
   })
   it('alice withdraw 500 MTE', async () => {
     // withdraw
@@ -165,5 +169,9 @@ describe('Protocol.sol', () => {
     expect(await staking.connect(bob).ownerOf(2)).to.be.equals(bob.address)
     // print balanceOf
     printBalance(balanceOf)
+  })
+  it('check mintable', async () => {
+    expect(await protocol.connect(alice).mintable(alice.address)).to.be.equals(false)
+    expect(await protocol.connect(alice).mintable(bob.address)).to.be.equals(true)
   })
 })
