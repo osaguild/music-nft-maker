@@ -49,25 +49,31 @@ describe('ERC2981MultipleRoyalties.sol', () => {
     printRoyalty(addresses, _receivers, _amounts, 1, 1000)
   })
   it('add royalty info of bob, tokenId is 1', async () => {
-    await erc2981.addRoyaltyInfo(1, bob.address, bobRoyalty.fraction)
+    await erc2981.addRoyaltyInfo(1, bobRoyalty.receiver, bobRoyalty.fraction)
     const [_receivers, _amounts] = await erc2981.royaltyInfo(1, 1000)
     expect(_receivers[1]).to.be.equals(bob.address)
     expect(_amounts[1]).to.be.equals(calcRoyalty(bobRoyalty, 1000))
     printRoyalty(addresses, _receivers, _amounts, 1, 1000)
   })
   it('add royalty info of carol, tokenId is 1', async () => {
-    await erc2981.addRoyaltyInfo(1, carol.address, carolRoyalty.fraction)
+    await erc2981.addRoyaltyInfo(1, carolRoyalty.receiver, carolRoyalty.fraction)
     const [_receivers, _amounts] = await erc2981.royaltyInfo(1, 1000)
     expect(_receivers[2]).to.be.equals(carol.address)
     expect(_amounts[2]).to.be.equals(calcRoyalty(carolRoyalty, 1000))
     printRoyalty(addresses, _receivers, _amounts, 1, 1000)
   })
   it('add royalty info of carol, tokenId is 2', async () => {
-    await erc2981.addRoyaltyInfo(2, carol.address, carolRoyalty.fraction)
+    await erc2981.addRoyaltyInfo(2, carolRoyalty.receiver, carolRoyalty.fraction)
     const [_receivers, _amounts] = await erc2981.royaltyInfo(2, 1000)
     expect(_receivers[1]).to.be.equals(carol.address)
     expect(_amounts[1]).to.be.equals(calcRoyalty(carolRoyalty, 1000))
     printRoyalty(addresses, _receivers, _amounts, 2, 1000)
+  })
+  it('add over denominator royalty fee will reverted, tokenId is 2', async () => {
+    await expect(erc2981.addRoyaltyInfo(2, carol.address, 10001)).to.be.revertedWith('ERC2981: over denominator')
+  })
+  it('add over total royalty fee will reverted, tokenId is 2', async () => {
+    await expect(erc2981.addRoyaltyInfo(2, carol.address, 6001)).to.be.revertedWith('ERC2981: over total royalty fee')
   })
   it('delete royalty of tokenId 2', async () => {
     await erc2981.resetTokenRoyalty(2)
