@@ -22,9 +22,13 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
     /**
      * @dev Set default royalty info
      */
-    constructor(address defaultReceiver, uint96 defaultFeeNumerator) {
+    constructor(
+        address owner,
+        address defaultReceiver,
+        uint96 defaultFeeNumerator
+    ) {
         _setDefaultRoyalty(defaultReceiver, defaultFeeNumerator);
-        _transferOwnership(_msgSender());
+        _transferOwnership(owner);
     }
 
     /**
