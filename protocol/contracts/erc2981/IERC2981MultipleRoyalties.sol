@@ -7,12 +7,21 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 /**
  * @dev Interface for the NFT Royalty Standard. enable to set multiple royalties
  */
-interface IERC2981MultipleRoyalities is IERC165 {
+interface IERC2981MultipleRoyalties is IERC165 {
     /**
      * @dev Returns how much royalty is owed and to whom, based on a sale price that may be denominated in any unit of
      */
-    function royaltyInfos(uint256[] memory tokenId, uint256[] memory salePrice)
+    function royaltyInfo(uint256 tokenId, uint256 salePrice)
         external
         view
-        returns (address receivers, uint256 royaltyAmounts);
+        returns (address[] memory receivers, uint256[] memory royaltyAmounts);
+
+    /**
+     * @dev Adds the royalty information for a specific token id, NOT overriding the global default
+     */
+    function addRoyaltyInfo(
+        uint256 tokenId,
+        address receiver,
+        uint96 feeNumerator
+    ) external;
 }
