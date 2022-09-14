@@ -22,6 +22,6 @@ interface IERC2981MultipleRoyalties is IERC165 {
     function addRoyaltyInfo(
         uint256 tokenId,
         address receiver,
-        uint96 feeNumerator
+        uint16 feeNumerator
     ) external;
 }

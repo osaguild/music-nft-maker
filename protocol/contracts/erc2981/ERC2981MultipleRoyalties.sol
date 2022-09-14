@@ -13,7 +13,7 @@ import "./IERC2981MultipleRoyalties.sol";
 contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable {
     struct RoyaltyInfo {
         address receiver;
-        uint96 royaltyFraction;
+        uint16 royaltyFraction;
     }
 
     RoyaltyInfo private _defaultRoyaltyInfo;
@@ -25,7 +25,7 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
     constructor(
         address owner,
         address defaultReceiver,
-        uint96 defaultFeeNumerator
+        uint16 defaultFeeNumerator
     ) {
         _setDefaultRoyalty(defaultReceiver, defaultFeeNumerator);
         _transferOwnership(owner);
@@ -86,10 +86,10 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
     function addRoyaltyInfo(
         uint256 tokenId,
         address receiver,
-        uint96 feeNumerator
+        uint16 feeNumerator
     ) external override onlyOwner {
         // count total fee
-        uint96 totalFeeNumerator = feeNumerator;
+        uint16 totalFeeNumerator = feeNumerator;
         if (_defaultRoyaltyInfo.receiver != address(0)) {
             totalFeeNumerator += _defaultRoyaltyInfo.royaltyFraction;
         }
@@ -108,7 +108,7 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
      * fraction of the sale price. Defaults to 10000 so fees are expressed in basis points, but may be customized by an
      * override.
      */
-    function _feeDenominator() internal pure returns (uint96) {
+    function _feeDenominator() internal pure returns (uint16) {
         return 10000;
     }
 
@@ -120,7 +120,7 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
      * - `receiver` cannot be the zero address.
      * - `feeNumerator` cannot be greater than the fee denominator.
      */
-    function _setDefaultRoyalty(address receiver, uint96 feeNumerator) internal {
+    function _setDefaultRoyalty(address receiver, uint16 feeNumerator) internal {
         require(feeNumerator <= _feeDenominator(), "ERC2981: royalty fee will exceed salePrice");
         require(receiver != address(0), "ERC2981: invalid receiver");
 
