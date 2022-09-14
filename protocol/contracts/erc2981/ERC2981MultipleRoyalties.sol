@@ -96,8 +96,8 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
         for (uint256 i = 0; i < _tokenRoyaltyInfo[tokenId].length; i++) {
             totalFeeNumerator += _tokenRoyaltyInfo[tokenId][i].royaltyFraction;
         }
-        require(feeNumerator <= _feeDenominator(), "ERC2981: royalty fee will exceed salePrice");
-        require(feeNumerator <= totalFeeNumerator, "ERC2981: total royalty fee is grate than 100%");
+        require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
+        require(feeNumerator <= totalFeeNumerator, "ERC2981: over total royalty fee");
         require(receiver != address(0), "ERC2981: Invalid parameters");
 
         _tokenRoyaltyInfo[tokenId].push(RoyaltyInfo(receiver, feeNumerator));
@@ -139,7 +139,7 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
      * - `feeNumerator` cannot be greater than the fee denominator.
      */
     function _setDefaultRoyalty(address receiver, uint16 feeNumerator) internal {
-        require(feeNumerator <= _feeDenominator(), "ERC2981: royalty fee will exceed salePrice");
+        require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
         require(receiver != address(0), "ERC2981: invalid receiver");
 
         _defaultRoyaltyInfo = RoyaltyInfo(receiver, feeNumerator);
