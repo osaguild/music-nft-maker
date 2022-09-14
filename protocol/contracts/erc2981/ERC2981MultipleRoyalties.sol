@@ -96,8 +96,9 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
         for (uint256 i = 0; i < _tokenRoyaltyInfo[tokenId].length; i++) {
             totalFeeNumerator += _tokenRoyaltyInfo[tokenId][i].royaltyFraction;
         }
+        // todo: add duplicated address check
         require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
-        require(feeNumerator <= totalFeeNumerator, "ERC2981: over total royalty fee");
+        require(totalFeeNumerator <= _feeDenominator(), "ERC2981: over total royalty fee");
         require(receiver != address(0), "ERC2981: Invalid parameters");
 
         _tokenRoyaltyInfo[tokenId].push(RoyaltyInfo(receiver, feeNumerator));
