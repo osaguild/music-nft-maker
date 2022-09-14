@@ -24,6 +24,7 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
      */
     constructor(address defaultReceiver, uint96 defaultFeeNumerator) {
         _setDefaultRoyalty(defaultReceiver, defaultFeeNumerator);
+        _transferOwnership(_msgSender());
     }
 
     /**
