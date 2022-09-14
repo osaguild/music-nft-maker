@@ -101,6 +101,24 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
         require(receiver != address(0), "ERC2981: Invalid parameters");
 
         _tokenRoyaltyInfo[tokenId].push(RoyaltyInfo(receiver, feeNumerator));
+
+        emit AddRoyaltyInfo(tokenId, receiver, feeNumerator);
+    }
+
+    /**
+     * @inheritdoc IERC2981MultipleRoyalties
+     */
+    function deleteDefaultRoyalty() external onlyOwner {
+        delete _defaultRoyaltyInfo;
+        emit DeleteDefaultRoyalty();
+    }
+
+    /**
+     * @inheritdoc IERC2981MultipleRoyalties
+     */
+    function resetTokenRoyalty(uint256 tokenId) external onlyOwner {
+        delete _tokenRoyaltyInfo[tokenId];
+        emit ResetTokenRoyalty(tokenId);
     }
 
     /**
@@ -125,19 +143,5 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
         require(receiver != address(0), "ERC2981: invalid receiver");
 
         _defaultRoyaltyInfo = RoyaltyInfo(receiver, feeNumerator);
-    }
-
-    /**
-     * @dev Removes default royalty information.
-     */
-    function _deleteDefaultRoyalty() internal {
-        delete _defaultRoyaltyInfo;
-    }
-
-    /**
-     * @dev Resets royalty information for the token id back to only the global default.
-     */
-    function _resetTokenRoyalty(uint256 tokenId) internal {
-        delete _tokenRoyaltyInfo[tokenId];
     }
 }

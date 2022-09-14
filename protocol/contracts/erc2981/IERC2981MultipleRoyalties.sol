@@ -24,4 +24,29 @@ interface IERC2981MultipleRoyalties is IERC165 {
         address receiver,
         uint16 feeNumerator
     ) external;
+
+    /**
+     * @dev Removes default royalty information.
+     */
+    function deleteDefaultRoyalty() external;
+
+    /**
+     * @dev Resets royalty information for the token id back to only the global default.
+     */
+    function resetTokenRoyalty(uint256 tokenId) external;
+
+    /**
+     * @dev Emit event of addRoyaltyInfo
+     */
+    event AddRoyaltyInfo(uint256 tokenId, address receiver, uint16 feeNumerator);
+
+    /**
+     * @dev Emit event of deleteDefaultRoyalty
+     */
+    event DeleteDefaultRoyalty();
+
+    /**
+     * @dev Emit event of resetTokenRoyalty
+     */
+    event ResetTokenRoyalty(uint256 tokenId);
 }
