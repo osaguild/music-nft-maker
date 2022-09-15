@@ -13,7 +13,7 @@ contract StakingToken is ERC721URIStorage, Ownable, IStakingToken {
     /**
      * @dev set the name and symbol of the staking token and set owner address
      */
-    constructor(address owner) ERC721("StakingToken", "STN") {
+    constructor(address owner) ERC721("StakingToken", "STAKING") {
         _transferOwnership(owner);
     }
 
