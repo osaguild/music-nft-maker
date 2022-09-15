@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./erc2981/IERC2981MultipleRoyalties.sol";
 import "./erc2981/ERC2981MultipleRoyalties.sol";
 import "./Protocol.sol";
+import "./OriginToken.sol";
 import "./interface/IFanficToken.sol";
 
 contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFanficToken {
@@ -53,9 +54,8 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
         _mint(msg.sender, _tokenIds.current());
         _setTokenURI(_tokenIds.current(), tokenURI);
         for (uint256 i = 0; i < originIds.length; i++) {
-            // set 10% royality to origin token owner
-            // todo: implement below
-            //_addRoyaltyInfo(_tokenIds.current(), OriginToken(_originToken).ownerOf(originIds[i]), 1000);
+            // set 10% royality every origin token owner
+            _addRoyaltyInfo(_tokenIds.current(), OriginToken(_originToken).ownerOf(originIds[i]), 1000);
         }
         return _tokenIds.current();
     }
