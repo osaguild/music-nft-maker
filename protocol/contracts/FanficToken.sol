@@ -17,17 +17,8 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
     address private _protocol;
     address private _originToken;
 
-    constructor(
-        address owner,
-        address protocol,
-        address originToken,
-        address defaultReceiver,
-        uint16 defaultFeeNumerator
-    ) ERC721("FanficToken", "FANFIC") {
+    constructor(address owner) ERC721("FanficToken", "FANFIC") {
         _transferOwnership(owner);
-        _setDefaultRoyalty(defaultReceiver, defaultFeeNumerator);
-        _protocol = protocol;
-        _originToken = originToken;
     }
 
     /**
@@ -58,5 +49,26 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
             _addRoyaltyInfo(_tokenIds.current(), OriginToken(_originToken).ownerOf(originIds[i]), 1000);
         }
         return _tokenIds.current();
+    }
+
+    /**
+     * @dev set origin token address.
+     */
+    function setOriginToken(address originToken) external override onlyOwner {
+        _originToken = originToken;
+    }
+
+    /**
+     * @dev set protocol address.
+     */
+    function setProtocol(address protocol) external override onlyOwner {
+        _protocol = protocol;
+    }
+
+    /**
+     * @dev Sets the royalty information that all ids in this contract will default to.
+     */
+    function setDefaultRoyalty(address receiver, uint16 feeNumerator) external override onlyOwner {
+        _setDefaultRoyalty(receiver, feeNumerator);
     }
 }
