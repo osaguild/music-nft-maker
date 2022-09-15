@@ -52,21 +52,21 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
     }
 
     /**
-     * @dev set origin token address.
+     * @inheritdoc IFanficToken
      */
     function setOriginToken(address originToken) external override onlyOwner {
         _originToken = originToken;
     }
 
     /**
-     * @dev set protocol address.
+     * @inheritdoc IFanficToken
      */
     function setProtocol(address protocol) external override onlyOwner {
         _protocol = protocol;
     }
 
     /**
-     * @dev Sets the royalty information that all ids in this contract will default to.
+     * @inheritdoc IFanficToken
      */
     function setDefaultRoyalty(address receiver, uint16 feeNumerator) external override onlyOwner {
         _setDefaultRoyalty(receiver, feeNumerator);
