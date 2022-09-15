@@ -3,14 +3,13 @@
 pragma solidity =0.8.9;
 
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./IERC2981MultipleRoyalties.sol";
 
 /**
  * @dev Implementation of the NFT Royalty Standard, a standardized way to retrieve royalty payment information. enable to set multiple royalties
  */
-contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable {
+abstract contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165 {
     struct RoyaltyInfo {
         address receiver;
         uint16 royaltyFraction;
@@ -20,22 +19,10 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
     mapping(uint256 => RoyaltyInfo[]) private _tokenRoyaltyInfo;
 
     /**
-     * @dev Set default royalty info
-     */
-    constructor(
-        address owner,
-        address defaultReceiver,
-        uint16 defaultFeeNumerator
-    ) {
-        _setDefaultRoyalty(defaultReceiver, defaultFeeNumerator);
-        _transferOwnership(owner);
-    }
-
-    /**
      * @dev See {IERC165-supportsInterface}.
      */
-    function supportsInterface(bytes4 interfaceId) public pure override(IERC165, ERC165) returns (bool) {
-        return interfaceId == type(IERC2981MultipleRoyalties).interfaceId;
+    function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC165) returns (bool) {
+        return interfaceId == type(IERC2981MultipleRoyalties).interfaceId || super.supportsInterface(interfaceId);
     }
 
     /**
@@ -44,6 +31,7 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
     function royaltyInfo(uint256 tokenId, uint256 salePrice)
         external
         view
+        virtual
         override
         returns (address[] memory, uint256[] memory)
     {
@@ -81,13 +69,31 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
     }
 
     /**
-     * @inheritdoc IERC2981MultipleRoyalties
+     * @dev Sets the royalty information that all ids in this contract will default to.
      */
-    function addRoyaltyInfo(
+    function _setDefaultRoyalty(address receiver, uint16 feeNumerator) internal {
+        require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
+        require(receiver != address(0), "ERC2981: invalid receiver");
+        _defaultRoyaltyInfo = RoyaltyInfo(receiver, feeNumerator);
+        emit SetDefaultRoyalty(receiver, feeNumerator);
+    }
+
+    /**
+     * @dev Removes default royalty information.
+     */
+    function _deleteDefaultRoyalty() internal {
+        delete _defaultRoyaltyInfo;
+        emit DeleteDefaultRoyalty();
+    }
+
+    /**
+     * @dev Adds the royalty information for a specific token id, NOT overriding the global default
+     */
+    function _addRoyaltyInfo(
         uint256 tokenId,
         address receiver,
         uint16 feeNumerator
-    ) external override onlyOwner {
+    ) internal {
         // count total fee
         uint16 totalFeeNumerator = feeNumerator;
         if (_defaultRoyaltyInfo.receiver != address(0)) {
@@ -99,25 +105,15 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
         // todo: add duplicated address check
         require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
         require(totalFeeNumerator <= _feeDenominator(), "ERC2981: over total royalty fee");
-        require(receiver != address(0), "ERC2981: Invalid parameters");
-
+        require(receiver != address(0), "ERC2981: Invalid parameters");‰
         _tokenRoyaltyInfo[tokenId].push(RoyaltyInfo(receiver, feeNumerator));
-
         emit AddRoyaltyInfo(tokenId, receiver, feeNumerator);
     }
 
     /**
-     * @inheritdoc IERC2981MultipleRoyalties
+     * @dev Resets royalty information for the token id back to only the global default.
      */
-    function deleteDefaultRoyalty() external onlyOwner {
-        delete _defaultRoyaltyInfo;
-        emit DeleteDefaultRoyalty();
-    }
-
-    /**
-     * @inheritdoc IERC2981MultipleRoyalties
-     */
-    function resetTokenRoyalty(uint256 tokenId) external onlyOwner {
+    function _resetTokenRoyalty(uint256 tokenId) internal {
         delete _tokenRoyaltyInfo[tokenId];
         emit ResetTokenRoyalty(tokenId);
     }
@@ -129,20 +125,5 @@ contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165, Ownable 
      */
     function _feeDenominator() internal pure returns (uint16) {
         return 10000;
-    }
-
-    /**
-     * @dev Sets the royalty information that all ids in this contract will default to.
-     *
-     * Requirements:
-     *
-     * - `receiver` cannot be the zero address.
-     * - `feeNumerator` cannot be greater than the fee denominator.
-     */
-    function _setDefaultRoyalty(address receiver, uint16 feeNumerator) internal {
-        require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
-        require(receiver != address(0), "ERC2981: invalid receiver");
-
-        _defaultRoyaltyInfo = RoyaltyInfo(receiver, feeNumerator);
     }
 }
