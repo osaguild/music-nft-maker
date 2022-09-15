@@ -105,7 +105,7 @@ abstract contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165 
         // todo: add duplicated address check
         require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
         require(totalFeeNumerator <= _feeDenominator(), "ERC2981: over total royalty fee");
-        require(receiver != address(0), "ERC2981: Invalid parameters");‰
+        require(receiver != address(0), "ERC2981: Invalid parameters");
         _tokenRoyaltyInfo[tokenId].push(RoyaltyInfo(receiver, feeNumerator));
         emit AddRoyaltyInfo(tokenId, receiver, feeNumerator);
     }
