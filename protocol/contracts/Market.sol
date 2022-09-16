@@ -75,6 +75,13 @@ contract Market is Ownable, IMarket {
     /**
      * @inheritdoc IMarket
      */
+    function setFanficToken(address fanficToken) external override onlyOwner {
+        _fanficToken = fanficToken;
+    }
+
+    /**
+     * @inheritdoc IMarket
+     */
     function totalSupply() external view override returns (uint256) {
         return _saleIds.current();
     }

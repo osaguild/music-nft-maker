@@ -37,6 +37,11 @@ interface IMarket {
     function totalSupply() external view returns (uint256);
 
     /**
+     * @dev set fanfic token address
+     */
+    function setFanficToken(address fanficToken) external;
+
+    /**
      * @dev get sale info by saleId
      */
     function sale(uint256 saleId) external view returns (Sale memory);
