@@ -4,7 +4,7 @@ import { ERC2981Mock } from '../typechain-types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { RoyaltyInfo, Address, calcRoyalty, printRoyalty } from './utils'
 
-describe('ERC2981MultipleRoyalties.sol', () => {
+describe('ERC2981Mock.sol', () => {
   const defaultRoyalty: RoyaltyInfo = {
     receiver: '', // set alice in before()
     fraction: 1000, // 10%
