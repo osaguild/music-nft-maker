@@ -26,7 +26,7 @@ contract Protocol is Ownable, IProtocol {
     /**
      * @dev set the name and symbol of the MTE token and set owner address
      */
-    constructor(address owner, uint8 apy) {
+    constructor(address owner, uint16 apy) {
         _transferOwnership(owner);
         _setApy(apy);
     }
