@@ -1,6 +1,6 @@
 import { ethers } from 'hardhat'
 import { expect } from 'chai'
-import { ERC2981MultipleRoyalties } from '../typechain-types'
+import { ERC2981Mock } from '../typechain-types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { RoyaltyInfo, Address, calcRoyalty, printRoyalty } from './utils'
 
@@ -18,19 +18,17 @@ describe('ERC2981MultipleRoyalties.sol', () => {
     fraction: 3000, // 30%
   }
   const addresses: Address[] = []
-  let owner: SignerWithAddress
   let alice: SignerWithAddress
   let bob: SignerWithAddress
   let carol: SignerWithAddress
-  let erc2981: ERC2981MultipleRoyalties
+  let erc2981: ERC2981Mock
 
   before(async () => {
     // signers
     const _signers = await ethers.getSigners()
-    owner = _signers[0] as SignerWithAddress
-    alice = _signers[1] as SignerWithAddress
-    bob = _signers[2] as SignerWithAddress
-    carol = _signers[3] as SignerWithAddress
+    alice = _signers[0] as SignerWithAddress
+    bob = _signers[1] as SignerWithAddress
+    carol = _signers[2] as SignerWithAddress
     // set constants
     defaultRoyalty.receiver = alice.address
     bobRoyalty.receiver = bob.address
@@ -39,8 +37,8 @@ describe('ERC2981MultipleRoyalties.sol', () => {
     addresses.push({ name: 'bob', address: bob.address })
     addresses.push({ name: 'carol', address: carol.address })
     // deploy
-    const _factory = await ethers.getContractFactory('ERC2981MultipleRoyalties')
-    erc2981 = await _factory.deploy(owner.address, defaultRoyalty.receiver, defaultRoyalty.fraction)
+    const _factory = await ethers.getContractFactory('ERC2981Mock')
+    erc2981 = await _factory.deploy(defaultRoyalty.receiver, defaultRoyalty.fraction)
   })
   it('check default royalty of 1000 price, tokenId is 1', async () => {
     const [_receivers, _amounts] = await erc2981.royaltyInfo(1, 1000)
