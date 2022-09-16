@@ -4,6 +4,10 @@ pragma solidity =0.8.9;
 import "../ERC2981MultipleRoyalties.sol";
 
 contract ERC2981Mock is ERC2981MultipleRoyalties {
+    constructor(address receiver, uint16 feeNumerator) {
+        _setDefaultRoyalty(receiver, feeNumerator);
+    }
+
     function setDefaultRoyalty(address receiver, uint16 feeNumerator) external {
         _setDefaultRoyalty(receiver, feeNumerator);
     }
