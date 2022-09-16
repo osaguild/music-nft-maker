@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
 describe('OriginToken.sol', () => {
   let alice: SignerWithAddress // default receiver
-  let bob: SignerWithAddress // author of orign token
+  let bob: SignerWithAddress // author of origin token
   let carol: SignerWithAddress // author of origin token
   let daniel: SignerWithAddress // fanfic token owner
   let fanfic: FanficToken
