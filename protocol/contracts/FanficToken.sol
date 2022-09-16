@@ -40,7 +40,7 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
      * @inheritdoc IFanficToken
      */
     function mint(string memory tokenURI, uint256[] memory originIds) external override returns (uint256) {
-        require(!Protocol(_protocol).mintable(_msgSender()), "FanficToken: not mintable");
+        require(Protocol(_protocol).mintable(_msgSender()), "FanficToken: not mintable");
         _tokenIds.increment();
         _mint(msg.sender, _tokenIds.current());
         _setTokenURI(_tokenIds.current(), tokenURI);
