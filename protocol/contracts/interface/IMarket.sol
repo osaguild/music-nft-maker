@@ -6,7 +6,6 @@ interface IMarket {
      * @dev sale info on market
      */
     struct Sale {
-        uint256 saleId;
         uint256 tokenId;
         uint256 price;
         address seller;
