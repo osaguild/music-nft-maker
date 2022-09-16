@@ -39,7 +39,7 @@ describe('OriginToken.sol', () => {
   it('bob stakes 100 MTE', async () => {
     await mte.connect(bob).approve(protocol.address, 100)
     await protocol.connect(bob).stake(100)
-    expect(await mte.connect(alice).balanceOf(bob.address)).to.be.equals(900)
+    expect(await mte.connect(bob).balanceOf(bob.address)).to.be.equals(900)
     expect(await protocol.connect(bob).balanceOfStaking(bob.address)).to.be.equals(100)
   })
   it('alice can not mint', async () => {
