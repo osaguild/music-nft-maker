@@ -2,11 +2,12 @@
 pragma solidity =0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./interface/IOriginToken.sol";
 import "./Protocol.sol";
 
-contract OriginToken is ERC721URIStorage, IOriginToken {
+contract OriginToken is ERC721URIStorage, Ownable, IOriginToken {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     address private _protocol;
@@ -14,8 +15,8 @@ contract OriginToken is ERC721URIStorage, IOriginToken {
     /**
      * @dev set the name and symbol of the origin token and set owner address
      */
-    constructor(address protocol) ERC721("OriginToken", "ORIGIN") {
-        _protocol = protocol;
+    constructor(address owner) ERC721("OriginToken", "ORIGIN") {
+        _transferOwnership(owner);
     }
 
     /**
@@ -27,5 +28,12 @@ contract OriginToken is ERC721URIStorage, IOriginToken {
         _mint(_msgSender(), _tokenIds.current());
         _setTokenURI(_tokenIds.current(), tokenURI);
         return _tokenIds.current();
+    }
+
+    /**
+     * @inheritdoc IOriginToken
+     */
+    function setProtocol(address protocol) external override onlyOwner {
+        _protocol = protocol;
     }
 }

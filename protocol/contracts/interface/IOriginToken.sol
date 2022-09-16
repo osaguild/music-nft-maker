@@ -6,4 +6,9 @@ interface IOriginToken {
      * @dev mint the origin token.
      */
     function mint(string memory tokenURI) external returns (uint256);
+
+    /**
+     * @dev set protocol address.
+     */
+    function setProtocol(address protocol) external;
 }
