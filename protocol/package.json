@@ -18,10 +18,9 @@
     "test": "run-s test:unit test:coverage",
     "test:unit": "hardhat test",
     "test:coverage": "hardhat coverage",
-    "deploy-rinkeby": "hardhat run scripts/deploy.ts --network rinkeby",
-    "deploy-goerli": "hardhat run scripts/deploy.ts --network goerli",
-    "verify-rinkeby": "hardhat verify --network rinkeby",
-    "verify-goerli": "hardhat verify --network goerli"
+    "faucet": "hardhat run scripts/faucet.ts --network goerli",
+    "deploy": "hardhat run scripts/deploy.ts --network goerli",
+    "verify": "hardhat verify --network goerli"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.6.0"
