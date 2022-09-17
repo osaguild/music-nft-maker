@@ -19,6 +19,7 @@
     "test:unit": "hardhat test",
     "test:coverage": "hardhat coverage",
     "faucet": "hardhat run scripts/faucet.ts --network goerli",
+    "check-balance": "hardhat run scripts/checkBalance.ts --network goerli",
     "deploy": "hardhat run scripts/deploy.ts --network goerli",
     "verify": "hardhat verify --network goerli"
   },
