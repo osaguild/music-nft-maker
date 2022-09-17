@@ -41,7 +41,7 @@ contract Market is Ownable, IMarket {
     function closeSale(uint256 saleId) external override {
         Sale memory _sale = _sales[saleId];
         require(_sale.seller == _msgSender(), "Market: not owner");
-        require(_sale.endBlockNumber != 0, "Market: already closed");
+        require(_sale.endBlockNumber == 0, "Market: already closed");
         _sale.endBlockNumber = block.number;
         _sales[saleId] = _sale;
         emit CloseSale(saleId, _sale.tokenId);
@@ -53,7 +53,7 @@ contract Market is Ownable, IMarket {
     function purchase(uint256 saleId) external payable override {
         Sale memory _sale = _sales[saleId];
         require(_sale.price == msg.value, "Market: not match price");
-        require(_sale.endBlockNumber != 0, "Market: already closed");
+        require(_sale.endBlockNumber == 0, "Market: already closed");
         _sale.buyer = _msgSender();
         _sale.endBlockNumber = block.number;
         _sale.isSold = true;
@@ -70,7 +70,7 @@ contract Market is Ownable, IMarket {
         if (_amount > 0) {
             payable(_sale.seller).transfer(_amount);
         }
-        FanficToken(_fanficToken).transferFrom(address(this), _msgSender(), _sale.tokenId);
+        FanficToken(_fanficToken).transferFrom(_sale.seller, _msgSender(), _sale.tokenId);
         emit Purchase(saleId, _sale.tokenId, _sale.price, _msgSender());
     }
 
