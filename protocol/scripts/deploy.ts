@@ -6,12 +6,12 @@ async function main() {
   // accounts
   const defaultReceiver = '0x0f16af1BdFeA64f8B8733603D346479f5B2c7DF5' // sub_4
   // contracts
-  const protocolAddress = '0x4d36c54f8B1AEFb8e79905E8D38260f46a146C96'
-  const stakingAddress = '0xe2001e1e5FeE006323D75F91aFD57C34af4bCb4B'
-  const mteAddress = '0x5752814c4654170769FdFCa15003477771547C28'
-  const fanficAddress = '0x10536c868b366484B3ef2b9b13Ce8f186f6aa0FA'
-  const originAddress = '0x2BfD1139c3F1aa3BEF838639Bf1Cb2d9E83bd509'
-  const marketAddress = '0xFBF76141dD7ce0941F496fF44f7d44C23A23631F'
+  const protocolAddress = '0x49273516c29a92Ba7152b0BD934091c838c71F7C'
+  const stakingAddress = '0xA4F19B9955b797f412dcE952C36AE4E9959414a2'
+  const mteAddress = '0xB034fE8111Bf487422961C8083cA7cd3eACd8986'
+  const fanficAddress = '0x94798Ac04e9A0694D3D352Ee711B00b99dDbE0eF'
+  const originAddress = '0xb9e51c795b03C840ABB2344e16866BAba09dADDD'
+  const marketAddress = '0x28e2362AA5091Db22BB483dC4420A31718135216'
 
   // account check
   const deployer = (await ethers.getSigners())[0] as SignerWithAddress
@@ -24,12 +24,12 @@ async function main() {
   const protocol = await protocolFactory.deploy(deployer.address, 2000) // APY is 20%
   console.log('Protocol address:', protocol.address)
 
-  // deploy StakingToken
+  // deploy StakingToken !! need protocol address !!
   const stakingFactory = await ethers.getContractFactory('StakingToken')
   const staking = await stakingFactory.deploy(protocolAddress)
   console.log('Staking address:', staking.address)
 
-  // deploy MteToken
+  // deploy MteToken !! need protocol address !!
   const mteFactory = await ethers.getContractFactory('MteToken')
   const mte = await mteFactory.deploy(protocolAddress)
   console.log('MteToken address:', mte.address)
