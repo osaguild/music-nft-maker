@@ -178,7 +178,7 @@ describe('Market.sol', () => {
     // set gas used
     gasUsed = _receipt.cumulativeGasUsed
     gasPrice = _receipt.effectiveGasPrice
-    // check transaction 
+    // check transaction
     endBlockOfSaleId2 = await ethers.provider.getBlockNumber()
     expect(await market.connect(daniel).totalSupply()).to.be.equals(2)
     expect(await fanfic.connect(daniel).ownerOf(1)).to.be.equals(daniel.address)
