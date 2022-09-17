@@ -3,7 +3,7 @@ pragma solidity =0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./interface/IMteToken.sol";
+import "./interfaces/IMteToken.sol";
 
 contract MteToken is ERC20, Ownable, IMteToken {
     /**

@@ -9,7 +9,7 @@ import "./erc2981/IERC2981MultipleRoyalties.sol";
 import "./erc2981/ERC2981MultipleRoyalties.sol";
 import "./Protocol.sol";
 import "./OriginToken.sol";
-import "./interface/IFanficToken.sol";
+import "./interfaces/IFanficToken.sol";
 
 contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFanficToken {
     using Counters for Counters.Counter;

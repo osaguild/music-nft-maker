@@ -3,7 +3,7 @@ pragma solidity =0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "./interface/IProtocol.sol";
+import "./interfaces/IProtocol.sol";
 import "./MteToken.sol";
 import "./StakingToken.sol";
 
