@@ -13,15 +13,240 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "Message",
+      name: "Ownable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Message__factory>;
+    ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
+      name: "ERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20__factory>;
+    getContractFactory(
+      name: "IERC20Metadata",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Metadata__factory>;
+    getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "ERC721",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721__factory>;
+    getContractFactory(
+      name: "ERC721URIStorage",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721URIStorage__factory>;
+    getContractFactory(
+      name: "IERC721Metadata",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC721Metadata__factory>;
+    getContractFactory(
+      name: "IERC721",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC721__factory>;
+    getContractFactory(
+      name: "IERC721Receiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC721Receiver__factory>;
+    getContractFactory(
+      name: "ERC165",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC165__factory>;
+    getContractFactory(
+      name: "IERC165",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC165__factory>;
+    getContractFactory(
+      name: "ERC2981MultipleRoyalties",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC2981MultipleRoyalties__factory>;
+    getContractFactory(
+      name: "IERC2981MultipleRoyalties",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC2981MultipleRoyalties__factory>;
+    getContractFactory(
+      name: "ERC2981Mock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC2981Mock__factory>;
+    getContractFactory(
+      name: "FanficToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FanficToken__factory>;
+    getContractFactory(
+      name: "IFanficToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IFanficToken__factory>;
+    getContractFactory(
+      name: "IMarket",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IMarket__factory>;
+    getContractFactory(
+      name: "IMteToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IMteToken__factory>;
+    getContractFactory(
+      name: "IOriginToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IOriginToken__factory>;
+    getContractFactory(
+      name: "IProtocol",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IProtocol__factory>;
+    getContractFactory(
+      name: "IStakingToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IStakingToken__factory>;
+    getContractFactory(
+      name: "Market",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Market__factory>;
+    getContractFactory(
+      name: "MteToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MteToken__factory>;
+    getContractFactory(
+      name: "OriginToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OriginToken__factory>;
+    getContractFactory(
+      name: "Protocol",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Protocol__factory>;
+    getContractFactory(
+      name: "StakingToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.StakingToken__factory>;
 
     getContractAt(
-      name: "Message",
+      name: "Ownable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Message>;
+    ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: "ERC20",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20>;
+    getContractAt(
+      name: "IERC20Metadata",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Metadata>;
+    getContractAt(
+      name: "IERC20",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "ERC721",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721>;
+    getContractAt(
+      name: "ERC721URIStorage",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721URIStorage>;
+    getContractAt(
+      name: "IERC721Metadata",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC721Metadata>;
+    getContractAt(
+      name: "IERC721",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC721>;
+    getContractAt(
+      name: "IERC721Receiver",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC721Receiver>;
+    getContractAt(
+      name: "ERC165",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC165>;
+    getContractAt(
+      name: "IERC165",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "ERC2981MultipleRoyalties",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC2981MultipleRoyalties>;
+    getContractAt(
+      name: "IERC2981MultipleRoyalties",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC2981MultipleRoyalties>;
+    getContractAt(
+      name: "ERC2981Mock",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC2981Mock>;
+    getContractAt(
+      name: "FanficToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FanficToken>;
+    getContractAt(
+      name: "IFanficToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IFanficToken>;
+    getContractAt(
+      name: "IMarket",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IMarket>;
+    getContractAt(
+      name: "IMteToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IMteToken>;
+    getContractAt(
+      name: "IOriginToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IOriginToken>;
+    getContractAt(
+      name: "IProtocol",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IProtocol>;
+    getContractAt(
+      name: "IStakingToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IStakingToken>;
+    getContractAt(
+      name: "Market",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Market>;
+    getContractAt(
+      name: "MteToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MteToken>;
+    getContractAt(
+      name: "OriginToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OriginToken>;
+    getContractAt(
+      name: "Protocol",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Protocol>;
+    getContractAt(
+      name: "StakingToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.StakingToken>;
 
     // default types
     getContractFactory(
