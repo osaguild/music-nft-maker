@@ -21,11 +21,21 @@ const NftMaker: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [tokenType, setTokenType] = useState('ORIGIN')
   const [tokenUri, setTokenUri] = useState<string>()
-  const { originToken } = useContract()
+  const [originIds, setOriginIds] = useState<string[]>([])
+  const { originToken, fanficToken } = useContract()
 
-  const make = async () => {
+  const makeOrigin = async () => {
     if (tokenUri) {
       const tx = await originToken?.mint(tokenUri)
+      const receipt = await tx?.wait()
+      const transfer = receipt?.events?.find((v) => v.event === 'Transfer')
+      if (transfer === undefined) throw new Error('transfer event is not found')
+    }
+  }
+
+  const makeFanfic = async () => {
+    if (tokenUri) {
+      const tx = await fanficToken?.mint(tokenUri, originIds)
       const receipt = await tx?.wait()
       const transfer = receipt?.events?.find((v) => v.event === 'Transfer')
       if (transfer === undefined) throw new Error('transfer event is not found')
@@ -50,9 +60,21 @@ const NftMaker: FunctionComponent = () => {
               </Stack>
             </RadioGroup>
             <Input placeholder="token uri" value={tokenUri} onChange={(e) => setTokenUri(e.target.value)} />
+            {tokenType === 'FANFIC' && (
+              <Input
+                placeholder="please input your token ids separated by commas"
+                value={originIds}
+                onChange={(e) => setOriginIds(e.target.value?.split(','))}
+              />
+            )}
+            <Box></Box>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={make}>Make</Button>
+            {tokenType === 'ORIGIN' ? (
+              <Button onClick={makeOrigin}>Make Origin Token</Button>
+            ) : (
+              <Button onClick={makeFanfic}>Make Fanfic Token</Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
