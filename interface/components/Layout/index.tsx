@@ -43,10 +43,6 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
             </Text>
             <NftMaker />
             <Collection pattern="CREATED" />
-            <Text fontSize="2xl" my="30">
-              Own Music
-            </Text>
-            <Collection pattern="OWN" />
           </Box>
         )}
       </Container>

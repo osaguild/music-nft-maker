@@ -15,30 +15,30 @@ type Alert = {
 
 type AlertStatus = 'success' | 'error' | 'info' | 'warning'
 
-interface Nft {
+interface Erc721 {
   id: number
-  url: string
-  author: string
+  uri: string
   owner: string
-  value: number
-  onSale: boolean
 }
 
-interface OriginNft extends Nft {
+interface OriginToken extends Erc721 {
   id: number
-  url: string
-  author: string
+  uri: string
   owner: string
-  value: number
-  onSale: boolean
 }
 
-interface FanficNft extends Nft {
+interface FanficToken extends Erc721 {
   id: number
-  url: string
-  author: string
+  uri: string
   owner: string
-  value: number
-  onSale: boolean
-  originIds: string[]
+  originIds: number[]
+  saleInfo: SaleInfo[]
+}
+
+type SaleInfo = {
+  id: number
+  buyer: string
+  startBlockNumber: number
+  endBlockNumber: number
+  isSold: bool
 }

@@ -2,44 +2,73 @@ import { FunctionComponent, useEffect, useState } from 'react'
 import { Wrap, WrapItem } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import { providers } from 'ethers'
-import { useOriginNft, useFanficNft } from '../../hooks/Nft'
 import { Item } from './Item'
+import { useContract } from '../../hooks/Contract'
 
 interface CollectionProps {
-  pattern: 'ON_SALE' | 'CREATED' | 'OWN'
+  pattern: Pattern
 }
 
+type Pattern = 'ON_SALE' | 'CREATED'
+
 const Collection: FunctionComponent<CollectionProps> = ({ pattern }) => {
-  const [nfts, setNfts] = useState<Nft[]>([])
+  const [tokens, setTokens] = useState<Erc721[]>([])
   const { account } = useWeb3React<providers.Web3Provider>()
-  const originNft = useOriginNft()
-  const fanficNfts = useFanficNft()
+  const { originToken, fanficToken } = useContract()
+
+  const fetchOriginTokens = async () => {
+    const _totalSupply = await originToken?.totalSupply()
+    const _ids = [...Array(_totalSupply?.toNumber())].map((_, i) => i + 1)
+    const _promises = _ids.map(async (e) => {
+      return {
+        id: e,
+        uri: await originToken?.tokenURI(e),
+        owner: await originToken?.ownerOf(e),
+      } as OriginToken
+    })
+    return await Promise.all(_promises)
+  }
+
+  const fetchFanficTokens = async () => {
+    const _totalSupply = await fanficToken?.totalSupply()
+    const _ids = [...Array(_totalSupply?.toNumber())].map((_, i) => i + 1)
+    const _promises = _ids.map(async (e) => {
+      return {
+        id: e,
+        uri: await fanficToken?.tokenURI(e),
+        owner: await fanficToken?.ownerOf(e),
+        originIds: [],
+        saleInfo: [],
+      } as FanficToken
+    })
+    return await Promise.all(_promises)
+  }
+
+  const onSaleTokens = async () => {
+    return [] as Erc721[]
+  }
+
+  const createdTokens = async (owner: string) => {
+    const _tokens: Erc721[] = (await fetchOriginTokens()).concat(await fetchFanficTokens())
+    _tokens.map((e) => (e.owner == owner ? e : null))
+    return _tokens
+  }
 
   useEffect(() => {
     if (pattern === 'ON_SALE') {
-      setNfts(originNft.concat(fanficNfts).filter((nft) => nft.onSale))
-    } else if (pattern === 'CREATED') {
-      setNfts(
-        originNft.concat(fanficNfts).filter((nft) => {
-          return nft.author === account ? nft : undefined
-        })
-      )
-    } else if (pattern === 'OWN') {
-      setNfts(
-        originNft.concat(fanficNfts).filter((nft) => {
-          return nft.owner === account ? nft : undefined
-        })
-      )
+      onSaleTokens().then((e) => setTokens(e))
+    } else if (pattern === 'CREATED' && account) {
+      createdTokens(account).then((e) => setTokens(e))
     }
-  }, [pattern, account, originNft, fanficNfts])
+  }, [pattern, account, originToken, fanficToken])
 
   return (
     <>
       <Wrap spacing="30px" justify="center" my="50">
-        {nfts ? (
-          nfts.map((e, i) => (
-            <WrapItem border="2px" className="web3-background" data-testid={`item-${i}`} key={i}>
-              <Item nft={e} saleable={pattern === 'ON_SALE' ? true : false} />
+        {tokens ? (
+          tokens.map((e, i) => (
+            <WrapItem border="2px" className="web3-background" data-testid={`item-${e.id}`} key={i}>
+              <Item token={e} pattern={pattern} />
             </WrapItem>
           ))
         ) : (
@@ -51,3 +80,4 @@ const Collection: FunctionComponent<CollectionProps> = ({ pattern }) => {
 }
 
 export { Collection }
+export type { Pattern }
