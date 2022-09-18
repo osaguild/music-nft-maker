@@ -8,6 +8,11 @@ interface IOriginToken {
     function mint(string memory tokenURI) external returns (uint256);
 
     /**
+     * @dev return total count of fanfic token. it is based on counter.
+     */
+    function totalSupply() external returns (uint256);
+
+    /**
      * @dev set protocol address.
      */
     function setProtocol(address protocol) external;

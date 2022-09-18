@@ -100,6 +100,7 @@ describe('OriginToken.sol', () => {
       .withArgs(ethers.constants.AddressZero, daniel.address, 1)
     expect(await fanfic.connect(daniel).ownerOf(1)).to.be.equals(daniel.address)
     expect(await fanfic.connect(daniel).tokenURI(1)).to.be.equals('https://osaguild.com/fanfic/1')
+    expect(await fanfic.connect(daniel).totalSupply()).to.be.equals(1)
   })
   it('daniel mint fanfic token as tokenId 2 witch origin tokenIds are 1 and 2', async () => {
     await expect(fanfic.connect(daniel).mint('https://osaguild.com/fanfic/2', [1, 2]))
@@ -107,6 +108,7 @@ describe('OriginToken.sol', () => {
       .withArgs(ethers.constants.AddressZero, daniel.address, 2)
     expect(await fanfic.connect(daniel).ownerOf(2)).to.be.equals(daniel.address)
     expect(await fanfic.connect(daniel).tokenURI(2)).to.be.equals('https://osaguild.com/fanfic/2')
+    expect(await fanfic.connect(daniel).totalSupply()).to.be.equals(2)
   })
   it('daniel mint fanfic token as tokenId 3 witch origin tokenIds are 3', async () => {
     await expect(fanfic.connect(daniel).mint('https://osaguild.com/fanfic/3', [3]))
@@ -114,6 +116,7 @@ describe('OriginToken.sol', () => {
       .withArgs(ethers.constants.AddressZero, daniel.address, 3)
     expect(await fanfic.connect(daniel).ownerOf(3)).to.be.equals(daniel.address)
     expect(await fanfic.connect(daniel).tokenURI(3)).to.be.equals('https://osaguild.com/fanfic/3')
+    expect(await fanfic.connect(daniel).totalSupply()).to.be.equals(3)
   })
   it('check royalty of tokenId 1', async () => {
     const [_receivers, _amounts] = await fanfic.connect(daniel).royaltyInfo(1, 1000)

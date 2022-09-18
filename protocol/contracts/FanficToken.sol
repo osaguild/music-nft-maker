@@ -54,6 +54,13 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
     /**
      * @inheritdoc IFanficToken
      */
+    function totalSupply() external view override returns (uint256) {
+        return _tokenIds.current();
+    }
+
+    /**
+     * @inheritdoc IFanficToken
+     */
     function setOriginToken(address originToken) external override onlyOwner {
         _originToken = originToken;
     }

@@ -46,12 +46,22 @@ describe('OriginToken.sol', () => {
     await expect(origin.connect(alice).mint('https://osaguild.com/1')).to.be.revertedWith('OriginToken: not mintable')
     expect(await protocol.connect(alice).balanceOfStaking(alice.address)).to.be.equals(0)
   })
-  it('bob can mint', async () => {
+  it('bob mint tokenId 1', async () => {
     await expect(origin.connect(bob).mint('https://osaguild.com/1'))
       .to.emit(origin, 'Transfer')
       .withArgs(ethers.constants.AddressZero, bob.address, 1)
     expect(await protocol.connect(bob).balanceOfStaking(bob.address)).to.be.equals(100)
     expect(await origin.connect(bob).tokenURI(1)).to.be.equals('https://osaguild.com/1')
     expect(await origin.connect(bob).ownerOf(1)).to.be.equals(bob.address)
+    expect(await origin.connect(bob).totalSupply()).to.be.equals(1)
+  })
+  it('bob mint tokenId 2', async () => {
+    await expect(origin.connect(bob).mint('https://osaguild.com/2'))
+      .to.emit(origin, 'Transfer')
+      .withArgs(ethers.constants.AddressZero, bob.address, 2)
+    expect(await protocol.connect(bob).balanceOfStaking(bob.address)).to.be.equals(100)
+    expect(await origin.connect(bob).tokenURI(2)).to.be.equals('https://osaguild.com/2')
+    expect(await origin.connect(bob).ownerOf(2)).to.be.equals(bob.address)
+    expect(await origin.connect(bob).totalSupply()).to.be.equals(2)
   })
 })

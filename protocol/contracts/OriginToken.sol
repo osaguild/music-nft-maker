@@ -33,6 +33,13 @@ contract OriginToken is ERC721URIStorage, Ownable, IOriginToken {
     /**
      * @inheritdoc IOriginToken
      */
+    function totalSupply() external view override returns (uint256) {
+        return _tokenIds.current();
+    }
+
+    /**
+     * @inheritdoc IOriginToken
+     */
     function setProtocol(address protocol) external override onlyOwner {
         _protocol = protocol;
     }
