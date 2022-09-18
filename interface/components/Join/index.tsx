@@ -52,7 +52,7 @@ const Join: FunctionComponent = () => {
           <ModalCloseButton />
           <ModalBody>
             <InputGroup size="sm">
-              <Input placeholder="1" value={value} onChange={(e) => setValue(e.target.value)} />
+              <Input placeholder="value of MTE" value={value} onChange={(e) => setValue(e.target.value)} />
               <InputRightAddon>MTE</InputRightAddon>
             </InputGroup>
           </ModalBody>
