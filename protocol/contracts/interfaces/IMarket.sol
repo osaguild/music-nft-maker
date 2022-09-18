@@ -8,7 +8,6 @@ interface IMarket {
     struct Sale {
         uint256 tokenId;
         uint256 price;
-        address seller;
         address buyer;
         uint256 startBlockNumber;
         uint256 endBlockNumber;
