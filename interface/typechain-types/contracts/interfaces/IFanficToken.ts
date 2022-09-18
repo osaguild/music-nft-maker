@@ -29,6 +29,7 @@ export interface IFanficTokenInterface extends utils.Interface {
     "setDefaultRoyalty(address,uint16)": FunctionFragment;
     "setOriginToken(address)": FunctionFragment;
     "setProtocol(address)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
   };
 
   getFunction(
@@ -37,6 +38,7 @@ export interface IFanficTokenInterface extends utils.Interface {
       | "setDefaultRoyalty"
       | "setOriginToken"
       | "setProtocol"
+      | "totalSupply"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -55,6 +57,10 @@ export interface IFanficTokenInterface extends utils.Interface {
     functionFragment: "setProtocol",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
@@ -67,6 +73,10 @@ export interface IFanficTokenInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setProtocol",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
     data: BytesLike
   ): Result;
 
@@ -121,6 +131,10 @@ export interface IFanficToken extends BaseContract {
       protocol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    totalSupply(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   mint(
@@ -142,6 +156,10 @@ export interface IFanficToken extends BaseContract {
 
   setProtocol(
     protocol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  totalSupply(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -167,6 +185,8 @@ export interface IFanficToken extends BaseContract {
       protocol: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
@@ -193,6 +213,10 @@ export interface IFanficToken extends BaseContract {
       protocol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    totalSupply(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -215,6 +239,10 @@ export interface IFanficToken extends BaseContract {
 
     setProtocol(
       protocol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    totalSupply(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

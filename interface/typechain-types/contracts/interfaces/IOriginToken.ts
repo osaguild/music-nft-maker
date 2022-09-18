@@ -26,9 +26,12 @@ export interface IOriginTokenInterface extends utils.Interface {
   functions: {
     "mint(string)": FunctionFragment;
     "setProtocol(address)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "mint" | "setProtocol"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "mint" | "setProtocol" | "totalSupply"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "mint",
@@ -38,10 +41,18 @@ export interface IOriginTokenInterface extends utils.Interface {
     functionFragment: "setProtocol",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setProtocol",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
     data: BytesLike
   ): Result;
 
@@ -84,6 +95,10 @@ export interface IOriginToken extends BaseContract {
       protocol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    totalSupply(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   mint(
@@ -93,6 +108,10 @@ export interface IOriginToken extends BaseContract {
 
   setProtocol(
     protocol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  totalSupply(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -106,6 +125,8 @@ export interface IOriginToken extends BaseContract {
       protocol: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
@@ -120,6 +141,10 @@ export interface IOriginToken extends BaseContract {
       protocol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    totalSupply(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -130,6 +155,10 @@ export interface IOriginToken extends BaseContract {
 
     setProtocol(
       protocol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    totalSupply(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
