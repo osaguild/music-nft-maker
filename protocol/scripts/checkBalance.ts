@@ -14,9 +14,10 @@ import {
 } from '../typechain-types'
 import { address } from './config'
 
-const checkErc20 = async (mte: MteToken, protocol: Protocol, account: string) => {
+const checkErc20 = async (mte: MteToken, protocol: Protocol, account: string, name: string) => {
   console.log(
-    '[sub_1] balance:',
+    name,
+    'balance:',
     ethers.utils.formatEther(await mte.balanceOf(account)).toString(),
     'MTE / approval:',
     ethers.utils.formatEther(await mte.allowance(account, address.PROTOCOL_CONTRACT)).toString(),
@@ -26,9 +27,16 @@ const checkErc20 = async (mte: MteToken, protocol: Protocol, account: string) =>
   )
 }
 
-const checkErc721 = async (staking: StakingToken, origin: OriginToken, fanfic: FanficToken, account: string) => {
+const checkErc721 = async (
+  staking: StakingToken,
+  origin: OriginToken,
+  fanfic: FanficToken,
+  account: string,
+  name: string
+) => {
   console.log(
-    '[sub_1] StakingToken:',
+    name,
+    'StakingToken:',
     (await staking.balanceOf(account)).toString(),
     '/ OriginToken:',
     (await origin.balanceOf(account)).toString(),
@@ -46,15 +54,17 @@ async function main() {
   const origin = OriginToken__factory.connect(address.ORIGIN_CONTRACT, signer)
   const fanfic = FanficToken__factory.connect(address.FANFIC_CONTRACT, signer)
   // ERC20
-  await checkErc20(mte, protocol, address.SUB_1_ACCOUNT)
-  await checkErc20(mte, protocol, address.SUB_2_ACCOUNT)
-  await checkErc20(mte, protocol, address.SUB_3_ACCOUNT)
-  await checkErc20(mte, protocol, address.SUB_4_ACCOUNT)
+  console.log('check for ERC20 is starting...')
+  await checkErc20(mte, protocol, address.SUB_1_ACCOUNT, 'sub_1')
+  await checkErc20(mte, protocol, address.SUB_2_ACCOUNT, 'sub_2')
+  await checkErc20(mte, protocol, address.SUB_3_ACCOUNT, 'sub_3')
+  await checkErc20(mte, protocol, address.SUB_4_ACCOUNT, 'sub_4')
   // ERC721
-  await checkErc721(staking, origin, fanfic, address.SUB_1_ACCOUNT)
-  await checkErc721(staking, origin, fanfic, address.SUB_2_ACCOUNT)
-  await checkErc721(staking, origin, fanfic, address.SUB_3_ACCOUNT)
-  await checkErc721(staking, origin, fanfic, address.SUB_4_ACCOUNT)
+  console.log('check for ERC721 is starting...')
+  await checkErc721(staking, origin, fanfic, address.SUB_1_ACCOUNT, 'sub_1')
+  await checkErc721(staking, origin, fanfic, address.SUB_2_ACCOUNT, 'sub_2')
+  await checkErc721(staking, origin, fanfic, address.SUB_3_ACCOUNT, 'sub_3')
+  await checkErc721(staking, origin, fanfic, address.SUB_4_ACCOUNT, 'sub_4')
 }
 
 main()
