@@ -10,6 +10,8 @@ import {
   OriginToken,
   FanficToken__factory,
   FanficToken,
+  Market__factory,
+  Market,
 } from '../../typechain-types'
 import { address } from '../../config/address'
 
@@ -18,6 +20,7 @@ const useContract = () => {
   const [mteToken, setMteToken] = useState<MteToken>()
   const [originToken, setOriginToken] = useState<OriginToken>()
   const [fanficToken, setFanficToken] = useState<FanficToken>()
+  const [market, setMarket] = useState<Market>()
   const { library } = useWeb3React<providers.Web3Provider>()
 
   useEffect(() => {
@@ -26,10 +29,11 @@ const useContract = () => {
       setMteToken(MteToken__factory.connect(address.MTE_CONTRACT, library.getSigner()))
       setOriginToken(OriginToken__factory.connect(address.ORIGIN_CONTRACT, library.getSigner()))
       setFanficToken(FanficToken__factory.connect(address.FANFIC_CONTRACT, library.getSigner()))
+      setMarket(Market__factory.connect(address.MARKET_CONTRACT, library.getSigner()))
     }
   }, [library])
 
-  return { protocol, mteToken, originToken, fanficToken }
+  return { protocol, mteToken, originToken, fanficToken, market }
 }
 
 export { useContract }
