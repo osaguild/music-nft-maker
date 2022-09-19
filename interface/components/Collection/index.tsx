@@ -18,30 +18,38 @@ const Collection: FunctionComponent<CollectionProps> = ({ pattern }) => {
 
   const fetchOriginTokens = async () => {
     const _totalSupply = await originToken?.totalSupply()
-    const _ids = [...Array(_totalSupply?.toNumber())].map((_, i) => i + 1)
-    const _promises = _ids.map(async (e) => {
-      return {
-        id: e,
-        uri: await originToken?.tokenURI(e),
-        owner: await originToken?.ownerOf(e),
-      } as OriginToken
-    })
-    return await Promise.all(_promises)
+    if (!_totalSupply || _totalSupply?.toNumber() === 0) {
+      return []
+    } else {
+      const _ids = [...Array(_totalSupply?.toNumber())].map((_, i) => i + 1)
+      const _promises = _ids.map(async (e) => {
+        return {
+          id: e,
+          uri: await originToken?.tokenURI(e),
+          owner: await originToken?.ownerOf(e),
+        } as OriginToken
+      })
+      return await Promise.all(_promises)
+    }
   }
 
   const fetchFanficTokens = async () => {
     const _totalSupply = await fanficToken?.totalSupply()
-    const _ids = [...Array(_totalSupply?.toNumber())].map((_, i) => i + 1)
-    const _promises = _ids.map(async (e) => {
-      return {
-        id: e,
-        uri: await fanficToken?.tokenURI(e),
-        owner: await fanficToken?.ownerOf(e),
-        originIds: [],
-        saleInfo: [],
-      } as FanficToken
-    })
-    return await Promise.all(_promises)
+    if (!_totalSupply || _totalSupply?.toNumber() === 0) {
+      return []
+    } else {
+      const _ids = [...Array(_totalSupply?.toNumber())].map((_, i) => i + 1)
+      const _promises = _ids.map(async (e) => {
+        return {
+          id: e,
+          uri: await fanficToken?.tokenURI(e),
+          owner: await fanficToken?.ownerOf(e),
+          originIds: [],
+          saleInfo: [],
+        } as FanficToken
+      })
+      return await Promise.all(_promises)
+    }
   }
 
   const onSaleTokens = async () => {
