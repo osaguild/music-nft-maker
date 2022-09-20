@@ -32,7 +32,6 @@ export declare namespace IMarket {
   export type SaleStruct = {
     tokenId: PromiseOrValue<BigNumberish>;
     price: PromiseOrValue<BigNumberish>;
-    seller: PromiseOrValue<string>;
     buyer: PromiseOrValue<string>;
     startBlockNumber: PromiseOrValue<BigNumberish>;
     endBlockNumber: PromiseOrValue<BigNumberish>;
@@ -43,14 +42,12 @@ export declare namespace IMarket {
     BigNumber,
     BigNumber,
     string,
-    string,
     BigNumber,
     BigNumber,
     boolean
   ] & {
     tokenId: BigNumber;
     price: BigNumber;
-    seller: string;
     buyer: string;
     startBlockNumber: BigNumber;
     endBlockNumber: BigNumber;
