@@ -22,6 +22,8 @@ const convertAddress = (_address: string) => {
       return 'SUB_3'
     case address.SUB_4_ACCOUNT:
       return 'SUB_4'
+    case address.ZERO_ADDRESS:
+      return 'ZERO'
     default:
       return _address
   }
