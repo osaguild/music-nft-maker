@@ -171,6 +171,10 @@ describe('Market.sol', () => {
     balanceOfDanielBefore = await ethers.provider.getBalance(daniel.address)
     // tx
     const _tx = await market.connect(daniel).purchase(2, { value: 1000 })
+    await expect(_tx).to.emit(market, 'Purchase').withArgs(2, 1, 1000, daniel.address)
+    await expect(_tx).to.emit(market, 'Send').withArgs(daniel.address, alice.address, 2, 1, 200)
+    await expect(_tx).to.emit(market, 'Send').withArgs(daniel.address, bob.address, 2, 1, 100)
+    await expect(_tx).to.emit(market, 'Send').withArgs(daniel.address, carol.address, 2, 1, 700)
     const _receipt = await ethers.provider.getTransactionReceipt(_tx.hash)
     // set gas used
     gasUsed = _receipt.cumulativeGasUsed
