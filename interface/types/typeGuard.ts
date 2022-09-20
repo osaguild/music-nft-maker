@@ -1,5 +1,9 @@
-const isFanficToken = (token: Erc721): token is FanficToken => {
-  return (token as FanficToken).originIds !== undefined
+const isFanfic = (e: Erc721): e is Fanfic => {
+  return (e as Fanfic).originIds !== undefined
 }
 
-export { isFanficToken }
+const isSale = (e: Erc721 | Sale): e is Sale => {
+  return (e as Sale).price !== undefined
+}
+
+export { isFanfic, isSale }

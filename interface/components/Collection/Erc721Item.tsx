@@ -17,21 +17,19 @@ import {
 } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { useContract } from '../../hooks/Contract'
-import { isFanficToken } from '../../types/typeGuard'
-import { Pattern } from '.'
+import { isFanfic } from '../../types/typeGuard'
 
-interface ItemProps {
-  token: Erc721
-  pattern: Pattern
+interface Erc721ItemProps {
+  erc721: Erc721
 }
 
-const Item: FunctionComponent<ItemProps> = ({ token, pattern }) => {
+const Erc721Item: FunctionComponent<Erc721ItemProps> = ({ erc721 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [price, setPrice] = useState('1000')
+  const [price, setPrice] = useState('0.01')
   const { market } = useContract()
 
   const startSale = async () => {
-    const tx = await market?.startSale(token.id, ethers.utils.parseEther(price))
+    const tx = await market?.startSale(erc721.id, ethers.utils.parseEther(price))
     const receipt = await tx?.wait()
     const start = receipt?.events?.find((v) => v.event === 'StartSale')
     if (start === undefined) throw new Error('start sale event is not found')
@@ -40,9 +38,9 @@ const Item: FunctionComponent<ItemProps> = ({ token, pattern }) => {
   return (
     <Box textAlign="center" w="300px" h="300px">
       <Text fontSize="xl" textAlign="center" my="30">
-        {isFanficToken(token) ? `Fanfic Token ${token.id} ` : `Origin Token ${token.id}`}
+        {isFanfic(erc721) ? `Fanfic Token ${erc721.id} ` : `Origin Token ${erc721.id}`}
       </Text>
-      {pattern == 'CREATED' && isFanficToken(token) && (
+      {isFanfic(erc721) && (
         <>
           <Button onClick={onOpen}>Exhibit</Button>
           <Modal isOpen={isOpen} onClose={onClose}>
@@ -52,8 +50,8 @@ const Item: FunctionComponent<ItemProps> = ({ token, pattern }) => {
               <ModalCloseButton />
               <ModalBody>
                 <InputGroup size="sm">
-                  <Input placeholder="value of MTE" value={price} onChange={(e) => setPrice(e.target.value)} />
-                  <InputRightAddon>MTE</InputRightAddon>
+                  <Input placeholder="value of ETH" value={price} onChange={(e) => setPrice(e.target.value)} />
+                  <InputRightAddon>ETH</InputRightAddon>
                 </InputGroup>
               </ModalBody>
               <ModalFooter>
@@ -67,4 +65,4 @@ const Item: FunctionComponent<ItemProps> = ({ token, pattern }) => {
   )
 }
 
-export { Item }
+export { Erc721Item }

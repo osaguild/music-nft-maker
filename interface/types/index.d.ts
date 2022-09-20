@@ -21,24 +21,25 @@ interface Erc721 {
   owner: string
 }
 
-interface OriginToken extends Erc721 {
+interface Origin extends Erc721 {
   id: number
   uri: string
   owner: string
 }
 
-interface FanficToken extends Erc721 {
+interface Fanfic extends Erc721 {
   id: number
   uri: string
   owner: string
   originIds: number[]
-  saleInfo: SaleInfo[]
 }
 
-type SaleInfo = {
+type Sale = {
   id: number
+  price: number
   buyer: string
   startBlockNumber: number
   endBlockNumber: number
   isSold: bool
+  fanficToken: Fanfic
 }
