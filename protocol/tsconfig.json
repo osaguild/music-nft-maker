@@ -19,7 +19,7 @@
     "resolveJsonModule": true,
     "isolatedModules": false
   },
-  "include": ["./scripts", "./test", "./typechain-types"],
+  "include": ["./scripts", "./test", "./typechain-types", "./utils"],
   "exclude": [],
   "files": ["./hardhat.config.ts"],
   "compileOnSave": false

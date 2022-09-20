@@ -14,7 +14,7 @@ import {
   Market__factory,
   Market,
 } from '../typechain-types'
-import { address } from './config'
+import { address } from '../utils/config'
 
 const checkErc20 = async (mte: MteToken, protocol: Protocol, account: string, name: string) => {
   console.log(
