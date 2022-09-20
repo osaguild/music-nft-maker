@@ -13,20 +13,34 @@ import {
   InputGroup,
   Input,
   InputRightAddon,
+  RadioGroup,
+  Stack,
+  Radio,
   useDisclosure,
 } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { useContract } from '../../hooks/Contract'
 import { isFanfic } from '../../types/typeGuard'
+import { address } from '../../config/address'
 
 interface Erc721ItemProps {
   erc721: Erc721
 }
 
+type EventType = 'APPROVE' | 'START_SALE'
+
 const Erc721Item: FunctionComponent<Erc721ItemProps> = ({ erc721 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [eventType, setEventType] = useState<EventType>('APPROVE')
   const [price, setPrice] = useState('0.01')
-  const { market } = useContract()
+  const { market, fanficToken } = useContract()
+
+  const approve = async () => {
+    const tx = await fanficToken?.approve(address.MARKET_CONTRACT, erc721.id)
+    const receipt = await tx?.wait()
+    const start = receipt?.events?.find((v) => v.event === 'Approval')
+    if (start === undefined) throw new Error('start sale event is not found')
+  }
 
   const startSale = async () => {
     const tx = await market?.startSale(erc721.id, ethers.utils.parseEther(price))
@@ -49,13 +63,25 @@ const Erc721Item: FunctionComponent<Erc721ItemProps> = ({ erc721 }) => {
               <ModalHeader>Form</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <InputGroup size="sm">
-                  <Input placeholder="value of ETH" value={price} onChange={(e) => setPrice(e.target.value)} />
-                  <InputRightAddon>ETH</InputRightAddon>
-                </InputGroup>
+                <RadioGroup onChange={(value) => setEventType(value as EventType)} value={eventType} mb={5}>
+                  <Stack direction="row">
+                    <Radio value="APPROVE">Approve</Radio>
+                    <Radio value="START_SALE">Start Sale</Radio>
+                  </Stack>
+                </RadioGroup>
+                {eventType === 'START_SALE' && (
+                  <InputGroup size="sm">
+                    <Input placeholder="value of ETH" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    <InputRightAddon>ETH</InputRightAddon>
+                  </InputGroup>
+                )}
               </ModalBody>
               <ModalFooter>
-                <Button onClick={startSale}>Start Sale</Button>
+                {eventType === 'APPROVE' ? (
+                  <Button onClick={approve}>Approve</Button>
+                ) : (
+                  <Button onClick={startSale}>Start Sale</Button>
+                )}
               </ModalFooter>
             </ModalContent>
           </Modal>
