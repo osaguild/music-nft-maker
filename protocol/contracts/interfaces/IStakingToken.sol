@@ -11,4 +11,9 @@ interface IStakingToken {
      * @dev burn the staking token
      */
     function burn(uint256 tokenId) external;
+
+    /**
+     * @dev return total count of fanfic token. it is based on counter.
+     */
+    function totalSupply() external returns (uint256);
 }

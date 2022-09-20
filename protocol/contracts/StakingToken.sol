@@ -33,4 +33,11 @@ contract StakingToken is ERC721URIStorage, Ownable, IStakingToken {
     function burn(uint256 tokenId) external onlyOwner {
         _burn(tokenId);
     }
+
+    /**
+     * @inheritdoc IStakingToken
+     */
+    function totalSupply() external view override returns (uint256) {
+        return _tokenIds.current();
+    }
 }

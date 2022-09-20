@@ -21,6 +21,7 @@ describe('StakingToken.sol', () => {
       .withArgs(ethers.constants.AddressZero, bob.address, 1)
     expect(await staking.connect(alice).tokenURI(1)).to.be.equals('https://osaguild.com/1')
     expect(await staking.connect(alice).ownerOf(1)).to.be.equals(bob.address)
+    expect(await staking.connect(alice).totalSupply()).to.be.equals(1)
   })
   it('bob can not mint', async () => {
     await expect(staking.connect(bob).mint(alice.address, 'https://osaguild.com/2')).to.be.revertedWith(
@@ -38,5 +39,6 @@ describe('StakingToken.sol', () => {
       .to.emit(staking, 'Transfer')
       .withArgs(bob.address, ethers.constants.AddressZero, 1)
     await expect(staking.connect(alice).tokenURI(1)).to.be.revertedWith('ERC721: invalid token ID')
+    expect(await staking.connect(alice).totalSupply()).to.be.equals(1)
   })
 })

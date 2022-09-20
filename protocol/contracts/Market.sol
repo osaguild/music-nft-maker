@@ -69,7 +69,11 @@ contract Market is Ownable, IMarket {
         if (_amount > 0) {
             payable(FanficToken(_fanficToken).ownerOf(_sale.tokenId)).transfer(_amount);
         }
-        FanficToken(_fanficToken).transferFrom(FanficToken(_fanficToken).ownerOf(_sale.tokenId), _msgSender(), _sale.tokenId);
+        FanficToken(_fanficToken).transferFrom(
+            FanficToken(_fanficToken).ownerOf(_sale.tokenId),
+            _msgSender(),
+            _sale.tokenId
+        );
         emit Purchase(saleId, _sale.tokenId, _sale.price, _msgSender());
     }
 
