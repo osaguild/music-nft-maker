@@ -17,9 +17,11 @@ import {
 } from '@chakra-ui/react'
 import { useContract } from '../../hooks/Contract'
 
+type TokenType = 'ORIGIN' | 'FANFIC'
+
 const NftMaker: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [tokenType, setTokenType] = useState('ORIGIN')
+  const [tokenType, setTokenType] = useState<TokenType>('ORIGIN')
   const [tokenUri, setTokenUri] = useState<string>()
   const [originIds, setOriginIds] = useState<string[]>([])
   const { originToken, fanficToken } = useContract()
@@ -53,7 +55,7 @@ const NftMaker: FunctionComponent = () => {
           <ModalHeader>Form</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <RadioGroup onChange={setTokenType} value={tokenType} mb={5}>
+            <RadioGroup onChange={(value) => setTokenType(value as TokenType)} value={tokenType} mb={5}>
               <Stack direction="row">
                 <Radio value="ORIGIN">Origin Token</Radio>
                 <Radio value="FANFIC">Fanfic Token</Radio>
