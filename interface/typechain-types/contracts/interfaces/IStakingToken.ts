@@ -27,9 +27,12 @@ export interface IStakingTokenInterface extends utils.Interface {
   functions: {
     "burn(uint256)": FunctionFragment;
     "mint(address,string)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "burn" | "mint"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "burn" | "mint" | "totalSupply"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "burn",
@@ -39,9 +42,17 @@ export interface IStakingTokenInterface extends utils.Interface {
     functionFragment: "mint",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
@@ -83,6 +94,10 @@ export interface IStakingToken extends BaseContract {
       tokenURI: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    totalSupply(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   burn(
@@ -93,6 +108,10 @@ export interface IStakingToken extends BaseContract {
   mint(
     to: PromiseOrValue<string>,
     tokenURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  totalSupply(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -107,6 +126,8 @@ export interface IStakingToken extends BaseContract {
       tokenURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
@@ -122,6 +143,10 @@ export interface IStakingToken extends BaseContract {
       tokenURI: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    totalSupply(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -133,6 +158,10 @@ export interface IStakingToken extends BaseContract {
     mint(
       to: PromiseOrValue<string>,
       tokenURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    totalSupply(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
