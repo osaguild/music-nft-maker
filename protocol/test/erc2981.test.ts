@@ -2,7 +2,7 @@ import { ethers } from 'hardhat'
 import { expect } from 'chai'
 import { ERC2981Mock } from '../typechain-types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { RoyaltyInfo, Address, calcRoyalty, printRoyalty } from './utils'
+import { calcRoyalty, printRoyalty } from '../utils'
 
 describe('ERC2981Mock.sol', () => {
   const defaultRoyalty: RoyaltyInfo = {
