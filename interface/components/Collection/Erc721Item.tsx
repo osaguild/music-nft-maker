@@ -21,7 +21,7 @@ import {
 import { ethers } from 'ethers'
 import { useContract } from '../../hooks/Contract'
 import { isFanfic } from '../../types/typeGuard'
-import { address } from '../../config/address'
+import { address } from '../../config'
 
 interface Erc721ItemProps {
   erc721: Erc721
@@ -36,7 +36,7 @@ const Erc721Item: FunctionComponent<Erc721ItemProps> = ({ erc721 }) => {
   const { market, fanficToken } = useContract()
 
   const approve = async () => {
-    const tx = await fanficToken?.approve(address.MARKET_CONTRACT, erc721.id)
+    const tx = await fanficToken?.approve(address().MARKET_CONTRACT, erc721.id)
     const receipt = await tx?.wait()
     const start = receipt?.events?.find((v) => v.event === 'Approval')
     if (start === undefined) throw new Error('start sale event is not found')

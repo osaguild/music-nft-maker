@@ -3,7 +3,7 @@ import { providers } from 'ethers'
 import { useWeb3React } from '@web3-react/core'
 import { Menu, MenuButton, MenuList, MenuItem, Image, Button, Box, Text } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { networks } from '../../config/network'
+import { networks } from '../../config'
 import { switchNetwork } from '../../lib/metamask'
 
 const Network: FunctionComponent = () => {

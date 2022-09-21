@@ -16,7 +16,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { useContract } from '../../hooks/Contract'
-import { address } from '../../config/address'
+import { address } from '../../config'
 import { ethers } from 'ethers'
 
 const Join: FunctionComponent = () => {
@@ -25,7 +25,7 @@ const Join: FunctionComponent = () => {
   const { protocol, mteToken } = useContract()
 
   const approve = async () => {
-    const tx = await mteToken?.approve(address.PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
+    const tx = await mteToken?.approve(address().PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
     const receipt = await tx?.wait()
     const approval = receipt?.events?.find((v) => v.event === 'Approval')
     if (approval === undefined) throw new Error('approve event is not found')

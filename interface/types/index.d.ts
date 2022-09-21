@@ -43,3 +43,12 @@ type Sale = {
   isSold: bool
   fanficToken: Fanfic
 }
+
+type Config = {
+  PROTOCOL_CONTRACT: string
+  STAKING_CONTRACT: string
+  MTE_CONTRACT: string
+  FANFIC_CONTRACT: string
+  ORIGIN_CONTRACT: string
+  MARKET_CONTRACT: string
+}

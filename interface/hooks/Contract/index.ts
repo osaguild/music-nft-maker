@@ -13,7 +13,7 @@ import {
   Market__factory,
   Market,
 } from '../../typechain-types'
-import { address } from '../../config/address'
+import { address } from '../../config'
 
 const useContract = () => {
   const [protocol, setProtocol] = useState<Protocol>()
@@ -25,11 +25,11 @@ const useContract = () => {
 
   useEffect(() => {
     if (library) {
-      setProtocol(Protocol__factory.connect(address.PROTOCOL_CONTRACT, library.getSigner()))
-      setMteToken(MteToken__factory.connect(address.MTE_CONTRACT, library.getSigner()))
-      setOriginToken(OriginToken__factory.connect(address.ORIGIN_CONTRACT, library.getSigner()))
-      setFanficToken(FanficToken__factory.connect(address.FANFIC_CONTRACT, library.getSigner()))
-      setMarket(Market__factory.connect(address.MARKET_CONTRACT, library.getSigner()))
+      setProtocol(Protocol__factory.connect(address().PROTOCOL_CONTRACT, library.getSigner()))
+      setMteToken(MteToken__factory.connect(address().MTE_CONTRACT, library.getSigner()))
+      setOriginToken(OriginToken__factory.connect(address().ORIGIN_CONTRACT, library.getSigner()))
+      setFanficToken(FanficToken__factory.connect(address().FANFIC_CONTRACT, library.getSigner()))
+      setMarket(Market__factory.connect(address().MARKET_CONTRACT, library.getSigner()))
     }
   }, [library])
 
