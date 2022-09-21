@@ -10,6 +10,7 @@ contract Market is Ownable, IMarket {
     using Counters for Counters.Counter;
     Counters.Counter private _saleIds;
     address private _fanficToken;
+    address private _protocol;
     mapping(uint256 => Sale) private _sales;
 
     constructor(address owner) {
@@ -64,12 +65,10 @@ contract Market is Ownable, IMarket {
         uint256 _amount = _sale.price;
         for (uint256 i = 0; i < receivers.length; i++) {
             payable(receivers[i]).transfer(royaltyAmounts[i]);
-            emit Send(_msgSender(), receivers[i], saleId, _sale.tokenId, royaltyAmounts[i]);
             _amount -= royaltyAmounts[i];
         }
         if (_amount > 0) {
             payable(FanficToken(_fanficToken).ownerOf(_sale.tokenId)).transfer(_amount);
-            emit Send(_msgSender(), FanficToken(_fanficToken).ownerOf(_sale.tokenId), saleId, _sale.tokenId, _amount);
         }
         FanficToken(_fanficToken).transferFrom(
             FanficToken(_fanficToken).ownerOf(_sale.tokenId),
@@ -84,6 +83,13 @@ contract Market is Ownable, IMarket {
      */
     function setFanficToken(address fanficToken) external override onlyOwner {
         _fanficToken = fanficToken;
+    }
+
+    /**
+     * @inheritdoc IMarket
+     */
+    function setProtocol(address protocol) external override onlyOwner {
+        _protocol = protocol;
     }
 
     /**

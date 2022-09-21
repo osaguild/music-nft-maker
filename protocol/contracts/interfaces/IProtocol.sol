@@ -9,6 +9,12 @@ interface IProtocol {
     function stake(uint256 amount) external;
 
     /**
+     * @dev stake MTE to protocol and receive staking token as proof of stake.
+     * approve amount of staking MTE to protocol first.
+     */
+    function stakeSales(uint256 saleId) external payable;
+
+    /**
      * @dev withdraw MTE from protocol with APY.
      */
     function withdraw(uint256 amount) external;
@@ -46,4 +52,14 @@ interface IProtocol {
      * @dev set staking token address.
      */
     function setStakingToken(address stakingToken) external;
+
+    /**
+     * @dev set fanfic token address.
+     */
+    function setFanficToken(address fanficToken) external;
+
+    /**
+     * @dev set market address.
+     */
+    function setMarket(address market) external;
 }

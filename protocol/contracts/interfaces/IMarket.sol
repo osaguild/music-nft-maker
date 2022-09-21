@@ -41,6 +41,11 @@ interface IMarket {
     function setFanficToken(address fanficToken) external;
 
     /**
+     * @dev set protocol address
+     */
+    function setProtocol(address protocol) external;
+
+    /**
      * @dev get sale info by saleId
      */
     function sale(uint256 saleId) external view returns (Sale memory);
@@ -59,9 +64,4 @@ interface IMarket {
      * @dev emit purchase event
      */
     event Purchase(uint256 indexed saleId, uint256 indexed tokenId, uint256 price, address buyer);
-
-    /**
-     * @dev emit send eth event
-     */
-    event Send(address indexed from, address indexed to, uint256 saleId, uint256 indexed tokenId, uint256 value);
 }
