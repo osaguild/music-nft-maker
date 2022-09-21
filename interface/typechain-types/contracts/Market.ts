@@ -141,12 +141,14 @@ export interface MarketInterface extends utils.Interface {
     "CloseSale(uint256,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Purchase(uint256,uint256,uint256,address)": EventFragment;
+    "Send(address,address,uint256,uint256,uint256)": EventFragment;
     "StartSale(uint256,uint256,uint256,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "CloseSale"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Purchase"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Send"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StartSale"): EventFragment;
 }
 
@@ -185,6 +187,20 @@ export type PurchaseEvent = TypedEvent<
 >;
 
 export type PurchaseEventFilter = TypedEventFilter<PurchaseEvent>;
+
+export interface SendEventObject {
+  from: string;
+  to: string;
+  saleId: BigNumber;
+  tokenId: BigNumber;
+  value: BigNumber;
+}
+export type SendEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber, BigNumber],
+  SendEventObject
+>;
+
+export type SendEventFilter = TypedEventFilter<SendEvent>;
 
 export interface StartSaleEventObject {
   saleId: BigNumber;
@@ -375,6 +391,21 @@ export interface Market extends BaseContract {
       price?: null,
       buyer?: null
     ): PurchaseEventFilter;
+
+    "Send(address,address,uint256,uint256,uint256)"(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      saleId?: null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      value?: null
+    ): SendEventFilter;
+    Send(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      saleId?: null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      value?: null
+    ): SendEventFilter;
 
     "StartSale(uint256,uint256,uint256,address)"(
       saleId?: PromiseOrValue<BigNumberish> | null,
