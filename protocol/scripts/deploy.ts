@@ -1,7 +1,6 @@
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { FanficToken__factory, Market__factory, OriginToken__factory, Protocol__factory } from '../typechain-types'
-import { address } from '../utils/config'
+import { address } from '../utils'
 
 async function main() {
   // account check
@@ -39,28 +38,6 @@ async function main() {
   const marketFactory = await ethers.getContractFactory('Market')
   const market = await marketFactory.deploy(deployer.address)
   console.log('Market address:', market.address)
-
-  // set up FanficToken
-  await FanficToken__factory.connect(address.FANFIC_CONTRACT, deployer).setOriginToken(address.ORIGIN_CONTRACT)
-  console.log('FanficToken.setOriginToken:', address.ORIGIN_CONTRACT)
-  await FanficToken__factory.connect(address.FANFIC_CONTRACT, deployer).setProtocol(address.PROTOCOL_CONTRACT)
-  console.log('FanficToken.setProtocol:', address.PROTOCOL_CONTRACT)
-  await FanficToken__factory.connect(address.FANFIC_CONTRACT, deployer).setDefaultRoyalty(address.SUB_4_ACCOUNT, 1000)
-  console.log('FanficToken.setDefaultRoyalty:', address.SUB_4_ACCOUNT, 1000)
-
-  // set up Market
-  await Market__factory.connect(address.MARKET_CONTRACT, deployer).setFanficToken(address.FANFIC_CONTRACT)
-  console.log('Market.setFanficToken:', address.FANFIC_CONTRACT)
-
-  // set up OriginToken
-  await OriginToken__factory.connect(address.ORIGIN_CONTRACT, deployer).setProtocol(address.PROTOCOL_CONTRACT)
-  console.log('OriginToken.setProtocol:', address.PROTOCOL_CONTRACT)
-
-  // set up Protocol
-  await Protocol__factory.connect(address.PROTOCOL_CONTRACT, deployer).setMteToken(address.MTE_CONTRACT)
-  console.log('Protocol.setMteToken:', address.MTE_CONTRACT)
-  await Protocol__factory.connect(address.PROTOCOL_CONTRACT, deployer).setStakingToken(address.STAKING_CONTRACT)
-  console.log('Protocol.setStakingToken:', address.STAKING_CONTRACT)
 }
 
 main()

@@ -1,5 +1,6 @@
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import {
   MteToken__factory,
   MteToken,
@@ -14,9 +15,7 @@ import {
   Market__factory,
   Market,
 } from '../typechain-types'
-import { address } from '../utils/config'
-import { convertAddress } from '../utils/converter'
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { address, convertAddress } from '../utils'
 
 const checkEth = async (account: string, name: string, provider: JsonRpcProvider) => {
   console.log(name, 'balance:', ethers.utils.formatEther(await provider.getBalance(account)).toString(), 'ETH')

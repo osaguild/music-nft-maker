@@ -1,7 +1,7 @@
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { MteToken__factory, Protocol__factory } from '../typechain-types'
-import { address } from '../utils/config'
+import { address } from '../utils'
 
 async function main() {
   // account check
