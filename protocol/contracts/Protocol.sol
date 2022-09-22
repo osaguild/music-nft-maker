@@ -20,13 +20,6 @@ contract Protocol is Ownable, IProtocol {
     Counters.Counter private _stakingId;
     mapping(uint256 => Staking) private _stakings;
 
-    struct Staking {
-        address staker;
-        uint256 blockNumber;
-        uint256 value;
-        uint256 stakingTokenId;
-    }
-
     /**
      * @dev set the name and symbol of the MTE token and set owner address
      */
@@ -70,13 +63,14 @@ contract Protocol is Ownable, IProtocol {
      * @inheritdoc IProtocol
      */
     function withdraw(uint256 amount) external override {
+        // todo: nedd to consider whether to withdraw from staking or apy.
         Staking memory staking = _currentStaking(_msgSender());
         if (staking.value == 0) {
             revert("Protocol: staking not found");
         } else if (staking.value < amount) {
             revert("Protocol: staking is not enough");
         } else {
-            uint256 apyAmount = _calcReward(amount, staking.blockNumber);
+            uint256 apyAmount = _calcReward(_msgSender());
             MteToken(_mteToken).transfer(_msgSender(), amount + apyAmount);
             _setStaking(_msgSender(), staking.value - amount, staking.stakingTokenId);
             if (staking.value == amount) {
@@ -97,8 +91,7 @@ contract Protocol is Ownable, IProtocol {
      * @inheritdoc IProtocol
      */
     function balanceOfReward(address account) external view override returns (uint256) {
-        Staking memory staking = _currentStaking(account);
-        return _calcReward(staking.value, staking.blockNumber);
+        return _calcReward(account);
     }
 
     /**
@@ -168,6 +161,7 @@ contract Protocol is Ownable, IProtocol {
             uint256 stakingTokenId = StakingToken(_stakingToken).mint(to, "https://osaguild.com/");
             _setStaking(to, value, stakingTokenId);
         } else {
+            _setEndBlockNumber(staking.stakingTokenId);
             _setStaking(to, staking.value + value, staking.stakingTokenId);
         }
     }
@@ -181,7 +175,14 @@ contract Protocol is Ownable, IProtocol {
         uint256 stakingTokenId
     ) internal {
         _stakingId.increment();
-        _stakings[_stakingId.current()] = Staking(staker, block.number, amount, stakingTokenId);
+        _stakings[_stakingId.current()] = Staking(staker, block.number, 0, amount, stakingTokenId);
+    }
+
+    /**
+     * @dev set endBlockNumber of staking
+     */
+    function _setEndBlockNumber(uint256 stakingId) internal {
+        _stakings[stakingId].endBlockNumber = block.number;
     }
 
     /**
@@ -190,9 +191,19 @@ contract Protocol is Ownable, IProtocol {
      * reward = block diff * apyNumenator / apyDenominator * staking amount
      * todo: update reward calculation
      */
-    function _calcReward(uint256 amount, uint256 blockNumber) internal view returns (uint256) {
-        uint256 blockDiff = block.number - blockNumber;
-        return (blockDiff * _apyNumerator * amount) / _apyDenominator;
+    function _calcReward(address staker) internal view returns (uint256) {
+        uint256 reward = 0;
+        for (uint256 i = 1; i <= _stakingId.current(); i++) {
+            Staking memory staking = _stakings[i];
+            if (staking.staker == staker && staking.endBlockNumber == 0) {
+                uint256 blockDiff = block.number - staking.startBlockNumber;
+                reward += (blockDiff * _apyNumerator * staking.value) / _apyDenominator;
+            } else if (staking.staker == staker && staking.endBlockNumber != 0) {
+                uint256 blockDiff = staking.endBlockNumber - staking.startBlockNumber;
+                reward += (blockDiff * _apyNumerator * staking.value) / _apyDenominator;
+            }
+        }
+        return reward;
     }
 
     /**
@@ -200,11 +211,11 @@ contract Protocol is Ownable, IProtocol {
      */
     function _currentStaking(address staker) internal view returns (Staking memory) {
         for (uint256 i = _stakingId.current(); i > 0; i--) {
-            if (_stakings[i].staker == staker) {
+            if (_stakings[i].staker == staker && _stakings[i].endBlockNumber == 0) {
                 return _stakings[i];
             }
         }
-        return Staking(address(0), 0, 0, 0);
+        return Staking(address(0), 0, 0, 0, 0);
     }
 
     /**

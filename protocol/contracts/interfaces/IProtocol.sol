@@ -2,6 +2,14 @@
 pragma solidity =0.8.9;
 
 interface IProtocol {
+    struct Staking {
+        address staker;
+        uint256 startBlockNumber;
+        uint256 endBlockNumber;
+        uint256 value;
+        uint256 stakingTokenId;
+    }
+
     /**
      * @dev stake MTE to protocol and receive staking token as proof of stake.
      * approve amount of staking MTE to protocol first.
