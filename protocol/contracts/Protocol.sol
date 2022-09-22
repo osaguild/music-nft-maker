@@ -34,6 +34,7 @@ contract Protocol is Ownable, IProtocol {
     function stake(uint256 amount) external override {
         _stake(_msgSender(), amount);
         MteToken(_mteToken).transferFrom(_msgSender(), address(this), amount);
+        emit Stake(_msgSender(), _msgSender(), amount);
     }
 
     /**
@@ -53,10 +54,12 @@ contract Protocol is Ownable, IProtocol {
         // stake royalty
         for (uint256 i = 0; i < receivers.length; i++) {
             _stake(receivers[i], royaltyAmounts[i]);
+            emit Stake(receivers[i], _market, royaltyAmounts[i]);
             ownerReward -= royaltyAmounts[i];
         }
         // stake to owner
         _stake(FanficToken(_fanficToken).ownerOf(sale.tokenId), ownerReward);
+        emit Stake(FanficToken(_fanficToken).ownerOf(sale.tokenId), _market, ownerReward);
     }
 
     /**

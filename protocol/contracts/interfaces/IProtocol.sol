@@ -70,4 +70,9 @@ interface IProtocol {
      * @dev set market address.
      */
     function setMarket(address market) external;
+
+    /**
+     * @dev emit staking event.
+     */
+    event Stake(address indexed staker, address indexed from, uint256 amounts);
 }
