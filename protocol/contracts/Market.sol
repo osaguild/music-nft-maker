@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FanficToken.sol";
 import "./interfaces/IMarket.sol";
+import "./Protocol.sol";
 
 contract Market is Ownable, IMarket {
     using Counters for Counters.Counter;
@@ -61,18 +62,7 @@ contract Market is Ownable, IMarket {
         _sale.endBlockNumber = block.number;
         _sale.isSold = true;
         _sales[saleId] = _sale;
-        (address[] memory receivers, uint256[] memory royaltyAmounts) = FanficToken(_fanficToken).royaltyInfo(
-            _sale.tokenId,
-            _sale.price
-        );
-        uint256 _amount = _sale.price;
-        for (uint256 i = 0; i < receivers.length; i++) {
-            payable(receivers[i]).transfer(royaltyAmounts[i]);
-            _amount -= royaltyAmounts[i];
-        }
-        if (_amount > 0) {
-            payable(FanficToken(_fanficToken).ownerOf(_sale.tokenId)).transfer(_amount);
-        }
+        Protocol(_protocol).stakeSales{value: msg.value}(saleId);
         FanficToken(_fanficToken).transferFrom(
             FanficToken(_fanficToken).ownerOf(_sale.tokenId),
             _msgSender(),
