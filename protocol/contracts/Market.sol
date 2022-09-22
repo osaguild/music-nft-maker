@@ -21,7 +21,10 @@ contract Market is Ownable, IMarket {
      * @inheritdoc IMarket
      */
     function startSale(uint256 tokenId, uint256 price) external override returns (uint256) {
+        Sale memory currentSale = _currentSale(tokenId);
         require(FanficToken(_fanficToken).ownerOf(tokenId) == _msgSender(), "Market: not owner");
+        require(FanficToken(_fanficToken).getApproved(tokenId) == address(this), "Market: not approved");
+        require(currentSale.tokenId == 0 || currentSale.endBlockNumber != 0, "Market: already on sale");
         _saleIds.increment();
         _sales[_saleIds.current()] = Sale(
             tokenId, // tokenId
@@ -104,5 +107,14 @@ contract Market is Ownable, IMarket {
      */
     function sale(uint256 saleId) external view override returns (Sale memory) {
         return _sales[saleId];
+    }
+
+    function _currentSale(uint256 tokenId) internal view returns (Sale memory) {
+        for (uint256 i = _saleIds.current(); i > 0; i--) {
+            if (_sales[i].tokenId == tokenId) {
+                return _sales[i];
+            }
+        }
+        return Sale(0, 0, address(0), 0, 0, false);
     }
 }
