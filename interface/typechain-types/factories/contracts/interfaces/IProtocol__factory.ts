@@ -94,6 +94,32 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "fanficToken",
+        type: "address",
+      },
+    ],
+    name: "setFanficToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "market",
+        type: "address",
+      },
+    ],
+    name: "setMarket",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "mteToken",
         type: "address",
       },
@@ -127,6 +153,19 @@ const _abi = [
     name: "stake",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "saleId",
+        type: "uint256",
+      },
+    ],
+    name: "stakeSales",
+    outputs: [],
+    stateMutability: "payable",
     type: "function",
   },
   {

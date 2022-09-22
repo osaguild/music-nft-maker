@@ -30,9 +30,12 @@ export interface IProtocolInterface extends utils.Interface {
     "balanceOfStaking(address)": FunctionFragment;
     "mintable(address)": FunctionFragment;
     "provideLiquidity(address,uint256,uint256)": FunctionFragment;
+    "setFanficToken(address)": FunctionFragment;
+    "setMarket(address)": FunctionFragment;
     "setMteToken(address)": FunctionFragment;
     "setStakingToken(address)": FunctionFragment;
     "stake(uint256)": FunctionFragment;
+    "stakeSales(uint256)": FunctionFragment;
     "withdraw(uint256)": FunctionFragment;
   };
 
@@ -42,9 +45,12 @@ export interface IProtocolInterface extends utils.Interface {
       | "balanceOfStaking"
       | "mintable"
       | "provideLiquidity"
+      | "setFanficToken"
+      | "setMarket"
       | "setMteToken"
       | "setStakingToken"
       | "stake"
+      | "stakeSales"
       | "withdraw"
   ): FunctionFragment;
 
@@ -69,6 +75,14 @@ export interface IProtocolInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "setFanficToken",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMarket",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setMteToken",
     values: [PromiseOrValue<string>]
   ): string;
@@ -78,6 +92,10 @@ export interface IProtocolInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "stake",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stakeSales",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -99,6 +117,11 @@ export interface IProtocolInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setFanficToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setMarket", data: BytesLike): Result;
+  decodeFunctionResult(
     functionFragment: "setMteToken",
     data: BytesLike
   ): Result;
@@ -107,6 +130,7 @@ export interface IProtocolInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "stakeSales", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {};
@@ -161,6 +185,16 @@ export interface IProtocol extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setFanficToken(
+      fanficToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMarket(
+      market: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setMteToken(
       mteToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -174,6 +208,11 @@ export interface IProtocol extends BaseContract {
     stake(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    stakeSales(
+      saleId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
@@ -204,6 +243,16 @@ export interface IProtocol extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setFanficToken(
+    fanficToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMarket(
+    market: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setMteToken(
     mteToken: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -217,6 +266,11 @@ export interface IProtocol extends BaseContract {
   stake(
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  stakeSales(
+    saleId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdraw(
@@ -247,6 +301,16 @@ export interface IProtocol extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setFanficToken(
+      fanficToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setMarket(
+      market: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setMteToken(
       mteToken: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -259,6 +323,11 @@ export interface IProtocol extends BaseContract {
 
     stake(
       amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    stakeSales(
+      saleId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -293,6 +362,16 @@ export interface IProtocol extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setFanficToken(
+      fanficToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMarket(
+      market: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setMteToken(
       mteToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -306,6 +385,11 @@ export interface IProtocol extends BaseContract {
     stake(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    stakeSales(
+      saleId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdraw(
@@ -337,6 +421,16 @@ export interface IProtocol extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setFanficToken(
+      fanficToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMarket(
+      market: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setMteToken(
       mteToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -350,6 +444,11 @@ export interface IProtocol extends BaseContract {
     stake(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    stakeSales(
+      saleId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(

@@ -61,6 +61,7 @@ export interface IMarketInterface extends utils.Interface {
     "purchase(uint256)": FunctionFragment;
     "sale(uint256)": FunctionFragment;
     "setFanficToken(address)": FunctionFragment;
+    "setProtocol(address)": FunctionFragment;
     "startSale(uint256,uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
   };
@@ -71,6 +72,7 @@ export interface IMarketInterface extends utils.Interface {
       | "purchase"
       | "sale"
       | "setFanficToken"
+      | "setProtocol"
       | "startSale"
       | "totalSupply"
   ): FunctionFragment;
@@ -92,6 +94,10 @@ export interface IMarketInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setProtocol",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "startSale",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -107,6 +113,10 @@ export interface IMarketInterface extends utils.Interface {
     functionFragment: "setFanficToken",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "setProtocol",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "startSale", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -116,13 +126,11 @@ export interface IMarketInterface extends utils.Interface {
   events: {
     "CloseSale(uint256,uint256)": EventFragment;
     "Purchase(uint256,uint256,uint256,address)": EventFragment;
-    "Send(address,address,uint256,uint256,uint256)": EventFragment;
     "StartSale(uint256,uint256,uint256,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "CloseSale"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Purchase"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Send"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StartSale"): EventFragment;
 }
 
@@ -149,20 +157,6 @@ export type PurchaseEvent = TypedEvent<
 >;
 
 export type PurchaseEventFilter = TypedEventFilter<PurchaseEvent>;
-
-export interface SendEventObject {
-  from: string;
-  to: string;
-  saleId: BigNumber;
-  tokenId: BigNumber;
-  value: BigNumber;
-}
-export type SendEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber, BigNumber],
-  SendEventObject
->;
-
-export type SendEventFilter = TypedEventFilter<SendEvent>;
 
 export interface StartSaleEventObject {
   saleId: BigNumber;
@@ -224,6 +218,11 @@ export interface IMarket extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setProtocol(
+      protocol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     startSale(
       tokenId: PromiseOrValue<BigNumberish>,
       price: PromiseOrValue<BigNumberish>,
@@ -253,6 +252,11 @@ export interface IMarket extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setProtocol(
+    protocol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   startSale(
     tokenId: PromiseOrValue<BigNumberish>,
     price: PromiseOrValue<BigNumberish>,
@@ -279,6 +283,11 @@ export interface IMarket extends BaseContract {
 
     setFanficToken(
       fanficToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setProtocol(
+      protocol: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -313,21 +322,6 @@ export interface IMarket extends BaseContract {
       price?: null,
       buyer?: null
     ): PurchaseEventFilter;
-
-    "Send(address,address,uint256,uint256,uint256)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      saleId?: null,
-      tokenId?: PromiseOrValue<BigNumberish> | null,
-      value?: null
-    ): SendEventFilter;
-    Send(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      saleId?: null,
-      tokenId?: PromiseOrValue<BigNumberish> | null,
-      value?: null
-    ): SendEventFilter;
 
     "StartSale(uint256,uint256,uint256,address)"(
       saleId?: PromiseOrValue<BigNumberish> | null,
@@ -364,6 +358,11 @@ export interface IMarket extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setProtocol(
+      protocol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     startSale(
       tokenId: PromiseOrValue<BigNumberish>,
       price: PromiseOrValue<BigNumberish>,
@@ -391,6 +390,11 @@ export interface IMarket extends BaseContract {
 
     setFanficToken(
       fanficToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setProtocol(
+      protocol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
