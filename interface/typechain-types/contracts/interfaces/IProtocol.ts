@@ -14,7 +14,11 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -133,8 +137,24 @@ export interface IProtocolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "stakeSales", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
-  events: {};
+  events: {
+    "Stake(address,address,uint256)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "Stake"): EventFragment;
 }
+
+export interface StakeEventObject {
+  staker: string;
+  from: string;
+  amounts: BigNumber;
+}
+export type StakeEvent = TypedEvent<
+  [string, string, BigNumber],
+  StakeEventObject
+>;
+
+export type StakeEventFilter = TypedEventFilter<StakeEvent>;
 
 export interface IProtocol extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -337,7 +357,18 @@ export interface IProtocol extends BaseContract {
     ): Promise<void>;
   };
 
-  filters: {};
+  filters: {
+    "Stake(address,address,uint256)"(
+      staker?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      amounts?: null
+    ): StakeEventFilter;
+    Stake(
+      staker?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      amounts?: null
+    ): StakeEventFilter;
+  };
 
   estimateGas: {
     balanceOfReward(

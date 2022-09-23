@@ -163,9 +163,11 @@ export interface ProtocolInterface extends utils.Interface {
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
+    "Stake(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Stake"): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
@@ -179,6 +181,18 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface StakeEventObject {
+  staker: string;
+  from: string;
+  amounts: BigNumber;
+}
+export type StakeEvent = TypedEvent<
+  [string, string, BigNumber],
+  StakeEventObject
+>;
+
+export type StakeEventFilter = TypedEventFilter<StakeEvent>;
 
 export interface Protocol extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -421,6 +435,17 @@ export interface Protocol extends BaseContract {
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
+
+    "Stake(address,address,uint256)"(
+      staker?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      amounts?: null
+    ): StakeEventFilter;
+    Stake(
+      staker?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      amounts?: null
+    ): StakeEventFilter;
   };
 
   estimateGas: {
