@@ -10,7 +10,6 @@
     "compile": "run-s compile:clean compile:build",
     "compile:clean": "hardhat clean",
     "compile:build": "hardhat compile",
-    "compile:copy": "cp -rf ./typechain-types ../interface",
     "lint": "run-s lint:solhint lint:eslint lint:prettier",
     "lint:solhint": "solhint 'contracts/**/*.sol' && prettier -c 'contracts/**/*.sol'",
     "lint:eslint": "eslint --fix --ext .js,.ts",
@@ -23,9 +22,9 @@
     "deploy": "hardhat run scripts/deploy.ts --network goerli",
     "setup": "hardhat run scripts/setup.ts --network goerli",
     "verify": "hardhat verify --network goerli",
-    "cp": "run-s cp:typechain cp:env",
-    "cp:typechain": "cp -rf ./typechain-types ../interface",
-    "cp:env": "cp -rf ./.env ../interface"
+    "copy": "run-s copy:typechain copy:env",
+    "copy:typechain": "cp -rf ./typechain-types ../interface",
+    "copy:env": "cp -rf ./.env ../interface"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.6.0"
