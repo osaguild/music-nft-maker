@@ -164,7 +164,7 @@ contract Protocol is Ownable, IProtocol {
             uint256 stakingTokenId = StakingToken(_stakingToken).mint(to, "https://osaguild.com/");
             _setStaking(to, value, stakingTokenId);
         } else {
-            _setEndBlockNumber(staking.stakingTokenId);
+            _setEndBlockNumber(staking.staker);
             _setStaking(to, staking.value + value, staking.stakingTokenId);
         }
     }
@@ -184,8 +184,12 @@ contract Protocol is Ownable, IProtocol {
     /**
      * @dev set endBlockNumber of staking
      */
-    function _setEndBlockNumber(uint256 stakingId) internal {
-        _stakings[stakingId].endBlockNumber = block.number;
+    function _setEndBlockNumber(address staker) internal {
+        for (uint256 i = _stakingId.current(); i > 0; i--) {
+            if (_stakings[i].staker == staker && _stakings[i].endBlockNumber == 0) {
+                _stakings[i].endBlockNumber = block.number;
+            }
+        }
     }
 
     /**
