@@ -21,6 +21,7 @@
     "faucet": "hardhat run scripts/faucet.ts --network goerli",
     "check-balance": "hardhat run scripts/checkBalance.ts --network goerli",
     "deploy": "hardhat run scripts/deploy.ts --network goerli",
+    "setup": "hardhat run scripts/setup.ts --network goerli",
     "verify": "hardhat verify --network goerli",
     "cp": "run-s cp:typechain cp:env",
     "cp:typechain": "cp -rf ./typechain-types ../interface",
