@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+import { RoyaltyInfo } from './type'
 
 const calcReward = (numerator: number, denominator = 10000, amount: number, blockDiff: number) =>
   (amount * blockDiff * numerator) / denominator

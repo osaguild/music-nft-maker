@@ -1,4 +1,6 @@
 import { BigNumber } from 'ethers'
+import { Address, Balance } from './type'
+import { ethers } from 'hardhat'
 
 const printRoyalty = (
   addresses: Address[],
@@ -34,9 +36,9 @@ const printBalance = (balance: Balance) => {
     'protocol:',
     balance.protocol,
     'stakingOfAlice:',
-    balance.stakingOfAlice,
+    ethers.utils.formatEther(balance.stakingOfAlice),
     'stakingOfBob:',
-    balance.stakingOfBob
+    ethers.utils.formatEther(balance.stakingOfBob)
   )
 }
 
