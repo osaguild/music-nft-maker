@@ -28,6 +28,7 @@ interface SaleItemProps {
 const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [image, setImage] = useState<string>()
+  const [sound, setSound] = useState<string>()
   const [origins, setOrigins] = useState<Origin[]>([])
   const [royalties, setRoyalties] = useState<Royalty[]>([])
   const { market, originToken, fanficToken, protocol } = useContract()
@@ -43,7 +44,10 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
     if (sale) {
       fetch(sale.fanficToken.uri)
         .then((res) => res.json())
-        .then((json) => setImage(json.image))
+        .then((json) => {
+          setImage(json.image)
+          setSound(json.animation_url)
+        })
     }
   }, [sale])
 
@@ -103,9 +107,7 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
                 <WrapItem>
                   <Box>
                     <Image src={image} alt="fanfic token image" w="350px" h="350px" display="block" margin="auto" />
-                    <Button display="block" margin="auto">
-                      Play
-                    </Button>
+                    <Box as="video" controls src={sound} width="350px" height="50px" mt="-50px" />
                   </Box>
                 </WrapItem>
                 <WrapItem>
@@ -118,14 +120,14 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
                     {royalties.map((e, i) => (
                       <Text fontSize="xl" key={i}>{`- ${e.value} MTE to ${e.receiver}`}</Text>
                     ))}
+                    <Box textAlign="center" mt={10}>
+                      <Button onClick={purchase} display="block" margin="auto" mb="20px">
+                        Purchase
+                      </Button>
+                    </Box>
                   </Box>
                 </WrapItem>
               </Wrap>
-              <Box textAlign="center" mt={10}>
-                <Button onClick={purchase} display="block" margin="auto" mb="20px">
-                  Purchase
-                </Button>
-              </Box>
               <Text fontSize="3xl" textAlign="center" mt="50" className="web3-title">
                 Original Music
               </Text>
