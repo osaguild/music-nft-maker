@@ -14,7 +14,7 @@ const fetchFanfic = async (fanficToken: FanficToken, id: number) => {
     id: id,
     uri: await fanficToken.tokenURI(id),
     owner: await fanficToken.ownerOf(id),
-    originIds: [],
+    originIds: (await fanficToken.origins(id)).map((e) => e.toNumber()),
   } as Fanfic
 }
 
