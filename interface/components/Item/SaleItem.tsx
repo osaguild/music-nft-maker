@@ -19,7 +19,7 @@ import {
 import { useContract } from '../../hooks/Contract'
 import { BigNumber, ethers } from 'ethers'
 import { fetchOrigin } from '../../lib/fetch'
-import { Erc721Item } from './Erc721Item'
+import { OriginItem } from './OriginItem'
 
 interface SaleItemProps {
   sale: Sale
@@ -134,7 +134,7 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
               <Wrap spacing="30px" justify="center" my="50">
                 {origins?.map((e, i) => (
                   <WrapItem border="2px" data-testid={`item-${e.id}`} key={i}>
-                    <Erc721Item erc721={e} />
+                    <OriginItem origin={e} />
                   </WrapItem>
                 ))}
               </Wrap>

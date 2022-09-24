@@ -1,42 +1,35 @@
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { Wrap, WrapItem } from '@chakra-ui/react'
-import { useWeb3React } from '@web3-react/core'
-import { providers } from 'ethers'
-import { Erc721Item } from './Erc721Item'
-import { SaleItem } from './SaleItem'
-import { useContract } from '../../hooks/Contract'
-import { fetchOnSales, fetchOwns } from '../../lib/fetch'
-import { isSale } from '../../types/typeGuard'
-
+import { isFanfic } from '../../types/typeGuard'
+import { SaleItem } from '../Item/SaleItem'
+import { FanficItem } from '../Item/FanficItem'
+import { OriginItem } from '../Item/OriginItem'
 interface CollectionProps {
   pattern: Pattern
+  items: Sale[] | Erc721[]
 }
 
-type Pattern = 'ON_SALE' | 'CREATED'
+type Pattern = 'ON_SALE' | 'OWN_TOKEN' | 'RELATED_ORIGIN'
 
-const Collection: FunctionComponent<CollectionProps> = ({ pattern }) => {
-  const [items, setItems] = useState<Erc721[] | Sale[]>([])
-  const { account } = useWeb3React<providers.Web3Provider>()
-  const { originToken, fanficToken, market } = useContract()
-
-  useEffect(() => {
-    if (pattern === 'ON_SALE' && market && fanficToken) {
-      fetchOnSales(market, fanficToken).then((e) => setItems(e))
-    } else if (pattern === 'CREATED' && account && originToken && fanficToken) {
-      fetchOwns(originToken, fanficToken, account).then((e) => setItems(e))
-    }
-  }, [pattern, account, originToken, fanficToken, market])
-
-  return items ? (
-    <Wrap spacing="30px" justify="center" my="30">
+const Collection: FunctionComponent<CollectionProps> = ({ pattern, items }) => {
+  return (
+    <Wrap spacing="30px" justify="center">
       {items.map((e, i) => (
-        <WrapItem data-testid={`item-${e.id}`} key={i}>
-          {isSale(e) ? <SaleItem sale={e} /> : <Erc721Item erc721={e} />}
+        <WrapItem key={i}>
+          {pattern === 'ON_SALE' ? (
+            <SaleItem sale={e as Sale} />
+          ) : pattern === 'OWN_TOKEN' && !isFanfic(e as Erc721) ? (
+            <OriginItem origin={e as Origin} />
+          ) : pattern === 'OWN_TOKEN' && isFanfic(e as Erc721) ? (
+            <FanficItem fanfic={e as Fanfic} />
+          ) : pattern === 'RELATED_ORIGIN' ? (
+            <OriginItem origin={e as Origin} />
+          ) : (
+            <></>
+          )}
         </WrapItem>
       ))}
     </Wrap>
-  ) : (
-    <></>
   )
 }
 
