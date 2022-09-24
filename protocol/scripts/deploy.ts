@@ -1,6 +1,5 @@
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { address } from '../utils'
 
 async function main() {
   // account check
@@ -16,12 +15,12 @@ async function main() {
 
   // deploy StakingToken !! need protocol address !!
   const stakingFactory = await ethers.getContractFactory('StakingToken')
-  const staking = await stakingFactory.deploy(address.PROTOCOL_CONTRACT)
+  const staking = await stakingFactory.deploy(protocol.address)
   console.log('Staking address:', staking.address)
 
   // deploy MteToken !! need protocol address !!
   const mteFactory = await ethers.getContractFactory('MteToken')
-  const mte = await mteFactory.deploy(address.PROTOCOL_CONTRACT)
+  const mte = await mteFactory.deploy(protocol.address)
   console.log('MteToken address:', mte.address)
 
   // deploy FanficToken
