@@ -21,21 +21,21 @@ import { ethers } from 'ethers'
 
 const Join: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [value, setValue] = useState('1000')
+  const [value, setValue] = useState('100')
   const { protocol, mteToken } = useContract()
 
   const approve = async () => {
     const tx = await mteToken?.approve(address().PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
     const receipt = await tx?.wait()
-    const approval = receipt?.events?.find((v) => v.event === 'Approval')
-    if (approval === undefined) throw new Error('approve event is not found')
+    const event = receipt?.events?.find((v) => v.event === 'Approval')
+    if (event === undefined) throw new Error('approve event is not found')
   }
 
   const join = async () => {
     const tx = await protocol?.stake(ethers.utils.parseEther(value))
     const receipt = await tx?.wait()
-    const transfer = receipt?.events?.find((v) => v.event === 'Transfer')
-    if (transfer === undefined) throw new Error('stake event is not found')
+    const event = receipt?.events?.find((v) => v.event === 'Stake')
+    if (event === undefined) throw new Error('stake event is not found')
     onClose
   }
 

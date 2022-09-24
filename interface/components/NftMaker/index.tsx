@@ -22,25 +22,30 @@ type TokenType = 'ORIGIN' | 'FANFIC'
 const NftMaker: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [tokenType, setTokenType] = useState<TokenType>('ORIGIN')
-  const [tokenUri, setTokenUri] = useState<string>()
+  const [originUri, setOriginUri] = useState<string>(
+    'https://gateway.pinata.cloud/ipfs/QmUPxiCyVBRB5erJQstXECCmwxzz6vrMuwpFnst5fjC1YG'
+  )
+  const [fanficUri, setFanficUri] = useState<string>(
+    'https://gateway.pinata.cloud/ipfs/QmaAVovdA53jdViqrHBgN1Xg9NaxXGdgEkQUTesKKHNzUP'
+  )
   const [originIds, setOriginIds] = useState<string[]>([])
   const { originToken, fanficToken } = useContract()
 
   const makeOrigin = async () => {
-    if (tokenUri) {
-      const tx = await originToken?.mint(tokenUri)
+    if (originUri) {
+      const tx = await originToken?.mint(originUri)
       const receipt = await tx?.wait()
-      const transfer = receipt?.events?.find((v) => v.event === 'Transfer')
-      if (transfer === undefined) throw new Error('transfer event is not found')
+      const event = receipt?.events?.find((v) => v.event === 'Transfer')
+      if (event === undefined) throw new Error('transfer event is not found')
     }
   }
 
   const makeFanfic = async () => {
-    if (tokenUri) {
-      const tx = await fanficToken?.mint(tokenUri, originIds)
+    if (fanficUri) {
+      const tx = await fanficToken?.mint(fanficUri, originIds)
       const receipt = await tx?.wait()
-      const transfer = receipt?.events?.find((v) => v.event === 'Transfer')
-      if (transfer === undefined) throw new Error('transfer event is not found')
+      const event = receipt?.events?.find((v) => v.event === 'Transfer')
+      if (event === undefined) throw new Error('transfer event is not found')
     }
   }
 
@@ -61,13 +66,17 @@ const NftMaker: FunctionComponent = () => {
                 <Radio value="FANFIC">Fanfic Token</Radio>
               </Stack>
             </RadioGroup>
-            <Input placeholder="token uri" value={tokenUri} onChange={(e) => setTokenUri(e.target.value)} />
-            {tokenType === 'FANFIC' && (
-              <Input
-                placeholder="please input your token ids separated by commas"
-                value={originIds}
-                onChange={(e) => setOriginIds(e.target.value?.split(','))}
-              />
+            {tokenType === 'ORIGIN' ? (
+              <Input placeholder="token uri" value={originUri} onChange={(e) => setOriginUri(e.target.value)} />
+            ) : (
+              <>
+                <Input placeholder="token uri" value={fanficUri} onChange={(e) => setFanficUri(e.target.value)} />
+                <Input
+                  placeholder="please input your token ids separated by commas"
+                  value={originIds}
+                  onChange={(e) => setOriginIds(e.target.value?.split(','))}
+                />
+              </>
             )}
             <Box></Box>
           </ModalBody>
