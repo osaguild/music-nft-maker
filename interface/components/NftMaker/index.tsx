@@ -23,10 +23,10 @@ const NftMaker: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [tokenType, setTokenType] = useState<TokenType>('ORIGIN')
   const [originUri, setOriginUri] = useState<string>(
-    'https://gateway.pinata.cloud/ipfs/QmUPxiCyVBRB5erJQstXECCmwxzz6vrMuwpFnst5fjC1YG'
+    'https://gateway.pinata.cloud/ipfs/QmQ5AeuuVj7SbFaShS8N4SBiWJCPbgw7cF7tcBexZ4cQuK'
   )
   const [fanficUri, setFanficUri] = useState<string>(
-    'https://gateway.pinata.cloud/ipfs/QmaAVovdA53jdViqrHBgN1Xg9NaxXGdgEkQUTesKKHNzUP'
+    'https://gateway.pinata.cloud/ipfs/QmQ5bTDRUzfoV5ehuVTUi113F81ZQTFTrFH8dpWgsTE12X'
   )
   const [originIds, setOriginIds] = useState<string[]>([])
   const { originToken, fanficToken } = useContract()
