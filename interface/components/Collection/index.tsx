@@ -30,7 +30,7 @@ const Collection: FunctionComponent<CollectionProps> = ({ pattern }) => {
   return items ? (
     <Wrap spacing="30px" justify="center" my="30">
       {items.map((e, i) => (
-        <WrapItem border="2px" className="web3-background" data-testid={`item-${e.id}`} key={i}>
+        <WrapItem data-testid={`item-${e.id}`} key={i}>
           {isSale(e) ? <SaleItem sale={e} /> : <Erc721Item erc721={e} />}
         </WrapItem>
       ))}

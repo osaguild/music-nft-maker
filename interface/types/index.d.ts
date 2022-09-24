@@ -52,3 +52,8 @@ type Config = {
   ORIGIN_CONTRACT: string
   MARKET_CONTRACT: string
 }
+
+type Royalty = {
+  receiver: string
+  value: number
+}
