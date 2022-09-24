@@ -21,13 +21,7 @@ const checkEth = async (account: string, name: string, provider: JsonRpcProvider
   console.log(name, 'balance:', ethers.utils.formatEther(await provider.getBalance(account)).toString(), 'ETH')
 }
 
-const checkMte = async (
-  mte: MteToken,
-  protocol: Protocol,
-  account: string,
-  name: string,
-  provider: JsonRpcProvider
-) => {
+const checkMte = async (mte: MteToken, protocol: Protocol, account: string, name: string) => {
   console.log(
     name,
     'balance:',
@@ -36,9 +30,7 @@ const checkMte = async (
     ethers.utils.formatEther(await mte.allowance(account, address.PROTOCOL_CONTRACT)).toString(),
     'MTE / staking:',
     ethers.utils.formatEther(await protocol.balanceOfStaking(account)).toString(),
-    'MTE / eth:',
-    ethers.utils.formatEther(await provider.getBalance(account)).toString(),
-    'ETH'
+    'MTE'
   )
 }
 
@@ -112,18 +104,18 @@ async function main() {
   const market = Market__factory.connect(address.MARKET_CONTRACT, signer)
   // ETH
   console.log('[check for ETH is starting...]')
-  await checkEth(address.SUB_1_ACCOUNT, 'sub_1', provider)
-  await checkEth(address.SUB_2_ACCOUNT, 'sub_2', provider)
-  await checkEth(address.SUB_3_ACCOUNT, 'sub_3', provider)
-  await checkEth(address.SUB_4_ACCOUNT, 'sub_4', provider)
+  await checkEth(address.SUB_1_ACCOUNT, 'sub_1   ', provider)
+  await checkEth(address.SUB_2_ACCOUNT, 'sub_2   ', provider)
+  await checkEth(address.SUB_3_ACCOUNT, 'sub_3   ', provider)
+  await checkEth(address.SUB_4_ACCOUNT, 'sub_4   ', provider)
   await checkEth(address.PROTOCOL_CONTRACT, 'protocol', provider)
   // MteToken
   console.log('[check for MteToken is starting...]')
-  await checkMte(mte, protocol, address.SUB_1_ACCOUNT, 'sub_1', provider)
-  await checkMte(mte, protocol, address.SUB_2_ACCOUNT, 'sub_2', provider)
-  await checkMte(mte, protocol, address.SUB_3_ACCOUNT, 'sub_3', provider)
-  await checkMte(mte, protocol, address.SUB_4_ACCOUNT, 'sub_4', provider)
-  await checkMte(mte, protocol, address.PROTOCOL_CONTRACT, 'protocol', provider)
+  await checkMte(mte, protocol, address.SUB_1_ACCOUNT, 'sub_1   ')
+  await checkMte(mte, protocol, address.SUB_2_ACCOUNT, 'sub_2   ')
+  await checkMte(mte, protocol, address.SUB_3_ACCOUNT, 'sub_3   ')
+  await checkMte(mte, protocol, address.SUB_4_ACCOUNT, 'sub_4   ')
+  await checkMte(mte, protocol, address.PROTOCOL_CONTRACT, 'protocol')
   // StakingToken
   console.log('[check for StakingToken is starting...]')
   await checkStaking(staking)
