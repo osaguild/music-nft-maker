@@ -1,6 +1,5 @@
 import { FunctionComponent } from 'react'
-import { Button, Container, Text, Box } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+import { Container, Text, Box } from '@chakra-ui/react'
 import { Alert } from '../Alert'
 import { Header } from './Header'
 import { Collection } from '../Collection'
@@ -15,8 +14,6 @@ interface LayoutProps {
 }
 
 const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
-  const router = useRouter()
-
   return (
     <>
       <Alert />
@@ -27,10 +24,9 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
             <Text fontSize="6xl" textAlign="center" my="30" className="web3-title" data-testid="text">
               Music Token Economy
             </Text>
-            <Button onClick={() => router.push('/member')}>member</Button>
             <Join />
-            <Text fontSize="2xl" textAlign="center" my="30">
-              Market
+            <Text fontSize="3xl" textAlign="center" mt="50" className="web3-title">
+              Market Place
             </Text>
             <Collection pattern="ON_SALE" />
           </Box>

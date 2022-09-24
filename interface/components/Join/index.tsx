@@ -14,7 +14,9 @@ import {
   Input,
   InputRightAddon,
   useDisclosure,
+  Link,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import { useContract } from '../../hooks/Contract'
 import { address } from '../../config'
 import { ethers } from 'ethers'
@@ -23,6 +25,7 @@ const Join: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [value, setValue] = useState('100')
   const { protocol, mteToken } = useContract()
+  const router = useRouter()
 
   const approve = async () => {
     const tx = await mteToken?.approve(address().PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
@@ -40,10 +43,16 @@ const Join: FunctionComponent = () => {
   }
 
   return (
-    <Box textAlign="center" my={20}>
-      <Text fontSize="2xl">please join our creator token economics</Text>
-      <Button verticalAlign="bottom" onClick={onOpen} mt={10}>
-        Join
+    <Box textAlign="center" my={10}>
+      <Text fontSize="xl">
+        Please join our ecosystem. If you are member, click{' '}
+        <Link onClick={() => router.push('/member')} color="teal.500">
+          here
+        </Link>{' '}
+        for member page.
+      </Text>
+      <Button verticalAlign="bottom" onClick={onOpen} mt={5}>
+        Join Us
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
