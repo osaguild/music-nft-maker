@@ -11,7 +11,7 @@ async function main() {
   console.log('account balance:', balance)
   // faucet
   const target = address.SUB_1_ACCOUNT
-  const amount = ethers.utils.parseEther('1000')
+  const amount = ethers.utils.parseEther('100')
   await Protocol__factory.connect(address.PROTOCOL_CONTRACT, deployer).provideLiquidity(target, 0, amount)
   console.log('send', amount.toString(), 'to', target)
   console.log(
