@@ -13,6 +13,11 @@ interface IFanficToken {
     function totalSupply() external returns (uint256);
 
     /**
+     * @dev return originIds of fanfic token.
+     */
+    function origins(uint256 tokenId) external returns (uint256[] memory);
+
+    /**
      * @dev set origin token address.
      */
     function setOriginToken(address originToken) external;
