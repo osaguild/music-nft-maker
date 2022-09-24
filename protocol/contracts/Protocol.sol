@@ -45,7 +45,7 @@ contract Protocol is Ownable, IProtocol {
         Market.Sale memory sale = Market(_market).sale(saleId);
         require(msg.value == sale.price, "Market: not enough ETH");
         // calc staking amount of mte
-        uint256 mteAmount = (msg.value * _apyDenominator) / _rateOfLiquidity();
+        uint256 mteAmount = (msg.value * _apyDenominator) / rateOfLiquidity();
         uint256 ownerReward = mteAmount;
         (address[] memory receivers, uint256[] memory royaltyAmounts) = FanficToken(_fanficToken).royaltyInfo(
             sale.tokenId,
@@ -117,6 +117,14 @@ contract Protocol is Ownable, IProtocol {
     ) external payable override onlyOwner {
         to.transfer(ethAmount);
         MteToken(_mteToken).mint(to, mteAmount);
+    }
+
+    /**
+     * @dev IProtocol
+     * todo: implement me.
+     */
+    function rateOfLiquidity() public pure override returns (uint256) {
+        return 1; // return constant rate for test.
     }
 
     /**
@@ -223,16 +231,5 @@ contract Protocol is Ownable, IProtocol {
             }
         }
         return Staking(address(0), 0, 0, 0, 0);
-    }
-
-    /**
-     * @dev rate of liquidity which pool is ETH and MTE.
-     * 10000    ->  ETH : MTE  =  1   : 1
-     * 1000000  ->  ETH : MTE  =  100 : 1
-     * 100      ->  ETH : MTE  =  1   : 100
-     * todo: implement me.
-     */
-    function _rateOfLiquidity() internal pure returns (uint256) {
-        return 100; // return constant rate for test.
     }
 }

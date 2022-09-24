@@ -403,16 +403,16 @@ describe('Integration Test', () => {
         await expect(_tx).to.emit(staking, 'Transfer').withArgs(ethers.constants.AddressZero, alice.address, 4)
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(alice.address, market.address, ethers.utils.parseEther('0.1'))
+          .withArgs(alice.address, market.address, ethers.utils.parseEther('10'))
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(bob.address, market.address, ethers.utils.parseEther('0.1'))
+          .withArgs(bob.address, market.address, ethers.utils.parseEther('10'))
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(carol.address, market.address, ethers.utils.parseEther('0.1'))
+          .withArgs(carol.address, market.address, ethers.utils.parseEther('10'))
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(daniel.address, market.address, ethers.utils.parseEther('0.7'))
+          .withArgs(daniel.address, market.address, ethers.utils.parseEther('70'))
         const _receipt = await ethers.provider.getTransactionReceipt(_tx.hash)
         // set gas used
         const gasUsed = _receipt.cumulativeGasUsed
@@ -443,16 +443,16 @@ describe('Integration Test', () => {
         expect(await staking.connect(ellie).ownerOf(4)).to.be.equals(alice.address)
         // check balance of MTE
         expect(await protocol.connect(ellie).balanceOfStaking(alice.address)).to.be.deep.equals(
-          ethers.utils.parseEther('0.1')
+          ethers.utils.parseEther('10')
         )
         expect(await protocol.connect(ellie).balanceOfStaking(bob.address)).to.be.deep.equals(
-          ethers.utils.parseEther('200.1')
+          ethers.utils.parseEther('210')
         )
         expect(await protocol.connect(ellie).balanceOfStaking(carol.address)).to.be.deep.equals(
-          ethers.utils.parseEther('200.1')
+          ethers.utils.parseEther('210')
         )
         expect(await protocol.connect(ellie).balanceOfStaking(daniel.address)).to.be.deep.equals(
-          ethers.utils.parseEther('100.7')
+          ethers.utils.parseEther('170')
         )
         // set sale
         if (sales[0]) {
@@ -464,7 +464,7 @@ describe('Integration Test', () => {
         stakingOfAlice.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: ethers.utils.parseEther('0.1'),
+          price: ethers.utils.parseEther('10'),
         })
         if (stakingOfBob[1]) {
           stakingOfBob[1].endBlock = await ethers.provider.getBlockNumber()
@@ -472,7 +472,7 @@ describe('Integration Test', () => {
         stakingOfBob.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: (stakingOfBob[1] as StakingInfo).price.add(ethers.utils.parseEther('0.1')),
+          price: (stakingOfBob[1] as StakingInfo).price.add(ethers.utils.parseEther('10')),
         })
         if (stakingOfCarol[0]) {
           stakingOfCarol[0].endBlock = await ethers.provider.getBlockNumber()
@@ -480,7 +480,7 @@ describe('Integration Test', () => {
         stakingOfCarol.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: (stakingOfCarol[0] as StakingInfo).price.add(ethers.utils.parseEther('0.1')),
+          price: (stakingOfCarol[0] as StakingInfo).price.add(ethers.utils.parseEther('10')),
         })
         if (stakingOfDaniel[0]) {
           stakingOfDaniel[0].endBlock = await ethers.provider.getBlockNumber()
@@ -488,7 +488,7 @@ describe('Integration Test', () => {
         stakingOfDaniel.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: (stakingOfDaniel[0] as StakingInfo).price.add(ethers.utils.parseEther('0.7')),
+          price: (stakingOfDaniel[0] as StakingInfo).price.add(ethers.utils.parseEther('70')),
         })
       })
       it('ellie purchases saleId 2', async () => {
@@ -501,16 +501,16 @@ describe('Integration Test', () => {
         await expect(_tx).to.emit(fanfic, 'Transfer').withArgs(daniel.address, ellie.address, 2)
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(alice.address, market.address, ethers.utils.parseEther('0.2'))
+          .withArgs(alice.address, market.address, ethers.utils.parseEther('20'))
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(bob.address, market.address, ethers.utils.parseEther('0.2'))
+          .withArgs(bob.address, market.address, ethers.utils.parseEther('20'))
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(carol.address, market.address, ethers.utils.parseEther('0.2'))
+          .withArgs(carol.address, market.address, ethers.utils.parseEther('20'))
         await expect(_tx)
           .to.emit(protocol, 'Stake')
-          .withArgs(daniel.address, market.address, ethers.utils.parseEther('1.4'))
+          .withArgs(daniel.address, market.address, ethers.utils.parseEther('140'))
         const _receipt = await ethers.provider.getTransactionReceipt(_tx.hash)
         // set gas used
         const gasUsed = _receipt.cumulativeGasUsed
@@ -539,16 +539,16 @@ describe('Integration Test', () => {
         )
         // check balance of MTE
         expect(await protocol.connect(ellie).balanceOfStaking(alice.address)).to.be.deep.equals(
-          ethers.utils.parseEther('0.3')
+          ethers.utils.parseEther('30')
         )
         expect(await protocol.connect(ellie).balanceOfStaking(bob.address)).to.be.deep.equals(
-          ethers.utils.parseEther('200.3')
+          ethers.utils.parseEther('230')
         )
         expect(await protocol.connect(ellie).balanceOfStaking(carol.address)).to.be.deep.equals(
-          ethers.utils.parseEther('200.3')
+          ethers.utils.parseEther('230')
         )
         expect(await protocol.connect(ellie).balanceOfStaking(daniel.address)).to.be.deep.equals(
-          ethers.utils.parseEther('102.1')
+          ethers.utils.parseEther('310')
         )
         // set sale
         if (sales[1]) {
@@ -563,7 +563,7 @@ describe('Integration Test', () => {
         stakingOfAlice.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: (stakingOfAlice[0] as StakingInfo).price.add(ethers.utils.parseEther('0.2')),
+          price: (stakingOfAlice[0] as StakingInfo).price.add(ethers.utils.parseEther('20')),
         })
         if (stakingOfBob[2]) {
           stakingOfBob[2].endBlock = await ethers.provider.getBlockNumber()
@@ -571,7 +571,7 @@ describe('Integration Test', () => {
         stakingOfBob.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: (stakingOfBob[2] as StakingInfo).price.add(ethers.utils.parseEther('0.2')),
+          price: (stakingOfBob[2] as StakingInfo).price.add(ethers.utils.parseEther('20')),
         })
         if (stakingOfCarol[1]) {
           stakingOfCarol[1].endBlock = await ethers.provider.getBlockNumber()
@@ -579,7 +579,7 @@ describe('Integration Test', () => {
         stakingOfCarol.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: (stakingOfCarol[1] as StakingInfo).price.add(ethers.utils.parseEther('0.2')),
+          price: (stakingOfCarol[1] as StakingInfo).price.add(ethers.utils.parseEther('20')),
         })
         if (stakingOfDaniel[1]) {
           stakingOfDaniel[1].endBlock = await ethers.provider.getBlockNumber()
@@ -587,7 +587,7 @@ describe('Integration Test', () => {
         stakingOfDaniel.push({
           startBlock: await ethers.provider.getBlockNumber(),
           endBlock: 0,
-          price: (stakingOfDaniel[1] as StakingInfo).price.add(ethers.utils.parseEther('1.4')),
+          price: (stakingOfDaniel[1] as StakingInfo).price.add(ethers.utils.parseEther('140')),
         })
       })
     })
@@ -645,7 +645,7 @@ describe('Integration Test', () => {
     describe('[success]', () => {
       it('alice', async () => {
         expect(await protocol.connect(alice).balanceOfStaking(alice.address)).to.be.deep.equals(
-          ethers.utils.parseEther('0.3')
+          ethers.utils.parseEther('30')
         )
         let totalReward = BigNumber.from(0)
         for (let i = 0; i < stakingOfAlice.length; i++) {
@@ -661,7 +661,7 @@ describe('Integration Test', () => {
       })
       it('bob', async () => {
         expect(await protocol.connect(bob).balanceOfStaking(bob.address)).to.be.deep.equals(
-          ethers.utils.parseEther('200.3')
+          ethers.utils.parseEther('230')
         )
         let totalReward = BigNumber.from(0)
         for (let i = 0; i < stakingOfBob.length; i++) {
@@ -677,7 +677,7 @@ describe('Integration Test', () => {
       })
       it('carol', async () => {
         expect(await protocol.connect(carol).balanceOfStaking(carol.address)).to.be.deep.equals(
-          ethers.utils.parseEther('200.3')
+          ethers.utils.parseEther('230')
         )
         let totalReward = BigNumber.from(0)
         for (let i = 0; i < stakingOfCarol.length; i++) {
@@ -693,7 +693,7 @@ describe('Integration Test', () => {
       })
       it('daniel', async () => {
         expect(await protocol.connect(daniel).balanceOfStaking(daniel.address)).to.be.deep.equals(
-          ethers.utils.parseEther('102.1')
+          ethers.utils.parseEther('310')
         )
         let totalReward = BigNumber.from(0)
         for (let i = 0; i < stakingOfDaniel.length; i++) {

@@ -52,6 +52,14 @@ interface IProtocol {
     ) external payable;
 
     /**
+     * @dev rate of liquidity which pool is ETH and MTE.
+     * 10000    ->  ETH : MTE  =  1   : 1
+     * 1000000  ->  ETH : MTE  =  100 : 1
+     * 100      ->  ETH : MTE  =  1   : 100
+     */
+    function rateOfLiquidity() external pure returns (uint256);
+
+    /**
      * @dev set MTE token address.
      */
     function setMteToken(address mteToken) external;
