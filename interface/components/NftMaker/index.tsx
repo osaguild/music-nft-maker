@@ -51,7 +51,7 @@ const NftMaker: FunctionComponent = () => {
 
   return (
     <Box textAlign="center">
-      <Button verticalAlign="bottom" onClick={onOpen} mt={10}>
+      <Button verticalAlign="bottom" onClick={onOpen}>
         Make New
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>

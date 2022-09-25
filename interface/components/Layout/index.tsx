@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from 'react'
-import { Container, Text, Box } from '@chakra-ui/react'
+import { Container, Text, Box, Button, Stack } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import { Alert } from '../Alert'
 import { Header } from './Header'
@@ -52,10 +52,15 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
         ) : pattern === 'MEMBER' ? (
           <Box textAlign="center">
             <Portfolio />
-            <Text fontSize="2xl" my="30">
+            <Stack spacing="5" direction="row" justify="center" mt="10">
+              <Button verticalAlign="bottom" onClick={() => alert('withdraw is clicked!')}>
+                With Draw
+              </Button>
+              <NftMaker />
+            </Stack>
+            <Text fontSize="3xl" mt="50" className="web3-title">
               Created Music
             </Text>
-            <NftMaker />
             <Collection pattern="ERC721" items={items} />
           </Box>
         ) : (

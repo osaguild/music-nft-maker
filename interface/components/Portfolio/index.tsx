@@ -7,7 +7,7 @@ const Portfolio: FunctionComponent = () => {
 
   return (
     <>
-      <Text fontSize="2xl">Portfolio</Text>
+      <Text fontSize="3xl" className="web3-title" my="5">Portfolio</Text>
       <Spacer />
       <Stack spacing={10} direction="row">
         <Stat>
@@ -27,11 +27,6 @@ const Portfolio: FunctionComponent = () => {
           <StatNumber>{reward} MTE</StatNumber>
         </Stat>
       </Stack>
-      <Box textAlign="center">
-        <Button verticalAlign="bottom" onClick={() => alert('withdraw is clicked!')}>
-          With Draw
-        </Button>
-      </Box>
     </>
   )
 }
