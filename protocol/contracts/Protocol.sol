@@ -57,9 +57,6 @@ contract Protocol is Ownable, IProtocol {
             emit Stake(receivers[i], _market, royaltyAmounts[i]);
             ownerReward -= royaltyAmounts[i];
         }
-        // stake to owner
-        _stake(FanficToken(_fanficToken).ownerOf(sale.tokenId), ownerReward);
-        emit Stake(FanficToken(_fanficToken).ownerOf(sale.tokenId), _market, ownerReward);
     }
 
     /**
