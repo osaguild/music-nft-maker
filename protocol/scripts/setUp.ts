@@ -15,8 +15,8 @@ async function main() {
   console.log('FanficToken.setOriginToken:', address.ORIGIN_CONTRACT)
   await FanficToken__factory.connect(address.FANFIC_CONTRACT, deployer).setProtocol(address.PROTOCOL_CONTRACT)
   console.log('FanficToken.setProtocol:', address.PROTOCOL_CONTRACT)
-  await FanficToken__factory.connect(address.FANFIC_CONTRACT, deployer).setDefaultRoyalty(address.SUB_4_ACCOUNT, 1000)
-  console.log('FanficToken.setDefaultRoyalty:', address.SUB_4_ACCOUNT, 1000)
+  //await FanficToken__factory.connect(address.FANFIC_CONTRACT, deployer).setDefaultRoyalty(address.SUB_4_ACCOUNT, 1000)
+  //console.log('FanficToken.setDefaultRoyalty:', address.SUB_4_ACCOUNT, 1000)
 
   // set up Market
   await Market__factory.connect(address.MARKET_CONTRACT, deployer).setFanficToken(address.FANFIC_CONTRACT)
