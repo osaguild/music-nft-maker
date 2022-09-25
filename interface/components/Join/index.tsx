@@ -46,7 +46,7 @@ const Join: FunctionComponent = () => {
     <Box textAlign="center" my={10}>
       <Text fontSize="xl">
         Please join our ecosystem. If you are member, click{' '}
-        <Link onClick={() => router.push('/member')} color="teal.500">
+        <Link onClick={() => router.push('/member')} className="web3-text">
           here
         </Link>{' '}
         for member page.
