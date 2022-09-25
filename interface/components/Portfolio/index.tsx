@@ -3,7 +3,7 @@ import { Box, Button, Text, Stat, StatLabel, StatNumber, Stack, Spacer } from '@
 import { usePortfolio } from '../../hooks/Portfolio'
 
 const Portfolio: FunctionComponent = () => {
-  const { total, stake, sale } = usePortfolio()
+  const { total, own, staking, reward } = usePortfolio()
 
   return (
     <>
@@ -15,12 +15,16 @@ const Portfolio: FunctionComponent = () => {
           <StatNumber>{total} MTE</StatNumber>
         </Stat>
         <Stat>
-          <StatLabel>Stake</StatLabel>
-          <StatNumber>{stake} MTE</StatNumber>
+          <StatLabel>Own</StatLabel>
+          <StatNumber>{own} MTE</StatNumber>
         </Stat>
         <Stat>
-          <StatLabel>Sale</StatLabel>
-          <StatNumber>{sale} MTE</StatNumber>
+          <StatLabel>Staking</StatLabel>
+          <StatNumber>{staking} MTE</StatNumber>
+        </Stat>
+        <Stat>
+          <StatLabel>Reward</StatLabel>
+          <StatNumber>{reward} MTE</StatNumber>
         </Stat>
       </Stack>
       <Box textAlign="center">
