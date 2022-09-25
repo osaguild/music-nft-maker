@@ -26,9 +26,4 @@ interface IFanficToken {
      * @dev set protocol address.
      */
     function setProtocol(address protocol) external;
-
-    /**
-     * @dev Sets the royalty information that all ids in this contract will default to.
-     */
-    function setDefaultRoyalty(address receiver, uint16 feeNumerator) external;
 }

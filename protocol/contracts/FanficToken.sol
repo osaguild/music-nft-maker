@@ -46,10 +46,13 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
         _mint(msg.sender, _tokenIds.current());
         _setTokenURI(_tokenIds.current(), tokenURI);
         _originIds[_tokenIds.current()] = originIds;
+        uint16 ownerFee = _feeDenominator();
         for (uint256 i = 0; i < originIds.length; i++) {
             // set 10% royality every origin token owner
             _addRoyaltyInfo(_tokenIds.current(), OriginToken(_originToken).ownerOf(originIds[i]), 1000);
+            ownerFee -= 1000;
         }
+        _addRoyaltyInfo(_tokenIds.current(), _msgSender(), ownerFee);
         return _tokenIds.current();
     }
 
@@ -79,12 +82,5 @@ contract FanficToken is ERC721URIStorage, ERC2981MultipleRoyalties, Ownable, IFa
      */
     function setProtocol(address protocol) external override onlyOwner {
         _protocol = protocol;
-    }
-
-    /**
-     * @inheritdoc IFanficToken
-     */
-    function setDefaultRoyalty(address receiver, uint16 feeNumerator) external override onlyOwner {
-        _setDefaultRoyalty(receiver, feeNumerator);
     }
 }

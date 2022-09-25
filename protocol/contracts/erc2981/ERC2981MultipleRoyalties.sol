@@ -15,7 +15,6 @@ abstract contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165 
         uint16 royaltyFraction;
     }
 
-    RoyaltyInfo private _defaultRoyaltyInfo;
     mapping(uint256 => RoyaltyInfo[]) private _tokenRoyaltyInfo;
 
     /**
@@ -39,51 +38,19 @@ abstract contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165 
         uint256[] memory royaltyAmounts;
 
         // set royalty info
-        if (_defaultRoyaltyInfo.receiver == address(0) && _tokenRoyaltyInfo[tokenId].length == 0) {
+        if (_tokenRoyaltyInfo[tokenId].length == 0) {
             receivers = new address[](0);
             royaltyAmounts = new uint256[](0);
-        } else if (_defaultRoyaltyInfo.receiver == address(0) && _tokenRoyaltyInfo[tokenId].length != 0) {
+        } else if (_tokenRoyaltyInfo[tokenId].length != 0) {
             receivers = new address[](_tokenRoyaltyInfo[tokenId].length);
             royaltyAmounts = new uint256[](_tokenRoyaltyInfo[tokenId].length);
             for (uint256 i = 0; i < _tokenRoyaltyInfo[tokenId].length; i++) {
                 receivers[i] = _tokenRoyaltyInfo[tokenId][i].receiver;
                 royaltyAmounts[i] = (salePrice * _tokenRoyaltyInfo[tokenId][i].royaltyFraction) / _feeDenominator();
             }
-        } else if (_defaultRoyaltyInfo.receiver != address(0) && _tokenRoyaltyInfo[tokenId].length == 0) {
-            receivers = new address[](1);
-            royaltyAmounts = new uint256[](1);
-            receivers[0] = _defaultRoyaltyInfo.receiver;
-            royaltyAmounts[0] = (salePrice * _defaultRoyaltyInfo.royaltyFraction) / _feeDenominator();
-        } else {
-            receivers = new address[](1 + _tokenRoyaltyInfo[tokenId].length);
-            royaltyAmounts = new uint256[](1 + _tokenRoyaltyInfo[tokenId].length);
-            receivers[0] = _defaultRoyaltyInfo.receiver;
-            royaltyAmounts[0] = (salePrice * _defaultRoyaltyInfo.royaltyFraction) / _feeDenominator();
-            for (uint256 i = 0; i < _tokenRoyaltyInfo[tokenId].length; i++) {
-                receivers[i + 1] = _tokenRoyaltyInfo[tokenId][i].receiver;
-                royaltyAmounts[i + 1] = (salePrice * _tokenRoyaltyInfo[tokenId][i].royaltyFraction) / _feeDenominator();
-            }
         }
 
         return (receivers, royaltyAmounts);
-    }
-
-    /**
-     * @dev Sets the royalty information that all ids in this contract will default to.
-     */
-    function _setDefaultRoyalty(address receiver, uint16 feeNumerator) internal {
-        require(feeNumerator <= _feeDenominator(), "ERC2981: over denominator");
-        require(receiver != address(0), "ERC2981: invalid receiver");
-        _defaultRoyaltyInfo = RoyaltyInfo(receiver, feeNumerator);
-        emit SetDefaultRoyalty(receiver, feeNumerator);
-    }
-
-    /**
-     * @dev Removes default royalty information.
-     */
-    function _deleteDefaultRoyalty() internal {
-        delete _defaultRoyaltyInfo;
-        emit DeleteDefaultRoyalty();
     }
 
     /**
@@ -96,9 +63,6 @@ abstract contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165 
     ) internal {
         // count total fee
         uint16 totalFeeNumerator = feeNumerator;
-        if (_defaultRoyaltyInfo.receiver != address(0)) {
-            totalFeeNumerator += _defaultRoyaltyInfo.royaltyFraction;
-        }
         for (uint256 i = 0; i < _tokenRoyaltyInfo[tokenId].length; i++) {
             totalFeeNumerator += _tokenRoyaltyInfo[tokenId][i].royaltyFraction;
         }

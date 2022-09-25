@@ -17,19 +17,9 @@ interface IERC2981MultipleRoyalties is IERC165 {
         returns (address[] memory receivers, uint256[] memory royaltyAmounts);
 
     /**
-     * @dev Emit event of setDefaultRoyalty
-     */
-    event SetDefaultRoyalty(address receiver, uint16 feeNumerator);
-
-    /**
      * @dev Emit event of addRoyaltyInfo
      */
     event AddRoyaltyInfo(uint256 tokenId, address receiver, uint16 feeNumerator);
-
-    /**
-     * @dev Emit event of deleteDefaultRoyalty
-     */
-    event DeleteDefaultRoyalty();
 
     /**
      * @dev Emit event of resetTokenRoyalty
