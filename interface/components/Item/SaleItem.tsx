@@ -15,11 +15,12 @@ import {
   Container,
   Wrap,
   WrapItem,
+  Link,
 } from '@chakra-ui/react'
 import { useContract } from '../../hooks/Contract'
 import { BigNumber, ethers } from 'ethers'
 import { fetchOrigin } from '../../lib/fetch'
-import { OriginItem } from './OriginItem'
+import { Collection } from '../Collection'
 
 interface SaleItemProps {
   sale: Sale
@@ -87,12 +88,10 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
       <Text fontSize="l" textAlign="center" position="absolute" height="30px" color="black" w="350px" mt={2}>
         {`id: ${sale.id} / price:${sale.price} ETH`}
       </Text>
-      <Box textAlign="center" w="350px" height="30px" position="absolute" mt="300px">
-        <Button onClick={onOpen} color="black">
-          Info
-        </Button>
-      </Box>
-      <Image src={image} alt="fanfic token image" />
+      <Link onClick={onOpen}>
+        <Image src={image} alt="sale token image" />
+      </Link>
+      <Box as="video" controls src={sound} width="350px" height="50px" mt="-50px" />
       <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent>
@@ -131,18 +130,10 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
               <Text fontSize="3xl" textAlign="center" mt="50" className="web3-title">
                 Original Music
               </Text>
-              <Wrap spacing="30px" justify="center" my="50">
-                {origins?.map((e, i) => (
-                  <WrapItem border="2px" data-testid={`item-${e.id}`} key={i}>
-                    <OriginItem origin={e} />
-                  </WrapItem>
-                ))}
-              </Wrap>
+              <Collection pattern="ERC721" items={origins} />
             </Container>
           </ModalBody>
-          <ModalFooter textAlign="center">
-            <Button onClick={onClose}>close</Button>
-          </ModalFooter>
+          <ModalFooter textAlign="center"></ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

@@ -45,7 +45,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
             <Text fontSize="3xl" textAlign="center" mt="50" className="web3-title">
               Market Place
             </Text>
-            <Collection pattern="ON_SALE" items={items} />
+            <Collection pattern="SALE" items={items} />
           </Box>
         ) : pattern === 'MEMBER' ? (
           <Box textAlign="center">
@@ -54,7 +54,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
               Created Music
             </Text>
             <NftMaker />
-            <Collection pattern="OWN_TOKEN" items={items} />
+            <Collection pattern="ERC721" items={items} />
           </Box>
         ) : (
           <></>

@@ -9,21 +9,19 @@ interface CollectionProps {
   items: Sale[] | Erc721[]
 }
 
-type Pattern = 'ON_SALE' | 'OWN_TOKEN' | 'RELATED_ORIGIN'
+type Pattern = 'SALE' | 'ERC721'
 
 const Collection: FunctionComponent<CollectionProps> = ({ pattern, items }) => {
   return (
-    <Wrap spacing="30px" justify="center">
+    <Wrap spacing="30px" justify="center" mt="10">
       {items.map((e, i) => (
         <WrapItem key={i}>
-          {pattern === 'ON_SALE' ? (
+          {pattern === 'SALE' ? (
             <SaleItem sale={e as Sale} />
-          ) : pattern === 'OWN_TOKEN' && !isFanfic(e as Erc721) ? (
+          ) : pattern === 'ERC721' && !isFanfic(e as Erc721) ? (
             <OriginItem origin={e as Origin} />
-          ) : pattern === 'OWN_TOKEN' && isFanfic(e as Erc721) ? (
+          ) : pattern === 'ERC721' && isFanfic(e as Erc721) ? (
             <FanficItem fanfic={e as Fanfic} />
-          ) : pattern === 'RELATED_ORIGIN' ? (
-            <OriginItem origin={e as Origin} />
           ) : (
             <></>
           )}
