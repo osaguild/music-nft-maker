@@ -10,7 +10,7 @@ async function main() {
 
   // deploy Protocol
   const protocolFactory = await ethers.getContractFactory('Protocol')
-  const protocol = await protocolFactory.deploy(deployer.address, 2000) // APY is 20%
+  const protocol = await protocolFactory.deploy(deployer.address, 1) // 0.01%/block means 3156.6 APY
   console.log('Protocol address:', protocol.address)
 
   // deploy StakingToken !! need protocol address !!
