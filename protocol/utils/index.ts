@@ -1,5 +1,5 @@
 import { calcReward, calcRoyalty } from './calc'
-import { address } from './config'
+import { address, uri } from './config'
 import { convertAddress } from './converter'
 import { printBalance, printRoyalty } from './print'
 import { Balance, RoyaltyInfo, Address, StakingInfo, SaleInfo } from './type'
@@ -14,6 +14,7 @@ export {
   Balance,
   RoyaltyInfo,
   Address,
+  uri,
   StakingInfo,
   SaleInfo,
 }

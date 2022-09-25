@@ -17,10 +17,13 @@ const withdraw = async (protocol: Protocol, mte: MteToken, to: string, amount: B
 }
 
 async function main() {
+  // account check
+  const sub_1 = (await ethers.getSigners())[0] as SignerWithAddress
+  console.log('sub_1 balance:', ethers.utils.formatEther(await sub_1.getBalance()), 'ETH')
+
   // set up
-  const deployer = (await ethers.getSigners())[0] as SignerWithAddress
-  const protocol = await Protocol__factory.connect(address.PROTOCOL_CONTRACT, deployer)
-  const mte = await MteToken__factory.connect(address.MTE_CONTRACT, deployer)
+  const protocol = await Protocol__factory.connect(address.PROTOCOL_CONTRACT, sub_1)
+  const mte = await MteToken__factory.connect(address.MTE_CONTRACT, sub_1)
   // faucet
   await withdraw(protocol, mte, address.SUB_1_ACCOUNT, ethers.utils.parseEther('100'))
   await withdraw(protocol, mte, address.SUB_2_ACCOUNT, ethers.utils.parseEther('100'))

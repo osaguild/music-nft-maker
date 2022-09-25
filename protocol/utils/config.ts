@@ -14,4 +14,8 @@ const address = {
   ZERO_ADDRESS: '0x0000000000000000000000000000000000000000',
 }
 
-export { address }
+const uri = {
+  ORIGIN_URI: process.env.ORIGIN_URI,
+  FANFIC_URI: process.env.FANFIC_URI,
+}
+export { address, uri }
