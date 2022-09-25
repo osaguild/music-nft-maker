@@ -18,7 +18,6 @@ const usePortfolio = () => {
         protocol.balanceOfReward(account),
         mteToken.balanceOf(account),
       ]).then(([staking, reward, own]) => {
-        console.log('Promise.all:', staking, reward, own)
         setStaking(Number(ethers.utils.formatEther(staking)))
         setReward(Number(ethers.utils.formatEther(reward)))
         setOwn(Number(ethers.utils.formatEther(own)))

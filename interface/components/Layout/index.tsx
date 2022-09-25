@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Container, Text, Box } from '@chakra-ui/react'
+import { useWeb3React } from '@web3-react/core'
 import { Alert } from '../Alert'
 import { Header } from './Header'
 import { Collection } from '../Collection'
@@ -7,9 +8,9 @@ import { Footer } from './Footer'
 import { Join } from '../Join'
 import { Portfolio } from '../Portfolio'
 import { NftMaker } from '../NftMaker'
+import { Kpi } from '../Kpi'
 import { useContract } from '../../hooks/Contract'
 import { fetchOnSales, fetchOwns } from '../../lib/fetch'
-import { useWeb3React } from '@web3-react/core'
 
 interface LayoutProps {
   pattern: 'TOP' | 'MEMBER'
@@ -41,6 +42,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
             <Text fontSize="6xl" textAlign="center" my="30" className="web3-title" data-testid="text">
               Music Token Economy
             </Text>
+            <Kpi />
             <Join />
             <Text fontSize="3xl" textAlign="center" mt="50" className="web3-title">
               Market Place
