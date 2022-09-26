@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useContract } from '../Contract'
 import { ethers } from 'ethers'
-import { address } from '../../config'
 
 const useKpi = () => {
   const [stakerCount, setStakerCount] = useState<number>()

@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { Box, Button, Text, Stat, StatLabel, StatNumber, Stack, Spacer } from '@chakra-ui/react'
+import { Text, Stat, StatLabel, StatNumber, Stack, Spacer } from '@chakra-ui/react'
 import { usePortfolio } from '../../hooks/Portfolio'
 
 const Portfolio: FunctionComponent = () => {
@@ -7,7 +7,9 @@ const Portfolio: FunctionComponent = () => {
 
   return (
     <>
-      <Text fontSize="3xl" className="web3-title" my="5">Portfolio</Text>
+      <Text fontSize="3xl" className="web3-title" my="5">
+        Portfolio
+      </Text>
       <Spacer />
       <Stack spacing={10} direction="row">
         <Stat>
