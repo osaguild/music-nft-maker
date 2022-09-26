@@ -97,6 +97,19 @@ contract Protocol is Ownable, IProtocol {
     /**
      * @inheritdoc IProtocol
      */
+    function totalStaking() external view override returns (uint256) {
+        uint256 totalAmount = 0;
+        for (uint256 i = 1; i <= _stakingId.current(); i++) {
+            if (_stakings[i].endBlockNumber == 0) {
+                totalAmount += _stakings[i].value;
+            }
+        }
+        return totalAmount;
+    }
+
+    /**
+     * @inheritdoc IProtocol
+     */
     function mintable(address account) external view override returns (bool) {
         Staking memory staking = _currentStaking(account);
         return staking.value > 0;

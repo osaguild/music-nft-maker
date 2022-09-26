@@ -165,6 +165,9 @@ describe('Integration Test', () => {
           price: (stakingOfBob[0] as StakingInfo).price.add(ethers.utils.parseEther('100')),
         })
       })
+      it('check total staking', async () => {
+        expect(await protocol.connect(bob).totalStaking()).to.be.equals(ethers.utils.parseEther('500'))
+      })
     })
     describe('[failed]', () => {
       it('can not mint if the approval amount is zero', async () => {
@@ -661,6 +664,10 @@ describe('Integration Test', () => {
         }
         expect(await protocol.connect(daniel).balanceOfReward(daniel.address)).to.be.deep.equals(totalReward)
       })
+      it('total staking', async () => {
+        expect(await protocol.connect(bob).totalStaking()).to.be.equals(ethers.utils.parseEther('800'))
+      })
+
     })
   })
   describe('9.withdraw', () => {

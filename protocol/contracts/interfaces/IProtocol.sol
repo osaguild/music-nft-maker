@@ -38,6 +38,11 @@ interface IProtocol {
     function balanceOfReward(address account) external view returns (uint256);
 
     /**
+     * @dev total staking amount.
+     */
+    function totalStaking() external view returns (uint256);
+
+    /**
      * @dev check whether account can mint oringin token and fanfic token.
      */
     function mintable(address account) external view returns (bool);
