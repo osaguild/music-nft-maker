@@ -15,7 +15,8 @@ const address = {
 }
 
 const uri = {
-  ORIGIN_URI: process.env.ORIGIN_URI,
-  FANFIC_URI: process.env.FANFIC_URI,
+  ORIGIN_URI: process.env.ORIGIN_URI as string,
+  FANFIC_URI: process.env.FANFIC_URI as string,
 }
+
 export { address, uri }

@@ -68,7 +68,7 @@ async function main() {
   await Protocol__factory.connect(address.PROTOCOL_CONTRACT, sub_2).stake(ethers.utils.parseEther('100'))
   console.log('complete to stake 100 MTE from sub_2')
 
-  await MteToken__factory.connect(address.MTE_CONTRACT, sub_2).approve(
+  await MteToken__factory.connect(address.MTE_CONTRACT, sub_3).approve(
     address.PROTOCOL_CONTRACT,
     ethers.utils.parseEther('100')
   )

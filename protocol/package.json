@@ -21,7 +21,7 @@
     "check-balance": "hardhat run scripts/checkBalance.ts --network goerli",
     "deploy": "hardhat run scripts/deploy.ts --network goerli",
     "setup": "hardhat run scripts/setup.ts --network goerli",
-    "runTransactions": "hardhat run scripts/runTransactions.ts --network goerli",
+    "run-tran": "hardhat run scripts/runTransactions.ts --network goerli",
     "verify": "hardhat verify --network goerli",
     "copy": "run-s copy:typechain copy:env",
     "copy:typechain": "cp -rf ./typechain-types ../interface",
