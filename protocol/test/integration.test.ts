@@ -667,7 +667,6 @@ describe('Integration Test', () => {
       it('total staking', async () => {
         expect(await protocol.connect(bob).totalStaking()).to.be.equals(ethers.utils.parseEther('800'))
       })
-
     })
   })
   describe('9.withdraw', () => {
