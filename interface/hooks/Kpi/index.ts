@@ -8,13 +8,13 @@ const useKpi = () => {
   const [stakingAmount, setStakingAmount] = useState<number>()
   const [originCount, setOriginCount] = useState<number>()
   const [fanficCount, setFanficCount] = useState<number>()
-  const { fanficToken, originToken, mteToken, stakingToken } = useContract()
+  const { fanficToken, originToken, protocol, stakingToken } = useContract()
 
   useEffect(() => {
-    if (fanficToken && originToken && mteToken && stakingToken) {
+    if (fanficToken && originToken && protocol && stakingToken) {
       Promise.all([
         stakingToken.totalSupply(),
-        mteToken.balanceOf(address().PROTOCOL_CONTRACT),
+        protocol.totalStaking(),
         originToken.totalSupply(),
         fanficToken.totalSupply(),
       ]).then(([staker, staking, origin, fanfic]) => {
@@ -24,7 +24,7 @@ const useKpi = () => {
         setFanficCount(fanfic.toNumber())
       })
     }
-  }, [fanficToken, originToken, mteToken, stakingToken])
+  }, [fanficToken, originToken, protocol, stakingToken])
 
   return { stakerCount, stakingAmount, fanficCount, originCount }
 }
