@@ -28,9 +28,15 @@ we create product to solve the following issues in the music industry.
 
 our architecture and ecosystem flow
 
-![mainImg](./assets/architecture.png)
+![architecture](./assets/architecture.png)
 
 ## Technology stacks
 
 - Front : react / next.js / chakra-ui / ethers.js / web3-react
 - Smart Contract : solidity / hardhat / openzeppelin / erc20 / etc721 / etc2981
+
+## Smart contract
+
+there are class diagram of our smart contract
+
+![classDiagram](./protocol/classDiagram.svg)
