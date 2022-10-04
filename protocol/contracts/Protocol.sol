@@ -116,24 +116,24 @@ contract Protocol is Ownable, IProtocol {
     }
 
     /**
-     * @dev IProtocol
-     * !!! this is test function. just send ETH and MTE to specified address from contract !!!
-     * todo: implement to provide liquidity to ETH-MTE pool of uniswap.
+     * @inheritdoc IProtocol
      */
     function provideLiquidity(
         address payable to,
         uint256 ethAmount,
         uint256 mteAmount
     ) external payable override onlyOwner {
+        // !!! this is test function. just send ETH and MTE to specified address from contract !!!
+        // todo: implement to provide liquidity to ETH-MTE pool of uniswap.
         to.transfer(ethAmount);
         MteToken(_mteToken).mint(to, mteAmount);
     }
 
     /**
-     * @dev IProtocol
-     * todo: implement me.
+     * @inheritdoc IProtocol
      */
     function rateOfLiquidity() public pure override returns (uint256) {
+        // todo: implement me.
         return 1; // return constant rate for test.
     }
 

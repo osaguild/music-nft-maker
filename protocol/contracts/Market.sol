@@ -99,6 +99,9 @@ contract Market is Ownable, IMarket {
         return _sales[saleId];
     }
 
+    /**
+     * @dev return current sale of tokenId
+     */
     function _currentSale(uint256 tokenId) internal view returns (Sale memory) {
         for (uint256 i = _saleIds.current(); i > 0; i--) {
             if (_sales[i].tokenId == tokenId) {

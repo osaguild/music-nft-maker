@@ -18,7 +18,7 @@ contract StakingToken is ERC721URIStorage, Ownable, IStakingToken {
     }
 
     /**
-     * @dev mint the staking nft and send to the address
+     * @inheritdoc IStakingToken
      */
     function mint(address to, string memory tokenURI) external onlyOwner returns (uint256) {
         _tokenIds.increment();
@@ -28,7 +28,7 @@ contract StakingToken is ERC721URIStorage, Ownable, IStakingToken {
     }
 
     /**
-     * @dev burn the staking token
+     * @inheritdoc IStakingToken
      */
     function burn(uint256 tokenId) external onlyOwner {
         _burn(tokenId);
