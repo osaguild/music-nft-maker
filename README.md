@@ -9,8 +9,28 @@ token economy for music creators, secondary creators and members who join in the
 
 - music creators provide original music to ecosystem as a NFT which is called "Origin Token".
 - member of ecosystem can create secondary creation as NFT which is called "Fanfic Token" using the original music provided. e.g playlists or remix music.
-- secondary creation are sold in the market, and proceeds are distributed among creators, secondary creator, and ecosystem.
+- secondary creation are sold in the market, and proceeds are distributed among creators, secondary creator
+- with nft, it is easy to see who is using the original music and how much they are profiting from the market.
 - in order to join the ecosystem, you need to staking token which is called "MTE = Music Token Ecosystem" to contract.
 - the staked MTE will be rewarded according to the staking period, and user will receive an incentive for continuing to participate in the ecosystem.
 - MTE are provided in pairs with native tokens and can be exchanged in the DEX.
-- The proceeds from the sale are locked as a reward for the contract and can be withdrawn at any time. locking the proceeds in the contract allows you to control when the proceeds are taxed as income.
+- The proceeds from the sale are locked as a MTE reward and can be withdrawn at any time. locking the proceeds in the contract allows you to control when the proceeds are taxed as income.
+
+## Issues
+
+we create product to solve the following issues in the music industry.
+
+1. **Centralized platform dependence** : you have to depend on the platform to sell music
+2. **No profit sharing to the creators** : the platform takes all the profit
+3. **Excessive rights protection** : rights protections is hindering the expansion of the secondary market
+
+## Architecture
+
+our architecture and ecosystem flow
+
+![mainImg](./assets/architecture.png)
+
+## Technology stacks
+
+- Front : react / next.js / chakra-ui / ethers.js / web3-react
+- Smart Contract : solidity / hardhat / openzeppelin / erc20 / etc721 / etc2981
