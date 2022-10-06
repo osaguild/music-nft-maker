@@ -10,12 +10,7 @@ import "./IERC2981MultipleRoyalties.sol";
  * @dev Implementation of the NFT Royalty Standard, a standardized way to retrieve royalty payment information. enable to set multiple royalties
  */
 abstract contract ERC2981MultipleRoyalties is IERC2981MultipleRoyalties, ERC165 {
-    struct RoyaltyInfo {
-        address receiver;
-        uint16 royaltyFraction;
-    }
-
-    mapping(uint256 => RoyaltyInfo[]) private _tokenRoyaltyInfo;
+    mapping(uint256 => IERC2981MultipleRoyalties.RoyaltyInfo[]) private _tokenRoyaltyInfo;
 
     /**
      * @dev See {IERC165-supportsInterface}.
