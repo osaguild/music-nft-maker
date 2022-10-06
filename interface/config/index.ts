@@ -1,4 +1,4 @@
-const networks: Network[] = [{ chainId: 5, name: 'Goerli', icon: '/assets/eth-diamond-black-white.jpeg' }]
+const networks = [{ chainId: 5, name: 'Goerli', icon: '/assets/eth-diamond-black-white.jpeg' }]
 
 const address = (): Config => {
   const protocol = (): string => {

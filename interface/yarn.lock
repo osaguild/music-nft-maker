@@ -3868,10 +3868,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@osaguild/wallet@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@osaguild/wallet/-/wallet-0.1.2.tgz#211097803cc4fa5880df105e4e11a3df2cf085d2"
-  integrity sha512-+0n5DHmmgZPBIM0pwnF8wVK5UUyU4bWF5H6rGx+JJl6WFe/3u0Uzjw6oP6fSyA76XB1E3WhPBfQuld5wDchRhg==
+"@osaguild/wallet@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@osaguild/wallet/-/wallet-0.1.3.tgz#880a31c871182eb001d262d2e10bf0aeff5ca2e3"
+  integrity sha512-bF2wmofHT9KIXebWOtVanycdeuAJSdYoFCugqKBGBe/2gmGtkBLMd+c2N97a+PL/FNu4pgB3mxG/itiOmtpA6A==
   dependencies:
     "@chakra-ui/icons" "^2.0.11"
     "@chakra-ui/react" "^2.3.5"
