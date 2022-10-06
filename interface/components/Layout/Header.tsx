@@ -1,7 +1,8 @@
 import { FunctionComponent } from 'react'
 import { Flex, Text, Spacer, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { Wallet } from '../Wallet'
+import { Wallet } from '@osaguild/wallet'
+import { networks } from '../../config'
 
 const Header: FunctionComponent = () => {
   const router = useRouter()
@@ -14,7 +15,7 @@ const Header: FunctionComponent = () => {
         </Text>
       </Link>
       <Spacer />
-      <Wallet />
+      <Wallet networks={networks} />
     </Flex>
   )
 }
