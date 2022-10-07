@@ -1,9 +1,9 @@
 import { BigNumber } from 'ethers'
 
 type Balance = {
-  alice: number
-  bob: number
-  protocol: number
+  alice: BigNumber
+  bob: BigNumber
+  protocol: BigNumber
   stakingOfAlice: BigNumber
   stakingOfBob: BigNumber
 }

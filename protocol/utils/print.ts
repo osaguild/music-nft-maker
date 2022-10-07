@@ -30,15 +30,15 @@ const printRoyalty = (
 const printBalance = (balance: Balance) => {
   console.log(
     'alice:',
-    balance.alice,
+    `${ethers.utils.formatEther(balance.alice)} ETH`,
     'bob:',
-    balance.bob,
+    `${ethers.utils.formatEther(balance.bob)} ETH`,
     'protocol:',
-    balance.protocol,
+    `${ethers.utils.formatEther(balance.protocol)} ETH`,
     'stakingOfAlice:',
-    ethers.utils.formatEther(balance.stakingOfAlice),
+    `${ethers.utils.formatEther(balance.stakingOfAlice)} ETH`,
     'stakingOfBob:',
-    ethers.utils.formatEther(balance.stakingOfBob)
+    `${ethers.utils.formatEther(balance.stakingOfBob)} ETH`
   )
 }
 
