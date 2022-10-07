@@ -7,19 +7,19 @@ const printRoyalty = (
   receivers: string[],
   amounts: BigNumber[],
   tokenId: number,
-  price: number
+  price: BigNumber
 ) => {
-  let message = `tokenId: ${tokenId} price: ${price} `
+  let message = `tokenId: ${tokenId} price: ${ethers.utils.formatEther(price)} MTE`
   for (let i = 0; i < addresses.length; i++) {
     if (receivers.length == 0) {
-      message += `${addresses[i]?.name}: 0 `
+      message += ` / ${addresses[i]?.name}: 0 MTE`
     } else {
       for (let j = 0; j < receivers.length; j++) {
         if (addresses[i]?.address === receivers[j]) {
-          message += `${addresses[i]?.name}: ${amounts[j]?.toNumber()} `
+          message += ` / ${addresses[i]?.name}: ${ethers.utils.formatEther(amounts[j] as BigNumber)} MTE`
           break
         } else if (j === receivers.length - 1) {
-          message += `${addresses[i]?.name}: 0 `
+          message += ` / ${addresses[i]?.name}: 0 MTE`
         }
       }
     }
