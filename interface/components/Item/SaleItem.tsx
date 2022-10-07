@@ -10,7 +10,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Image,
   useDisclosure,
   Container,
   Wrap,
@@ -21,6 +20,7 @@ import { useContract } from '../../hooks/Contract'
 import { BigNumber, ethers } from 'ethers'
 import { fetchOrigin } from '../../lib/fetch'
 import { Collection } from '../Collection'
+import { Item } from './Item'
 
 interface SaleItemProps {
   sale: Sale
@@ -29,7 +29,7 @@ interface SaleItemProps {
 const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [image, setImage] = useState<string>()
-  const [sound, setSound] = useState<string>()
+  const [audio, setAudio] = useState<string>()
   const [origins, setOrigins] = useState<Origin[]>([])
   const [royalties, setRoyalties] = useState<Royalty[]>([])
   const { market, originToken, fanficToken, protocol } = useContract()
@@ -47,7 +47,7 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
         .then((res) => res.json())
         .then((json) => {
           setImage(json.image)
-          setSound(json.animation_url)
+          setAudio(json.animation_url)
         })
     }
   }, [sale])
@@ -84,14 +84,13 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
   }, [originToken, sale])
 
   return (
-    <Box textAlign="center" w="350px" h="350px">
-      <Text fontSize="l" textAlign="center" position="absolute" height="30px" color="black" w="350px" mt={2}>
-        {`id: ${sale.id} / price:${sale.price} ETH`}
-      </Text>
+    <Box>
       <Link onClick={onOpen}>
-        <Image src={image} alt="sale token image" />
+        <Item image={image as string} audio={audio as string} />
       </Link>
-      <Box as="video" controls src={sound} width="350px" height="50px" mt="-50px" />
+      <Text fontSize="l" textAlign="center">
+        {`SALE ${sale.id} / ${sale.price} ETH`}
+      </Text>
       <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent>
@@ -104,10 +103,7 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
               </Text>
               <Wrap spacing="30px" justify="center" my="30">
                 <WrapItem>
-                  <Box>
-                    <Image src={image} alt="fanfic token image" w="350px" h="350px" display="block" margin="auto" />
-                    <Box as="video" controls src={sound} width="350px" height="50px" mt="-50px" />
-                  </Box>
+                  <Item image={image as string} audio={audio as string} />
                 </WrapItem>
                 <WrapItem>
                   <Box>
