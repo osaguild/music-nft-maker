@@ -16,7 +16,7 @@ const Header: FunctionComponent = () => {
   }
 
   return (
-    <Flex>
+    <Flex bg="bg">
       <Link onClick={() => router.push('/')}>
         <Text fontSize="xl" fontWeight="bold" px={5} py={3}>
           Demo

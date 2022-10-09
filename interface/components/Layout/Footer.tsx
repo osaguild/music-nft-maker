@@ -3,7 +3,7 @@ import { Center, Text } from '@chakra-ui/react'
 
 const Footer: FunctionComponent = () => {
   return (
-    <Center>
+    <Center bg="bg">
       <Text fontSize="large" py={2}>
         @{new Date().getFullYear()} osaguild.com
       </Text>
