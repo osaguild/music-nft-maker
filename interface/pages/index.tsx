@@ -4,6 +4,7 @@ import { Web3ReactProvider } from '@web3-react/core'
 import { ChakraProvider } from '@chakra-ui/react'
 import { AlertContext, useAlertProvider } from '../hooks/AlertContext'
 import { Layout } from '../components/Layout'
+import theme from '../theme'
 
 const Top: FunctionComponent = () => {
   const getLibrary = (provider: providers.ExternalProvider | providers.JsonRpcFetchFunc) => {
@@ -13,7 +14,7 @@ const Top: FunctionComponent = () => {
   }
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <AlertContext.Provider value={useAlertProvider()}>
           <Layout pattern="TOP" />
