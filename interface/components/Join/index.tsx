@@ -28,7 +28,7 @@ const Join: FunctionComponent = () => {
   const router = useRouter()
 
   const approve = async () => {
-    const tx = await mteToken?.approve(address().PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
+    const tx = await mteToken?.approve(address.PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
     const receipt = await tx?.wait()
     const event = receipt?.events?.find((v) => v.event === 'Approval')
     if (event === undefined) throw new Error('approve event is not found')

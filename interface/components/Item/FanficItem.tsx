@@ -38,7 +38,7 @@ const FanficItem: FunctionComponent<FanficItemProps> = ({ fanfic }) => {
   const { market, fanficToken } = useContract()
 
   const approve = async () => {
-    const tx = await fanficToken?.approve(address().MARKET_CONTRACT, fanfic.id)
+    const tx = await fanficToken?.approve(address.MARKET_CONTRACT, fanfic.id)
     const receipt = await tx?.wait()
     const start = receipt?.events?.find((v) => v.event === 'Approval')
     if (start === undefined) throw new Error('start sale event is not found')

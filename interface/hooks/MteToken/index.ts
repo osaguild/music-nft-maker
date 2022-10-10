@@ -10,7 +10,7 @@ const useProtocol = () => {
 
   useEffect(() => {
     if (library) {
-      setProtocol(Protocol__factory.connect(address().PROTOCOL_CONTRACT, library.getSigner()))
+      setProtocol(Protocol__factory.connect(address.PROTOCOL_CONTRACT, library.getSigner()))
     }
   }, [library])
 
