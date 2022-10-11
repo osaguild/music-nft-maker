@@ -3868,10 +3868,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@osaguild/ipfs-uploader@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@osaguild/ipfs-uploader/-/ipfs-uploader-0.3.2.tgz#2e61172411415dd07385eb7e4f9a5f1069d39e20"
-  integrity sha512-+fBbUwwq3xZqoTFwxZ2Iz072UEnREW5rgWx9mwpnvCEKLNLzlPICW6LNwxYCaGVjV2pKEh08JTiE/ZUwMVOO+g==
+"@osaguild/ipfs-uploader@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@osaguild/ipfs-uploader/-/ipfs-uploader-0.3.4.tgz#8c2566493a44131efc6ae570afe4293ae1fb8569"
+  integrity sha512-E7lMt+r+ARqGfVpTgRmnNL9OiehWX2SHnoJ3r6f10hgcuHi7J4AaANXB1rGIPipuPcBId7mIu8K112MfXc9UbQ==
   dependencies:
     "@chakra-ui/react" "^2.2.8"
     axios "^0.27.2"
