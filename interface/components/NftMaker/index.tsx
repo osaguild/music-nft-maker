@@ -100,7 +100,7 @@ const NftMaker: FunctionComponent = () => {
           <ModalHeader>Form</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Accordion>
+            <Accordion allowToggle>
               <AccordionItem>
                 <AccordionButton>
                   <Box flex="1" textAlign="left">
