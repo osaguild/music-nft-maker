@@ -77,7 +77,7 @@ const Join: FunctionComponent = () => {
         </Link>{' '}
         for member page.
       </Text>
-      <Button verticalAlign="bottom" onClick={onOpen} mt={5} bg="primary" color="white">
+      <Button verticalAlign="bottom" onClick={onOpen} mt={5} bg="primary" color="white" w="120px">
         Join Us
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
