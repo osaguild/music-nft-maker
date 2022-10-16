@@ -1,5 +1,4 @@
 import { extendTheme } from '@chakra-ui/react'
-import { FiBluetooth } from 'react-icons/fi'
 
 const theme: any = extendTheme({
   config: {
