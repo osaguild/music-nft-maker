@@ -7,7 +7,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   InputGroup,
@@ -15,6 +14,7 @@ import {
   InputRightAddon,
   useDisclosure,
   Link,
+  Stack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useContract } from '../../hooks/Contract'
@@ -24,22 +24,48 @@ import { ethers } from 'ethers'
 const Join: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [value, setValue] = useState('100')
+  const [isApproving, setIsApproving] = useState(false)
+  const [isStaking, setIsStaking] = useState(false)
   const { protocol, mteToken } = useContract()
   const router = useRouter()
 
   const approve = async () => {
-    const tx = await mteToken?.approve(address().PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
-    const receipt = await tx?.wait()
-    const event = receipt?.events?.find((v) => v.event === 'Approval')
-    if (event === undefined) throw new Error('approve event is not found')
+    try {
+      // start approve
+      setIsApproving(true)
+
+      // send transaction
+      const tx = await mteToken?.approve(address.PROTOCOL_CONTRACT, ethers.utils.parseEther(value))
+      const receipt = await tx?.wait()
+      const event = receipt?.events?.find((v) => v.event === 'Approval')
+      if (event === undefined) throw new Error('approve event is not found')
+
+      // end approve
+      setIsApproving(false)
+    } catch (e) {
+      // todo: error handling
+      setIsApproving(false)
+    }
   }
 
-  const join = async () => {
-    const tx = await protocol?.stake(ethers.utils.parseEther(value))
-    const receipt = await tx?.wait()
-    const event = receipt?.events?.find((v) => v.event === 'Stake')
-    if (event === undefined) throw new Error('stake event is not found')
-    onClose
+  const stake = async () => {
+    try {
+      // start stake
+      setIsStaking(true)
+
+      // send transaction
+      const tx = await protocol?.stake(ethers.utils.parseEther(value))
+      const receipt = await tx?.wait()
+      const event = receipt?.events?.find((v) => v.event === 'Stake')
+      if (event === undefined) throw new Error('stake event is not found')
+
+      // end stake
+      setIsStaking(false)
+      onClose
+    } catch (e) {
+      // todo: error handling
+      setIsStaking(false)
+    }
   }
 
   return (
@@ -51,7 +77,7 @@ const Join: FunctionComponent = () => {
         </Link>{' '}
         for member page.
       </Text>
-      <Button verticalAlign="bottom" onClick={onOpen} mt={5}>
+      <Button verticalAlign="bottom" onClick={onOpen} mt={5} bg="primary" color="white" w="120px">
         Join Us
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -64,11 +90,15 @@ const Join: FunctionComponent = () => {
               <Input placeholder="value of MTE" value={value} onChange={(e) => setValue(e.target.value)} />
               <InputRightAddon>MTE</InputRightAddon>
             </InputGroup>
+            <Stack spacing="2" direction="row" justify="center" mt="5">
+              <Button onClick={approve} isLoading={isApproving} w="120px" bg="primary" color="white">
+                Approve
+              </Button>
+              <Button onClick={stake} isLoading={isStaking} w="120px" bg="primary" color="white">
+                Stake
+              </Button>
+            </Stack>
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={approve}>Approve</Button>
-            <Button onClick={join}>Stake</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

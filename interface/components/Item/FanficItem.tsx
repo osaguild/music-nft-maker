@@ -17,11 +17,11 @@ import {
   Stack,
   Radio,
   useDisclosure,
-  Image,
 } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { useContract } from '../../hooks/Contract'
 import { address } from '../../config'
+import { Item } from './Item'
 
 interface FanficItemProps {
   fanfic: Fanfic
@@ -34,11 +34,11 @@ const FanficItem: FunctionComponent<FanficItemProps> = ({ fanfic }) => {
   const [eventType, setEventType] = useState<EventType>('APPROVE')
   const [price, setPrice] = useState('0.01')
   const [image, setImage] = useState<string>()
-  const [sound, setSound] = useState<string>()
+  const [audio, setAudio] = useState<string>()
   const { market, fanficToken } = useContract()
 
   const approve = async () => {
-    const tx = await fanficToken?.approve(address().MARKET_CONTRACT, fanfic.id)
+    const tx = await fanficToken?.approve(address.MARKET_CONTRACT, fanfic.id)
     const receipt = await tx?.wait()
     const start = receipt?.events?.find((v) => v.event === 'Approval')
     if (start === undefined) throw new Error('start sale event is not found')
@@ -57,19 +57,18 @@ const FanficItem: FunctionComponent<FanficItemProps> = ({ fanfic }) => {
         .then((res) => res.json())
         .then((json) => {
           setImage(json.image)
-          setSound(json.animation_url)
+          setAudio(json.animation_url)
         })
     }
   }, [fanfic])
 
   return (
-    <Box textAlign="center" w="350" h="350px">
-      <Text fontSize="l" textAlign="center" position="absolute" height="30px" color="black" w="350px" mt={2}>
-        {`id: ${fanfic.id}`}
+    <Box>
+      <Item image={image as string} audio={audio as string} />
+      <Text fontSize="l" textAlign="center">
+        {`Fanfic NFT / ${fanfic.id}`}
       </Text>
-      <Image src={image} alt="fanfic token image" />
-      <Box as="video" controls src={sound} width="350px" height="50px" mt="-50px" />
-      <Box textAlign="center" w="350px" height="30px" position="absolute" mt="-50px">
+      <Box textAlign="center" w="350px" height="30px" position="absolute" mt="-75px">
         <Button onClick={onOpen} color="black">
           Exhibit
         </Button>

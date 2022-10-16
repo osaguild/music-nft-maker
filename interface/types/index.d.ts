@@ -1,13 +1,3 @@
-interface Window {
-  ethereum: any
-}
-
-type Network = {
-  chainId: number
-  name: string
-  icon: string
-}
-
 type Alert = {
   message: string
   status: AlertStatus
@@ -44,13 +34,17 @@ type Sale = {
   fanficToken: Fanfic
 }
 
-type Config = {
+type Address = {
   PROTOCOL_CONTRACT: string
   STAKING_CONTRACT: string
   MTE_CONTRACT: string
   FANFIC_CONTRACT: string
   ORIGIN_CONTRACT: string
   MARKET_CONTRACT: string
+}
+
+type ApiKey = {
+  PINATA_API_JWT: string
 }
 
 type Royalty = {

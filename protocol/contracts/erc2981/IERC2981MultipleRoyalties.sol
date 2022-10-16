@@ -9,6 +9,14 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
  */
 interface IERC2981MultipleRoyalties is IERC165 {
     /**
+     * @dev royalty info
+     */
+    struct RoyaltyInfo {
+        address receiver;
+        uint16 royaltyFraction;
+    }
+
+    /**
      * @dev Returns how much royalty is owed and to whom, based on a sale price that may be denominated in any unit of
      */
     function royaltyInfo(uint256 tokenId, uint256 salePrice)

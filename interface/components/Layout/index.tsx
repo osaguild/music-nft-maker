@@ -53,7 +53,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ pattern }) => {
           <Box textAlign="center">
             <Portfolio />
             <Stack spacing="5" direction="row" justify="center" mt="10">
-              <Button verticalAlign="bottom" onClick={() => alert('withdraw is clicked!')}>
+              <Button verticalAlign="bottom" onClick={() => alert('withdraw is clicked!')} bg="primary" color="white">
                 With Draw
               </Button>
               <NftMaker />
