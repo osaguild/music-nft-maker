@@ -34,6 +34,7 @@ const NftMaker: FunctionComponent = () => {
   const [tokenType, setTokenType] = useState<TokenType>('ORIGIN')
   const [tokenUri, setTokenUri] = useState<string>('')
   const [originIds, setOriginIds] = useState<string[]>([])
+  const [accordionIndex, setAccordionIndex] = useState<0 | 1>(0)
   const { originToken, fanficToken } = useContract()
   const ipfsUploaderConfig: Config = {
     enableChange: {
@@ -84,6 +85,7 @@ const NftMaker: FunctionComponent = () => {
         // set tokenUri from ipfs hash of uploaded metadata
         const uploadedData = (event as SuccessEvent).uploadedData
         const metadata = uploadedData[uploadedData.length - 1] as UploadedData
+        setAccordionIndex(1)
         setTokenUri(`https://gateway.pinata.cloud/ipfs/${metadata.log.IpfsHash}`)
       } else if (event.eventType === 'FAILED') {
         throw new Error(`failed to upload: ${(event as FailedEvent).message}`)
@@ -102,7 +104,7 @@ const NftMaker: FunctionComponent = () => {
 
   return (
     <Box textAlign="center">
-      <Button verticalAlign="bottom" onClick={onOpen} bg="primary">
+      <Button verticalAlign="bottom" onClick={onOpen} bg="primary" color="white">
         Make New
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -111,11 +113,11 @@ const NftMaker: FunctionComponent = () => {
           <ModalHeader>Form</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Accordion allowToggle>
+            <Accordion index={[accordionIndex]}>
               <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    1.upload
+                <AccordionButton _expanded={{ bg: 'primary', color: 'white' }} onClick={() => setAccordionIndex(0)}>
+                  <Box flex="1" textAlign="left" as="b">
+                    step.1 upload
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -124,9 +126,9 @@ const NftMaker: FunctionComponent = () => {
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    2.mint
+                <AccordionButton _expanded={{ bg: 'primary', color: 'white' }} onClick={() => setAccordionIndex(1)}>
+                  <Box flex="1" textAlign="left" as="b">
+                    step.2 mint
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
