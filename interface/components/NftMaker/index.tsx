@@ -23,7 +23,7 @@ import {
   FormHelperText,
   FormErrorMessage,
 } from '@chakra-ui/react'
-import { IpfsUploader, Event, SuccessEvent, FailedEvent, UploadedData } from '@osaguild/ipfs-uploader'
+import { IpfsUploader, Event, SuccessEvent, FailedEvent, UploadedData, Config } from '@osaguild/ipfs-uploader'
 import { useContract } from '../../hooks/Contract'
 import { apiKey } from '../../config'
 
@@ -35,6 +35,17 @@ const NftMaker: FunctionComponent = () => {
   const [tokenUri, setTokenUri] = useState<string>('')
   const [originIds, setOriginIds] = useState<string[]>([])
   const { originToken, fanficToken } = useContract()
+  const ipfsUploaderConfig: Config = {
+    enableChange: {
+      metadataName: false,
+      metadataKeyValue: false,
+      imageName: false,
+      audioName: false,
+    },
+    imageSize: 'm',
+    pattern: 'audio',
+    pinataApiJwt: apiKey.PINATA_API_JWT,
+  }
 
   const mint = async () => {
     try {
@@ -109,14 +120,7 @@ const NftMaker: FunctionComponent = () => {
                   <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel pb={4}>
-                  <IpfsUploader
-                    pinataApiJwt={apiKey.PINATA_API_JWT}
-                    callback={uploadEvent}
-                    enableMetadata={false}
-                    enableChangeName={false}
-                    imageSize="m"
-                    pattern="audio"
-                  />
+                  <IpfsUploader callback={uploadEvent} config={ipfsUploaderConfig} />
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem>
