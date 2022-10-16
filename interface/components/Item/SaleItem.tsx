@@ -32,13 +32,25 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
   const [audio, setAudio] = useState<string>()
   const [origins, setOrigins] = useState<Origin[]>([])
   const [royalties, setRoyalties] = useState<Royalty[]>([])
+  const [isPurchasing, setIsPurchasing] = useState(false)
   const { market, originToken, fanficToken, protocol } = useContract()
 
   const purchase = async () => {
-    const tx = await market?.purchase(sale.id, { value: ethers.utils.parseEther(sale.price.toString()) })
-    const receipt = await tx?.wait()
-    const start = receipt?.events?.find((v) => v.event === 'Purchase')
-    if (start === undefined) throw new Error('purchase event is not found')
+    try {
+      // start purchase
+      setIsPurchasing(true)
+
+      // send transaction
+      const tx = await market?.purchase(sale.id, { value: ethers.utils.parseEther(sale.price.toString()) })
+      const receipt = await tx?.wait()
+      const start = receipt?.events?.find((v) => v.event === 'Purchase')
+      if (start === undefined) throw new Error('purchase event is not found')
+
+      // end purchase
+      setIsPurchasing(false)
+    } catch (e) {
+      setIsPurchasing(false)
+    }
   }
 
   useEffect(() => {
@@ -116,7 +128,16 @@ const SaleItem: FunctionComponent<SaleItemProps> = ({ sale }) => {
                       <Text fontSize="xl" key={i}>{`- ${e.value} MTE to ${e.receiver}`}</Text>
                     ))}
                     <Box textAlign="center" mt={10}>
-                      <Button onClick={purchase} display="block" margin="auto" mb="20px">
+                      <Button
+                        onClick={purchase}
+                        display="block"
+                        margin="auto"
+                        mb="20px"
+                        bg="primary"
+                        color="white"
+                        w="120px"
+                        isLoading={isPurchasing}
+                      >
                         Purchase
                       </Button>
                     </Box>

@@ -35,6 +35,7 @@ const NftMaker: FunctionComponent = () => {
   const [tokenUri, setTokenUri] = useState<string>('')
   const [originIds, setOriginIds] = useState<string[]>([])
   const [accordionIndex, setAccordionIndex] = useState<0 | 1>(0)
+  const [isMinting, setIsMinting] = useState(false)
   const { originToken, fanficToken } = useContract()
   const ipfsUploaderConfig: Config = {
     enableChange: {
@@ -50,6 +51,9 @@ const NftMaker: FunctionComponent = () => {
 
   const mint = async () => {
     try {
+      // start mint
+      setIsMinting(true)
+
       // validation
       if (tokenUri === '') throw new Error('tokenUri is required')
       else if (tokenType === 'FANFIC' && originIds.length === 0) throw new Error('originIds is required')
@@ -66,9 +70,12 @@ const NftMaker: FunctionComponent = () => {
         const event = receipt?.events?.find((v) => v.event === 'Transfer')
         if (event === undefined) throw new Error('transfer event is not found')
       }
+
+      // end mint
+      setIsMinting(false)
     } catch (e) {
       // todo: implement error handling
-      console.log(e)
+      setIsMinting(false)
     }
   }
 
@@ -170,7 +177,9 @@ const NftMaker: FunctionComponent = () => {
                     </FormControl>
                   )}
                   <Box textAlign="center" mt="5">
-                    <Button onClick={mint}>mint</Button>
+                    <Button onClick={mint} bg="primary" color="white" w="120px" isLoading={isMinting}>
+                      mint
+                    </Button>
                   </Box>
                 </AccordionPanel>
               </AccordionItem>
