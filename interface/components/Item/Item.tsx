@@ -22,7 +22,7 @@ const Item: FunctionComponent<ItemProps> = ({ image, audio }) => {
   }
 
   return (
-    <Box textAlign="center" w="350" h="350px">
+    <Box textAlign="center" w="350px" h="350px" boxShadow="base" rounded="md">
       <Box position="absolute" width="50" height="50" mt="150" ml="150">
         {playing ? (
           <IconButton aria-label="pause" onClick={pause} icon={<Icon as={FiPause} />} size="lg" />
