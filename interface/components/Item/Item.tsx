@@ -1,5 +1,5 @@
 import { FunctionComponent, useState, createRef } from 'react'
-import { Box, BoxProps, Image, forwardRef, Icon, IconButton } from '@chakra-ui/react'
+import { Box, BoxProps, Image, forwardRef, Icon, IconButton, Spinner } from '@chakra-ui/react'
 import { FiPlay, FiPause } from 'react-icons/fi'
 
 interface ItemProps {
@@ -30,7 +30,7 @@ const Item: FunctionComponent<ItemProps> = ({ image, audio }) => {
           <IconButton aria-label="play" onClick={play} icon={<Icon as={FiPlay} />} size="lg" />
         )}
       </Box>
-      <Image src={image} alt="origin token image" />
+      <Image src={image} alt="origin token image" fallbackSrc="/assets/loading.gif" w="350px" h="350px"/>
       <Audio src={audio} ref={ref}></Audio>
     </Box>
   )
